@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html lang="en">
+
+    <head>
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Hostel Stays</title>
+
+        <link rel="stylesheet" href="https://pro.fontawesome.com/releases/v5.10.0/css/all.css" />
+
+        <link rel="stylesheet" href="style.css">
+
+        <script src="https://code.jquery.com/jquery-3.6.0.min.js"
+            integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
+
+    </head>
+
+    <body>
+
+        <!-- Navigation -->
+        <nav>
+            <img class ="image" src="../images/logo.png" alt="">
+            <div class="navigation">
+                <ul>
+                    <i id="menu-close" class=" fas fa-times"></i>
+                    <li><a href="index.html">Home</a></li>
+                    <li><a class="active" href="about.html">About</a></li>
+                    <li><a href="services.html">Services</a></li>
+                    <li><a href="contact.html">Contact</a></li>
+                    
+        <button class="button" id="form-open">Login</button>
+                </ul>
+                <img id="menu-btn" src="../images/menu.png" alt="">
+            </div>
+        <!-- Unicons -->
+    <link rel="stylesheet" href="https://unicons.iconscout.com/release/v4.0.0/css/line.css" />
+        </nav>
+
+        <!-- Home -->
+    <section class="about-home">
+        <h2>
+          About Hostel Stays
+        </h2>
+        <div class="form_container">
+          <i class="uil uil-times form_close"></i>
+          <!-- Login From -->
+          <div class="form login_form">
+            <form action="#">
+              <h2>Login</h2>
+  
+              <div class="input_box">
+                <input type="email" placeholder="Enter your email" required />
+                <i class="uil uil-envelope-alt email"></i>
+              </div>
+              <div class="input_box">
+                <input type="password" placeholder="Enter your password" required />
+                <i class="uil uil-lock password"></i>
+                <i class="uil uil-eye-slash pw_hide"></i>
+              </div>
+  
+              <div class="option_field">
+                <span class="checkbox">
+                  <input type="checkbox" id="check" />
+                  <label for="check">Remember me</label>
+                </span>
+                <a href="#" class="forgot_pw">Forgot password?</a>
+              </div>
+  
+              <button class="form_button" id="loginButton">Login Now</button>
+  
+              <div class="login_signup">Don't have an account? <a class="lug" href="#" id="signup">Signup</a></div>
+            </form>
+          </div>
+  
+          <!-- Signup From -->
+          <div class="form signup_form">
+            <form action="#">
+              <h2>Signup</h2>
+              <div class="name">
+                <div class="name_input">
+                  <input type="text" placeholder="First Name" required />
+                  <i class="uil uil-user user"></i>
+                </div>
+                <div class="name_input">
+                  <input type="text" placeholder="Middle Name" />
+                </div>
+                <div class="name_input">
+                  <input type="text" placeholder="Last Name" required />
+                </div>
+              </div>
+              <div class="input_box">
+                <input type="email" placeholder="Enter your email" required />
+                <i class="uil uil-envelope-alt email"></i>
+              </div>
+              <div class="input_box">
+                <input type="tel" placeholder="Phone Number" required />
+                <i class="uil uil-phone Phone"></i>
+              </div>
+              <div class="input_box">
+                <input type="date" placeholder="Date of Birth" required />
+                <i class="uil uil-calendar-alt calander"></i>
+              </div>
+              <div class="input_box">
+                <input type="text" placeholder="Citizenship Number" required />
+                <i class="uil uil-file-alt file"></i>
+              </div>
+              <div class="input_box">
+                <input type="password" placeholder="Create password" required />
+                <i class="uil uil-lock password"></i>
+                <i class="uil uil-eye-slash pw_hide"></i>
+              </div>
+              <div class="input_box">
+                <input type="password" placeholder="Confirm password" required />
+                <i class="uil uil-lock password"></i>
+                <i class="uil uil-eye-slash pw_hide"></i>
+              </div>
+              
+              <button class="form_button">Signup Now</button>
+  
+              <div class="login_signup">Already have an account? <a class="lug" href="#" id="login">Login</a></div>
+            </form>
+          </div>
+        </div>
+      </section>
+        <!-- Hostel Features -->
+        <section id="features">
+          <h1>Discover Our Hostel</h1>
+          <p>Welcome to Our Hostel, a vibrant sanctuary for travelers seeking more than just a place to rest their heads. 
+            Located in the heart of Kathmandu, our community-centric environment fosters connections among the residents from every corner of Nepal. 
+            With comfortable accommodations designed for restful nights, mouthwatering dining options that showcase local flavors, and reliable high-speed Wi-Fi ensuring seamless connectivity, our hostel caters to the needs of modern travelers. Committed to sustainability and equipped with modern security features, we prioritize both the well-being of our guests and the planet. With 24/7 assistance from our friendly staff, a wealth of local insights to explore,
+             and an unforgettable experience awaiting each guest,
+             Our Hostel promises memories that transcend mere travel—book your stay today and discover the magic for yourself.</p>
+          <div class="fea-base">
+            <div class="fea-box">
+              <i class="fas fa-bed"></i>
+              <h3>Comfortable Accommodation</h3>
+              <p>Relax in our cozy rooms designed for a restful stay.</p>
+            </div>
+            <div class="fea-box">
+              <i class="fas fa-utensils"></i>
+              <h3>Delicious Dining</h3>
+              <p>Savor mouthwatering meals prepared by our talented chefs.</p>
+            </div>
+            <div class="fea-box">
+              <i class="fas fa-wifi"></i>
+              <h3>High-Speed Wi-Fi</h3>
+              <p>Stay connected with our reliable high-speed Wi-Fi network.</p>
+            </div>
+          </div>
+        </section>     
+        <!-- Footer -->
+        <footer>
+          <div class="footer-col">
+            <h3>Explore</h3>
+            <ul>
+              <li>Monthly Rent</li>
+              <li>Facilities</li>
+              <li>Community Events</li>
+              <li>House Rules</li>
+            </ul>
+          </div>
+          <div class="footer-col">
+            <h3>Services</h3>
+            <ul>
+              <li>Property Maintenance</li>
+              <li>Security</li>
+              <li>Utilities Management</li>
+              <li>Complaint Resolution</li>
+            </ul>
+          </div>
+          <div class="footer-col">
+            <h3>Community</h3>
+            <ul>
+              <li>Resident Forums</li>
+              <li>Social Activities</li>
+              <li>Support Network</li>
+              <li>Feedback Mechanism</li>
+            </ul>
+          </div>
+          <div class="footer-col">
+            <h3>Stay Connected</h3>
+            <ul>
+              <li>Receive Updates</li>
+              <li>Join Community Groups</li>
+              <li>Share Ideas</li>
+            </ul>
+          </div>
+        
+          <div class="footer-col">
+            <h3>Newsletter</h3>
+            <p>Stay informed about the latest updates and community events.</p>
+            <div class="subscribe">
+              <input type="email" placeholder="Your Email address">
+              <a href="#" class="yellow"> SUBSCRIBE</a>
+            </div>
+          </div>
+          <div class="copyright">
+            <p>© 2024 Residential Hostel Management. All rights reserved.</p>
+            <div class="pro-links">
+              <a href="#"><i class="fab fa-facebook-f"></i></a>
+              <a href="#"><i class="fab fa-instagram"></i></a>
+              <a href="#"><i class="fab fa-linkedin-in"></i></a>
+            </div>
+          </div>
+        </footer>   
+    <script>
+    $('#menu-btn').click(function(){
+        $('nav .navigation ul').addClass('active')
+});
+    $('#menu-close').click(function(){
+        $('nav .navigation ul').removeClass('active')
+});
+    </script>
+    <script src="script.js"></script>
+    </body>
+
+</html>
