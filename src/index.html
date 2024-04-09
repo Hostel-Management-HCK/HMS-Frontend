@@ -24,10 +24,10 @@
             <div class="navigation">
                 <ul>
                     <i id="menu-close" class=" fas fa-times"></i>
-                    <li><a class="active" href="#home">Home</a></li>
-                    <li><a href="about.html">About</a></li>
-                    <li><a href="services.html">Services</a></li>
-                    <li><a href="contact.html">Contact</a></li>
+                    <li><a href="#home">Home</a></li>
+                    <li><a href="#features">About</a></li>
+                    <li><a href="#services">Services</a></li>
+                    <li><a href="#contact">Contact</a></li>
                     
         <button class="button" id="form-open">Login</button>
                 </ul>
@@ -45,22 +45,22 @@
         <p>
           Our residence features cozy rooms equipped with all the essentials for a comfortable stay. Whether you're staying for a night, a week, or longer, you'll find everything you need to feel at home.
             <div class="btn">
-                <a class="blue" href="#"> Learn More</a>
+                <a class="blue" href="#features"> Learn More</a>
             </div>
         </p>
         <div class="form_container">
           <i class="uil uil-times form_close"></i>
           <!-- Login From -->
           <div class="form login_form">
-            <form action="#">
+            <form action="#" id="loginForm">
               <h2>Login</h2>
   
               <div class="input_box">
-                <input type="email" placeholder="Enter your email" required />
+                <input type="email" placeholder="Enter your email" id="loginEmail" required />
                 <i class="uil uil-envelope-alt email"></i>
               </div>
               <div class="input_box">
-                <input type="password" placeholder="Enter your password" required />
+                <input type="password" id="password" placeholder="Enter your password" required />
                 <i class="uil uil-lock password"></i>
                 <i class="uil uil-eye-slash pw_hide"></i>
               </div>
@@ -70,7 +70,7 @@
                   <input type="checkbox" id="check" />
                   <label for="check">Remember me</label>
                 </span>
-                <a href="#" class="forgot_pw">Forgot password?</a>
+                <a href="forgot_password.html" class="forgot_pw">Forgot password?</a>
               </div>
   
               <button class="form_button" id="loginButton">Login Now</button>
@@ -81,43 +81,47 @@
   
           <!-- Signup From -->
           <div class="form signup_form">
-            <form action="#">
+            <form action="#" method="POST" id="signupForm">
               <h2>Signup</h2>
               <div class="name">
                 <div class="name_input">
-                  <input type="text" placeholder="First Name" required />
+                  <input type="text" placeholder="First Name" id="firstName" required />
                   <i class="uil uil-user user"></i>
                 </div>
                 <div class="name_input">
-                  <input type="text" placeholder="Middle Name" />
+                  <input type="text" placeholder="Middle Name" id="middleName"  />
                 </div>
                 <div class="name_input">
-                  <input type="text" placeholder="Last Name" required />
+                  <input type="text" placeholder="Last Name" id="lastName"  required />
                 </div>
               </div>
+              <div class="name_input">
+                <input type="text" placeholder="Username" id="userName" required />
+                <i class="uil uil-user user"></i>
+              </div>
               <div class="input_box">
-                <input type="email" placeholder="Enter your email" required />
+                <input type="email" placeholder="Enter your email" id="Email" required />
                 <i class="uil uil-envelope-alt email"></i>
               </div>
               <div class="input_box">
-                <input type="tel" placeholder="Phone Number" required />
+                <input type="tel" placeholder="Phone Number" id="phNumber" title="98XXXXXXXX / 97XXXXXXXX" pattern="9[7-8][0-9]{8}" required />
                 <i class="uil uil-phone Phone"></i>
               </div>
               <div class="input_box">
-                <input type="date" placeholder="Date of Birth" required />
+                <input type="date" placeholder="Date of Birth" id="DOB"required />
                 <i class="uil uil-calendar-alt calander"></i>
               </div>
               <div class="input_box">
-                <input type="text" placeholder="Citizenship Number" required />
+                <input type="text" placeholder="Citizenship Number" id="citizenshipNumber" required />
                 <i class="uil uil-file-alt file"></i>
               </div>
               <div class="input_box">
-                <input type="password" placeholder="Create password" required />
+                <input type="password" placeholder="Create password" id="currentPassword" required />
                 <i class="uil uil-lock password"></i>
                 <i class="uil uil-eye-slash pw_hide"></i>
               </div>
               <div class="input_box">
-                <input type="password" placeholder="Confirm password" required />
+                <input type="password" placeholder="Confirm password" id="confirmPassword"required />
                 <i class="uil uil-lock password"></i>
                 <i class="uil uil-eye-slash pw_hide"></i>
               </div>
@@ -206,6 +210,40 @@
             </div>
           </div>
         </section>        
+
+        <!-- contact -->
+        <section id="contact">
+          <div class="getin">
+              <h2>Get in touch with us</h2>
+              <p>Looking to join the hostel you can contact us through various means.</p>
+          </div>
+          <div class="getin-details">
+              <h3>Location</h3>
+              <div>
+                  <i class="far fa-home get"></i>
+                  <p>Kathmandu,Naxal</p>
+              </div>
+              <h3>Phone</h3>
+              <div>
+                  <i class="fas fa-phone-alt get"></i>
+                  <p>+977 9878463723 <br> +977 01-2342342</p>
+              </div>
+              <h3>Support</h3>
+              <div>
+                  <i class="far fa-envelope-open-text get"></i>
+                  <p>Hostelstays123@gmail.com</p>
+              </div>
+              <div>
+                  <h3>Follow Us</h3>
+                  <div class="pro-links">
+                      <a href="#"><i class="fab fa-facebook-f"></i></a>
+                      <a href="#"><i class="fab fa-instagram"></i></a>
+                      <a href="#"><i class="fab fa-linkedin-in"></i></a>
+                    </div>
+              </div>
+          </div>
+        </section>
+        
         <!-- Footer -->
         <footer>
           <div class="footer-col">
@@ -270,6 +308,7 @@
 });
     </script>
     <script src="script.js"></script>
+    <script src="fetch.js"></script>
     </body>
 
 </html>
