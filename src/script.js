@@ -184,7 +184,7 @@ $("#loginForm").on("submit", function (event) {
         if (data.token) {
           localStorage.setItem("token", data.token)
 
-          window.location.href = "./Admin/index.html"
+          window.location.href = "./Admin/admin.html"
         }
       })
       .catch(err => {

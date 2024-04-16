@@ -7,6 +7,8 @@
   <title>UI/UX</title>
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Sharp:opsz,wght,FILL,GRAD@48,400,0,0" />
   <link rel="stylesheet" href="style.css">
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"
+            integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
 </head>
 <body>
    <div class="container">
@@ -66,7 +68,7 @@
 
       <!-- Dashboard -->
       <main>
-        <div class="insights">
+        <div class="insights" id="inSights">
 
            <!-- Residents -->
            <div class="Residents">
@@ -74,7 +76,7 @@
             <div class="middle">
                <div class="left">
                   <h3>Total Residents</h3>
-                  <h1>500</h1>
+                  <h1 id="totalResident">500</h1>
                </div>
             </div>
          </div>
@@ -85,7 +87,7 @@
             <div class="middle">
                <div class="left">
                   <h3>Total Staffs</h3>
-                  <h1>100</h1>
+                  <h1 id="totalStaffs">100</h1>
                </div>
             </div>
          </div>
@@ -95,8 +97,8 @@
             <span class="material-symbols-sharp">meeting_room</span>
             <div class="middle">
                <div class="left">
-                  <h3>Total Rooms</h3>
-                  <h1>200</h1>
+                  <h3 >Total Rooms</h3>
+                  <h1 id="totalRooms">200</h1>
                </div>
             </div>
          </div>
@@ -164,5 +166,7 @@
 
 
    <script src="script.js"></script>
+   <script src="../fetch.js"></script>
+   
 </body>
 </html>
