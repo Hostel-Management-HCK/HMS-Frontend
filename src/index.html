@@ -13,6 +13,9 @@
 
         <script src="https://code.jquery.com/jquery-3.6.0.min.js"
             integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
+        
+        <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+
 
     </head>
 
@@ -64,6 +67,7 @@
                 <i class="uil uil-lock password"></i>
                 <i class="uil uil-eye-slash pw_hide"></i>
               </div>
+              <div id="errorContainer" class="error"></div>
   
               <div class="option_field">
                 <span class="checkbox">
@@ -210,39 +214,6 @@
             </div>
           </div>
         </section>        
-
-        <!-- contact -->
-        <section id="contact">
-          <div class="getin">
-              <h2>Get in touch with us</h2>
-              <p>Looking to join the hostel you can contact us through various means.</p>
-          </div>
-          <div class="getin-details">
-              <h3>Location</h3>
-              <div>
-                  <i class="far fa-home get"></i>
-                  <p>Kathmandu,Naxal</p>
-              </div>
-              <h3>Phone</h3>
-              <div>
-                  <i class="fas fa-phone-alt get"></i>
-                  <p>+977 9878463723 <br> +977 01-2342342</p>
-              </div>
-              <h3>Support</h3>
-              <div>
-                  <i class="far fa-envelope-open-text get"></i>
-                  <p>Hostelstays123@gmail.com</p>
-              </div>
-              <div>
-                  <h3>Follow Us</h3>
-                  <div class="pro-links">
-                      <a href="#"><i class="fab fa-facebook-f"></i></a>
-                      <a href="#"><i class="fab fa-instagram"></i></a>
-                      <a href="#"><i class="fab fa-linkedin-in"></i></a>
-                    </div>
-              </div>
-          </div>
-        </section>
         
         <!-- Footer -->
         <footer>
@@ -274,11 +245,11 @@
             </ul>
           </div>
           <div class="footer-col">
-            <h3>Stay Connected</h3>
+            <h3 id="contact">Contact Us</h3>
             <ul>
-              <li>Receive Updates</li>
-              <li>Join Community Groups</li>
-              <li>Share Ideas</li>
+              <li><i class="fas fa-phone-alt get"></i>Phone: +977 9878463723, +977 01-2342342 </li>
+              <li><i class="far fa-envelope-open-text get"></i>Hostelstays123@gmail.com</li>
+              <li><i class="far fa-home get"></i>Naxal, Kathmandu</li>
             </ul>
           </div>
         

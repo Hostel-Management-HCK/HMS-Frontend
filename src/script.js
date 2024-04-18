@@ -33,7 +33,6 @@ loginBtn.addEventListener("click", (e) => {
   formContainer.classList.remove("active");
 });
 
-
 // Function to display error message
 function showError(input, message) {
   var errorElement = document.createElement('div');
@@ -82,22 +81,7 @@ function validateLoginForm() {
 
 // Function to validate signup form
 function validateSignupForm() {
-  var firstName = document.querySelector('.signup_form input[placeholder="First Name"]');
-  var lastName = document.querySelector('.signup_form input[placeholder="Last Name"]');
-  var username = document.querySelector('.signup_form input[placeholder="Username"]');
-  var email = document.querySelector('.signup_form input[type="email"]');
-  var phoneNumber = document.querySelector('.signup_form input[type="tel"]');
-  var dob = document.querySelector('.signup_form input[type="date"]');
-  var citizenshipNumber = document.querySelector('.signup_form input[placeholder="Citizenship Number"]');
-  var password = document.querySelector('.signup_form input[placeholder="Create password"]');
-  var confirmPassword = document.querySelector('.signup_form input[placeholder="Confirm password"]');
   var isValid = true;
-
- 
-
-
-
-
   return isValid;
 }
 
@@ -137,9 +121,9 @@ $("#signupForm").on("submit", function (event) {
 
     let body = {
       "username": userName,
-      "role": "Resident",
       "firstName": firstName,
       "middleName": middleName,
+      "role":"Resident",
       "lastName": lastName,
       "email": Email,
       "phone": phNumber,
@@ -150,19 +134,25 @@ $("#signupForm").on("submit", function (event) {
 
 
     makeRequest("POST", "http://localhost:3000/api/signup", "", {}, body)
-      .then(data => {
-        
-
-        console.log(data)
-        alert("SIgn Up successfully")
-
-      })
-      .catch(err => {
-        console.log(err)
-      })
-
-
-    console.log(resp)
+  .then(response => {
+    if (response.data && response.error) {
+      console.log("Both response data and error present");
+      alert("Sign Up successful");
+    } else if (response.data) {
+      console.log(response.data);
+      alert("Sign Up successful");
+    } else if (response.error) {
+      console.log(response.error);
+      alert("Sign Up error");
+    } else {
+      console.log("Unknown error");
+      alert("Sign Up error");
+    }
+  })
+  .catch(err => {
+    console.log(err);
+    alert("Sign Up error");
+  });
   }
 
 
@@ -179,17 +169,31 @@ $("#loginForm").on("submit", function (event) {
     body = { email: email, password: password }
 
     makeRequest("POST", "http://localhost:3000/api/login", "", {}, body)
-      .then(data => {
+  .then(data => {
+    if (data.token) {
+      localStorage.setItem("token", data.token);
+      // Display SweetAlert
+      swal({
+        title: "Success!",
+        text: "Login Successful",
+        icon: "success",
+        timer: 2000, // Auto close after 2 seconds
+        buttons: false // Hide the "OK" button
+      }).then(() => {
+        // Redirect after a delay of 2 seconds
+        setTimeout(() => {
+          window.location.href = "./Admin/admin.html";
+        });
+      });
+    } else {
+      console.log("Login error. No token received.");
+      document.getElementById("errorContainer").innerText = "Invalid Email or Password";
+    }
+  })
+  .catch(err => {
+    console.log("Error occurred during login:", err);
+  });
 
-        if (data.token) {
-          localStorage.setItem("token", data.token)
-
-          window.location.href = "./Admin/admin.html"
-        }
-      })
-      .catch(err => {
-        console.log(err)
-      })
 
 
   }

@@ -552,10 +552,13 @@ footer .copyright .pro-links i:hover{
 }
 .error {
   color: red;
-  font-size: 12px;
+  font-size: 15px;
   margin-top: 5px;
 }
 
+  .footer-col ul li i {
+  padding-right: 8px; 
+  }
 
 /* responsive */
 
