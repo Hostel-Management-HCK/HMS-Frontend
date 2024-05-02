@@ -164,7 +164,6 @@
     background: linear-gradient(to bottom, rgb(44, 44, 80), rgb(44, 44, 80)7b838a);
     box-shadow: 0 6px 8px rgba(0, 0, 0, 0.2);
 }
-
 </style>
    <div class="container">
       <aside>
@@ -221,81 +220,84 @@
                 <span class="material-symbols-sharp">logout </span>
                 <h3>logout</h3>
               </a> 
-          </div>
       </aside>
 
       <!-- Dashboard -->
       <main>
         <!-- recent_feedbacks -->
        <div class="recent_feedbacks">
-        <h2>Staff Details</h2>
-        <table id="table1" class="table">
+        <h2>Feedback From the residents</h2>
+        <table>
             <thead>
                 <tr>
-                    <th>Staff ID</th>
-                    <th>Staff Name</th>
-                    <th>Assigned Task</th>
-                    <th>Job Status</th>
+                    <th>Resident Name</th>
+                    <th>Room Number</th>
+                    <th>Feedback</th>
                 </tr>
             </thead>
             <tbody>
                 <tr>
+                    <td>John Doe</td>
                     <td>101</td>
-                    <td>Emily Johnson</td>
-                    <td>Check payment records</td>
-                    <td>Completed</td>
+                    <td>Great place to stay!</td>
                 </tr>
                 <tr>
+                    <td>Jane Smith</td>
                     <td>205</td>
-                    <td>David Wilson</td>
-                    <td>Issue receipts</td>
-                    <td>In Progress</td>
+                    <td>Excellent service!</td>
                 </tr>
                 <tr>
+                    <td>Michael Johnson</td>
                     <td>310</td>
-                    <td>Susan Martinez</td>
-                    <td>Send payment reminders</td>
-                    <td>Not Started</td>
+                    <td>Comfortable and clean rooms.</td>
                 </tr>
                 <tr>
+                    <td>Sarah Brown</td>
                     <td>401</td>
-                    <td>Michael Brown</td>
-                    <td>Update resident records</td>
-                    <td>In Progress</td>
+                    <td>Could improve WiFi connectivity.</td>
                 </tr>
             </tbody>
-        </table>        
+        </table>
     </div>    
     <div class="button-container">
         <button id="show-announce">Announce</button>
+        <button id="show-compose">Compose</button>
       </div>
     <div class="popup">
         <div class="close-btn">&times;</div>
         <div class="form">
-          <h2>Add Staff</h2>
-          <div class="form-element">
-              <label for="staffId">Staff ID:</label>
-              <input type="text" id="staffId" name="staffId" placeholder="Enter Staff ID" required>
-          </div>
-          <div class="form-element">
-              <label for="staffName">Staff Name:</label>
-              <input type="text" id="staffName" name="staffName" placeholder="Enter Staff Name" required>
-          </div>
-          <div class="form-element">
-              <label for="phoneNumber">Phone Number:</label>
-              <input type="tel" id="phoneNumber" name="phoneNumber" placeholder="Enter Phone Number" required>
-          </div>
-          <div class="form-element">
-              <label for="dob">Date of Birth:</label>
-              <input type="date" id="dob" name="dob" required>
-          </div>
-          <div class="form-element">
-              <label for="location">Location:</label>
-              <input type="text" id="location" name="location" placeholder="Enter Location" required>
-          </div>
-          <div class="form-element">
-              <button>Submit</button>
+            <h2>Announcement</h2>
+            <div class="form-element">
+                <textarea id="messages" rows="10" placeholder="Enter your message"></textarea>
+            </div>
+            <div class="form-element">
+                <button>Submit</button>
+            </div>
+        </div>
     </div>
+       <!-- Popup for Compose -->
+       <div class="popup compose">
+        <div class="close-btn">&times;</div>
+        <div class="form">
+          <h2>Compose</h2>
+          <div class="form-element">
+            <label for="recipient">To:</label>
+            <input type="text" id="recipient" placeholder="Enter recipient email">
+          </div>
+          <div class="form-element">
+            <label for="subject">Subject:</label>
+            <input type="text" id="subject" placeholder="Enter subject">
+          </div>
+          <div class="form-element">
+            <label for="message">Message:</label>
+            <textarea id="message" rows="6" placeholder="Enter your message"></textarea>
+          </div>
+          <div class="form-element">
+            <button>Send</button>
+          </div>
+        </div>
+      </div>
+    
       </main>
 
 <!-- Profile -->
@@ -324,16 +326,25 @@ document.querySelector("#show-announce").addEventListener("click", function(){
     document.querySelector(".popup").classList.add("active");
 });
 
+document.querySelector("#show-compose").addEventListener("click", function(){
+    document.querySelector(".popup.compose").classList.add("active");
+});
+
 document.querySelectorAll(".popup .close-btn").forEach(function(closeBtn) {
     closeBtn.addEventListener("click", function(){
         document.querySelector(".popup.active").classList.remove("active");
     });
 });
 
+document.querySelectorAll(".popup.compose .close-btn").forEach(function(closeBtn) {
+    closeBtn.addEventListener("click", function(){
+        document.querySelector(".popup.compose.active").classList.remove("active");
+    });
+});
 
   </script>
    <script src="script.js"></script>
    <script src="../fetch.js"></script>
    
 </body>
-</html>     
+</html>

@@ -11,22 +11,29 @@ closeBtn.addEventListener('click',()=>{
 
 $(document).ready(function(){
 
-    // Make the API request to fetch data
-    makeRequest("GET", "http://localhost:3000/api/dashboard", "", {})
-      .then(data => {
-        // Extract total residents, staffs, and rooms from the response data
-        let totalResidents = data.totalResidents;
-        let totalStaffs = data.totalStaffs;
-        let totalRooms = data.totalRooms;
 
-        // Update the HTML elements with the fetched data
-        $("#totalResident").text(totalResidents);
-        $("#totalStaffs").text(totalStaffs);
-        $("#totalRooms").text(totalRooms);
-      })
-      .catch(err => {
-        console.log(err)
-      });
+  token = localStorage.getItem("token")
+
+  console.log(token)
+  // Make the API request to fetch data
+  makeRequest("GET", "http://localhost:3000/api/dashboard", token, {})
+    .then( async (resp) => {
+      // Extract total residents, staffs, and rooms from the response data
+      data = await resp.json()
+      console.log(data)
+      
+      let totalResidents = data.totalResidents;
+      let totalStaffs = data.totalStaffs;
+      let totalRooms = data.totalRooms;
+
+      // Update the HTML elements with the fetched data
+      $("#totalResident").text(totalResidents);
+      $("#totalStaffs").text(totalStaffs);
+      $("#totalRooms").text(totalRooms);
+    })
+    .catch(err => {
+      console.log(err)
+    });
 });
 
   

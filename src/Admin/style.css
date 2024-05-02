@@ -330,7 +330,7 @@ main .recent_feedbacks h2{
 }
 main .recent_feedbacks table{
   background: var(--clr-white);
-  width: 100%;
+  width: 110%;
   border-radius: var(--card-border-radius);
   padding: var(--card-padding);
   text-align: center;
@@ -442,7 +442,6 @@ Right Side
   font-size: 20px;
 }
 
-
 /* **********8
 MEDIA QUERY
 ****************/
@@ -467,7 +466,6 @@ MEDIA QUERY
       grid-template-columns: repeat(1,1fr);
     }
 }
-
 /* ****************
 MEDIA QUERY PHONE
 ************************/
