@@ -1,0 +1,327 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Hostel Stays</title>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Sharp:opsz,wght,FILL,GRAD@48,400,0,0" />
+  <link rel="stylesheet" href="style.css">
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"
+            integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
+</head>
+<body>
+    <style>
+        * {
+    margin: 0px;
+    padding: 0px;
+    box-sizing: border-box;
+}
+
+.center {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+.center button {
+    padding: 10px 20px;
+    font-size: 15px;
+    font-weight: 600;
+    color: #222;
+    background: #f5f5f5;
+    border: none;
+    outline: none;
+    cursor: pointer;
+    border-radius: 5px;
+}
+
+.popup {
+    position: absolute;
+    top: -150%;
+    left: 50%;
+    opacity: 0;
+    transform: translate(-50%, -50%) scale(1.25);
+    width: 500px;
+    height: 600px;
+    padding: 20px 30px;
+    background: #fff;
+    box-shadow: 2px 2px 5px 5px rgba(0, 0, 0, 0.15);
+    border-radius: 10px;
+    transition:top 0ms ease-in-out 200ms, opacity 200ms ease-in-out 0ms,transform 20ms ease-in-out 0ms;
+
+}
+.popup.active{
+    top: 50%;
+    opacity: 1;
+    transform: translate(-50%,-50%) scale(1);
+    transition:top 0ms ease-in-out 0ms, opacity 200ms ease-in-out 0ms,transform 20ms ease-in-out 0ms;
+}
+.popup .close-btn {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    width: 15px;
+    height: 15px;
+    background: #888;
+    color: #eee;
+    text-align: center;
+    line-height: 15px;
+    border-radius: 15px;
+    cursor: pointer;
+}
+
+.popup .form h2 {
+    text-align: center;
+    color: #222;
+    margin: 10px 0px 20px;
+    font-size: 25px;
+}
+
+.popup .form .form-element {
+    margin: 15px 0px;
+}
+
+.popup .form .form-element label {
+    font-size: 14px;
+    color: #222;
+}
+
+.popup .form .form-element input {
+    margin-top: 5px;
+    display: block;
+    width: 100%;
+    padding: 10px;
+    outline: none;
+    border: 1px solid #aaa;
+    border-radius: 5px;
+}
+
+.popup .form .form-element button {
+    width: 100%;
+    height: 50px;
+    border: none;
+    outline: none;
+    font-size: 16px;
+    background: linear-gradient(to bottom, rgb(44, 44, 80), rgb(44, 44, 80)); 
+    color: #ffffff; 
+    border-radius: 25px; 
+    cursor: pointer;
+    margin-top: 30px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); 
+    transition: background-color 0.3s, box-shadow 0.3s; 
+}
+
+.popup .form .form-element button:hover {
+    background: linear-gradient(to bottom, rgb(44, 44, 80), rgb(44, 44, 80));
+    box-shadow: 0 6px 8px rgba(0, 0, 0, 0.2);
+}
+.popup .form .form-element textarea {
+    margin-top: 5px;
+    display: block;
+    width: 100%;
+    padding: 10px;
+    outline: none;
+    border: 1px solid #aaa;
+    border-radius: 5px;
+    resize: vertical; 
+}
+#messages{
+    margin-top: 5px;
+    display: block;
+    width: 100%;
+    height: 300px;
+    padding: 10px;
+    outline: none;
+    border: 1px solid #aaa;
+    border-radius: 5px;
+    resize: vertical; 
+}
+
+.button-container {
+      text-align: center;
+      margin-top: 20px;
+    }
+
+    .button-container button {
+    display: inline-block;
+    margin: 0 10px;
+    padding: 10px 20px;
+    font-size: 15px;
+    font-weight: 600;
+    color: #fff; 
+    background: linear-gradient(to bottom, rgb(44, 44, 80), rgb(44, 44, 80)); 
+    border: none;
+    outline: none;
+    cursor: pointer;
+    border-radius: 25px; 
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); 
+    transition: background-color 0.3s, box-shadow 0.3s; 
+}
+
+.button-container button:hover {
+    background: linear-gradient(to bottom, rgb(44, 44, 80), rgb(44, 44, 80)7b838a);
+    box-shadow: 0 6px 8px rgba(0, 0, 0, 0.2);
+}
+
+</style>
+   <div class="container">
+      <aside>
+           
+         <div class="top">
+           <div class="logo">
+             <h2>Hostel <span class="danger">Stays</span> </h2>
+           </div>
+           <div class="close" id="close_btn">
+            <span class="material-symbols-sharp">
+              close
+              </span>
+           </div>
+         </div>
+         <!-- Side bar -->
+         <div class="sidebar">
+            <a href="admin.html">
+                <span class="material-symbols-sharp">dashboard </span>
+                <h3>Dashboard</h3>
+            </a>
+            <a href="facilities.html">
+                <span class="material-symbols-sharp">group </span>
+                <h3>Facilities</h3>
+            </a>
+            <a href="billing.html">
+                <span class="material-symbols-sharp">payment </span>
+                <h3>Billing</h3>
+            </a>
+            <a href="profile.html">
+                <span class="material-symbols-sharp">person </span>
+                <h3>Profile</h3>
+            </a>
+            <a href="Feedback.html">
+                <span class="material-symbols-sharp">forum </span>
+                <h3>Feedback</h3>
+            </a>
+            <a href="setting.html">
+                <span class="material-symbols-sharp">settings </span>
+                <h3>Settings</h3>
+            </a>
+            <a href="../index.html" id="logout-link">
+                <span class="material-symbols-sharp">logout </span>
+                <h3>logout</h3>
+            </a>          
+          </div>
+      </aside>
+
+      <!-- Dashboard -->
+      <main>
+        <!-- recent_feedbacks -->
+       <div class="recent_feedbacks">
+        <h2>Resident Billings</h2>
+        <table id="table1" class="table">
+            <thead>
+                <tr>
+                    <th>Resident Name</th>
+                    <th>Time Spent</th>
+                    <th>Amount Paid</th>
+                    <th>Upcoming Due Date</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>John Doe</td>
+                    <td>6 months</td>
+                    <td>$4800</td>
+                    <td>May 30, 2024</td>
+                </tr>
+                <tr>
+                    <td>Jane Smith</td>
+                    <td>8 months</td>
+                    <td>$7200</td>
+                    <td>April 25, 2024</td>
+                </tr>
+                <tr>
+                    <td>Michael Johnson</td>
+                    <td>4 months</td>
+                    <td>$3400</td>
+                    <td>April 28, 2024</td>
+                </tr>
+                <tr>
+                    <td>Sarah Brown</td>
+                    <td>7 months</td>
+                    <td>$5250</td>
+                    <td>April 30, 2024</td>
+                </tr>
+            </tbody>
+        </table>        
+    </div>    
+    <div class="button-container">
+        <button id="show-announce">Announce</button>
+      </div>
+    <div class="popup">
+        <div class="close-btn">&times;</div>
+        <div class="form">
+          <h2>Add Staff</h2>
+          <div class="form-element">
+              <label for="staffId">Staff ID:</label>
+              <input type="text" id="staffId" name="staffId" placeholder="Enter Staff ID" required>
+          </div>
+          <div class="form-element">
+              <label for="staffName">Staff Name:</label>
+              <input type="text" id="staffName" name="staffName" placeholder="Enter Staff Name" required>
+          </div>
+          <div class="form-element">
+              <label for="phoneNumber">Phone Number:</label>
+              <input type="tel" id="phoneNumber" name="phoneNumber" placeholder="Enter Phone Number" required>
+          </div>
+          <div class="form-element">
+              <label for="dob">Date of Birth:</label>
+              <input type="date" id="dob" name="dob" required>
+          </div>
+          <div class="form-element">
+              <label for="location">Location:</label>
+              <input type="text" id="location" name="location" placeholder="Enter Location" required>
+          </div>
+          <div class="form-element">
+              <button>Submit</button>
+    </div>
+      </main>
+
+<!-- Profile -->
+    <div class="right">
+
+<div class="top">
+   <button id="menu_bar">
+     <span class="material-symbols-sharp">menu</span>
+   </button>
+   
+    <div class="profile">
+       <div class="info">
+           <p><b>John</b></p>
+           <p>Admin</p>
+           <small class="text-muted"></small>
+       </div>
+       <div class="profile-photo">
+         <img src="../../images/profile-1.jpg" alt=""/>
+       </div>
+    </div>
+</div>  
+  </div>
+
+  <script>
+document.querySelector("#show-announce").addEventListener("click", function(){
+    document.querySelector(".popup").classList.add("active");
+});
+
+document.querySelectorAll(".popup .close-btn").forEach(function(closeBtn) {
+    closeBtn.addEventListener("click", function(){
+        document.querySelector(".popup.active").classList.remove("active");
+    });
+});
+
+
+  </script>
+   <script src="script.js"></script>
+   <script src="../fetch.js"></script>
+   
+</body>
+</html>     
