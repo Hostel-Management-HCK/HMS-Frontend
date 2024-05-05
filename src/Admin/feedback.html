@@ -10,11 +10,6 @@
   <link rel="stylesheet" href="//cdn.datatables.net/2.0.5/css/dataTables.dataTables.min.css">
   <script src="https://code.jquery.com/jquery-3.6.0.min.js"integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
   <script src="//cdn.datatables.net/2.0.5/js/dataTables.min.js"></script>
-  <script>
-      $(document).ready(function(){
-          $('table#table1').DataTable();
-      });
-  </script>
 </head>
 <body>
     <style>
@@ -233,34 +228,29 @@
         <!-- recent_feedbacks -->
        <div class="recent_feedbacks">
         <h2>Feedback From the residents</h2>
-        <table id="table1">
+        <table id="feedbackTable">
             <thead>
                 <tr>
                     <th>Resident Name</th>
-                    <th>Room Number</th>
                     <th>Feedback</th>
                 </tr>
             </thead>
-            <tbody>
+            <tbody id="feedbackTableBody">
                 <tr>
                     <td>John Doe</td>
                     <td>101</td>
-                    <td>Great place to stay!</td>
                 </tr>
                 <tr>
                     <td>Jane Smith</td>
                     <td>205</td>
-                    <td>Excellent service!</td>
                 </tr>
                 <tr>
                     <td>Michael Johnson</td>
                     <td>310</td>
-                    <td>Comfortable and clean rooms.</td>
                 </tr>
                 <tr>
                     <td>Sarah Brown</td>
-                    <td>401</td>
-                    <td>Could improve WiFi connectivity.</td>
+                    <td>401</td>    
                 </tr>
             </tbody>
         </table>

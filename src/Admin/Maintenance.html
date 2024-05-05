@@ -8,7 +8,11 @@
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Sharp:opsz,wght,FILL,GRAD@48,400,0,0" />
   <link rel="stylesheet" href="style.css">
   <script src="https://code.jquery.com/jquery-3.6.0.min.js"
-            integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
+  integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
+<link rel="stylesheet" href="//cdn.datatables.net/2.0.5/css/dataTables.dataTables.min.css">
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"
+  integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
+<script src="//cdn.datatables.net/2.0.5/js/dataTables.min.js"></script>
 </head>
 <body>
     <style>
@@ -49,8 +53,8 @@
     background: #fff;
     box-shadow: 2px 2px 5px 5px rgba(0, 0, 0, 0.15);
     border-radius: 10px;
-    transition:top 0ms ease-in-out 200ms, opacity 200ms ease-in-out 0ms,transform 20ms ease-in-out 0ms;
-
+    transition: top 200ms ease-in-out, opacity 200ms ease-in-out, transform 200ms ease-in-out;
+    z-index: 9999; /* Ensure the popup appears above other elements */
 }
 .popup.active{
     top: 50%;
@@ -229,17 +233,19 @@
         <!-- recent_feedbacks -->
        <div class="recent_feedbacks">
         <h2>Staff Details</h2>
-        <table id="table1" class="table">
+        <table id="maintenance" class="table">
             <thead>
                 <tr>
+                    <th>Maintenance ID</th>
                     <th>Staff ID</th>
                     <th>Staff Name</th>
                     <th>Assigned Task</th>
                     <th>Job Status</th>
                 </tr>
             </thead>
-            <tbody>
+            <tbody id="maintenanceTableBody">
                 <tr>
+                    <td>101</td>
                     <td>101</td>
                     <td>Emily Johnson</td>
                     <td>Check payment records</td>
@@ -247,17 +253,20 @@
                 </tr>
                 <tr>
                     <td>205</td>
+                    <td>205</td>
                     <td>David Wilson</td>
                     <td>Issue receipts</td>
                     <td>In Progress</td>
                 </tr>
                 <tr>
                     <td>310</td>
+                    <td>310</td>
                     <td>Susan Martinez</td>
                     <td>Send payment reminders</td>
                     <td>Not Started</td>
                 </tr>
                 <tr>
+                    <td>401</td>
                     <td>401</td>
                     <td>Michael Brown</td>
                     <td>Update resident records</td>
