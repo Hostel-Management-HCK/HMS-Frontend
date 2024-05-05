@@ -7,12 +7,14 @@
   <title>Hostel Stays</title>
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Sharp:opsz,wght,FILL,GRAD@48,400,0,0" />
   <link rel="stylesheet" href="style.css">
-  <script src="https://code.jquery.com/jquery-3.6.0.min.js"
-  integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
-<link rel="stylesheet" href="//cdn.datatables.net/2.0.5/css/dataTables.dataTables.min.css">
-<script src="https://code.jquery.com/jquery-3.6.0.min.js"
-  integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
-<script src="//cdn.datatables.net/2.0.5/js/dataTables.min.js"></script>
+  <link rel="stylesheet" href="//cdn.datatables.net/2.0.5/css/dataTables.dataTables.min.css">
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
+  <script src="//cdn.datatables.net/2.0.5/js/dataTables.min.js"></script>
+  <script>
+      $(document).ready(function(){
+          $('table#table1').DataTable();
+      });
+      </script>
 </head>
 <body>
     <style>
@@ -53,8 +55,8 @@
     background: #fff;
     box-shadow: 2px 2px 5px 5px rgba(0, 0, 0, 0.15);
     border-radius: 10px;
-    transition: top 200ms ease-in-out, opacity 200ms ease-in-out, transform 200ms ease-in-out;
-    z-index: 9999; /* Ensure the popup appears above other elements */
+    transition:top 0ms ease-in-out 200ms, opacity 200ms ease-in-out 0ms,transform 20ms ease-in-out 0ms;
+
 }
 .popup.active{
     top: 50%;
@@ -170,6 +172,7 @@
 }
 
 </style>
+
    <div class="container">
       <aside>
            
@@ -224,87 +227,105 @@
               <a href="../index.html" id="logout-link">
                 <span class="material-symbols-sharp">logout </span>
                 <h3>logout</h3>
-              </a> 
-          </div>
+              </a>
       </aside>
 
       <!-- Dashboard -->
       <main>
         <!-- recent_feedbacks -->
        <div class="recent_feedbacks">
-        <h2>Staff Details</h2>
-        <table id="maintenance" class="table">
+        <h2>Resident Details</h2>
+        <table id="table1" class="table">
             <thead>
-                <tr>
-                    <th>Maintenance ID</th>
-                    <th>Staff ID</th>
-                    <th>Staff Name</th>
-                    <th>Assigned Task</th>
-                    <th>Job Status</th>
+                <tr >
+                    <th>Room ID</th>
+                    <th>Name</th>
+                    <th>Phone Number</th>
+                    <th>Email</th>
+                    <th>Citizenship No</th>
+                    <th>Edit</th>
+                    <th>Delete</th>
                 </tr>
             </thead>
-            <tbody id="maintenanceTableBody">
+            <tbody>
                 <tr>
                     <td>101</td>
-                    <td>101</td>
-                    <td>Emily Johnson</td>
-                    <td>Check payment records</td>
-                    <td>Completed</td>
+                    <td>John Doe</td>
+                    <td>123-456-7890</td>
+                    <td>johndoe@example.com</td>
+                    <td>ABCD123456</td>
+                    <td><button onclick="editDetails(101)">Edit</button></td>
+                    <td><button onclick="deleteDetails(101)">Delete</button></td>
                 </tr>
                 <tr>
                     <td>205</td>
-                    <td>205</td>
-                    <td>David Wilson</td>
-                    <td>Issue receipts</td>
-                    <td>In Progress</td>
+                    <td>Jane Smith</td>
+                    <td>987-654-3210</td>
+                    <td>janesmith@example.com</td>
+                    <td>EFGH098765</td>
+                    <td><button onclick="editDetails(205)">Edit</button></td>
+                    <td><button onclick="deleteDetails(205)">Delete</button></td>
                 </tr>
                 <tr>
                     <td>310</td>
-                    <td>310</td>
-                    <td>Susan Martinez</td>
-                    <td>Send payment reminders</td>
-                    <td>Not Started</td>
+                    <td>Michael Johnson</td>
+                    <td>456-789-0123</td>
+                    <td>michaeljohnson@example.com</td>
+                    <td>IJKL456789</td>
+                    <td><button onclick="editDetails(310)">Edit</button></td>
+                    <td><button onclick="deleteDetails(310)">Delete</button></td>
                 </tr>
                 <tr>
                     <td>401</td>
-                    <td>401</td>
-                    <td>Michael Brown</td>
-                    <td>Update resident records</td>
-                    <td>In Progress</td>
+                    <td>Emily Davis</td>
+                    <td>789-012-3456</td>
+                    <td>emilydavis@example.com</td>
+                    <td>MNOP789012</td>
+                    <td><button onclick="editDetails(401)">Edit</button></td>
+                    <td><button onclick="deleteDetails(401)">Delete</button></td>
                 </tr>
             </tbody>
-        </table>        
+        </table>
     </div>    
     <div class="button-container">
         <button id="show-announce">Announce</button>
+        <button id="show-compose">Compose</button>
       </div>
     <div class="popup">
         <div class="close-btn">&times;</div>
         <div class="form">
-          <h2>Add Staff</h2>
-          <div class="form-element">
-              <label for="staffId">Staff ID:</label>
-              <input type="text" id="staffId" name="staffId" placeholder="Enter Staff ID" required>
-          </div>
-          <div class="form-element">
-              <label for="staffName">Staff Name:</label>
-              <input type="text" id="staffName" name="staffName" placeholder="Enter Staff Name" required>
-          </div>
-          <div class="form-element">
-              <label for="phoneNumber">Phone Number:</label>
-              <input type="tel" id="phoneNumber" name="phoneNumber" placeholder="Enter Phone Number" required>
-          </div>
-          <div class="form-element">
-              <label for="dob">Date of Birth:</label>
-              <input type="date" id="dob" name="dob" required>
-          </div>
-          <div class="form-element">
-              <label for="location">Location:</label>
-              <input type="text" id="location" name="location" placeholder="Enter Location" required>
-          </div>
-          <div class="form-element">
-              <button>Submit</button>
+            <h2>Announcement</h2>
+            <div class="form-element">
+                <textarea id="messages" rows="10" placeholder="Enter your message"></textarea>
+            </div>
+            <div class="form-element">
+                <button>Submit</button>
+            </div>
+        </div>
     </div>
+       <!-- Popup for Compose -->
+       <div class="popup compose">
+        <div class="close-btn">&times;</div>
+        <div class="form">
+          <h2>Compose</h2>
+          <div class="form-element">
+            <label for="recipient">To:</label>
+            <input type="text" id="recipient" placeholder="Enter recipient email">
+          </div>
+          <div class="form-element">
+            <label for="subject">Subject:</label>
+            <input type="text" id="subject" placeholder="Enter subject">
+          </div>
+          <div class="form-element">
+            <label for="message">Message:</label>
+            <textarea id="message" rows="6" placeholder="Enter your message"></textarea>
+          </div>
+          <div class="form-element">
+            <button>Send</button>
+          </div>
+        </div>
+      </div>
+    
       </main>
 
 <!-- Profile -->
@@ -333,16 +354,25 @@ document.querySelector("#show-announce").addEventListener("click", function(){
     document.querySelector(".popup").classList.add("active");
 });
 
+document.querySelector("#show-compose").addEventListener("click", function(){
+    document.querySelector(".popup.compose").classList.add("active");
+});
+
 document.querySelectorAll(".popup .close-btn").forEach(function(closeBtn) {
     closeBtn.addEventListener("click", function(){
         document.querySelector(".popup.active").classList.remove("active");
     });
 });
 
+document.querySelectorAll(".popup.compose .close-btn").forEach(function(closeBtn) {
+    closeBtn.addEventListener("click", function(){
+        document.querySelector(".popup.compose.active").classList.remove("active");
+    });
+});
 
   </script>
    <script src="script.js"></script>
    <script src="../fetch.js"></script>
    
 </body>
-</html>     
+</html>

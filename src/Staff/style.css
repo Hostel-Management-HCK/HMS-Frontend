@@ -441,30 +441,7 @@ Right Side
   margin-left: 0px;
   font-size: 20px;
 }
-.delete-btn {
-  padding: 5px 10px;
-  background-color: #ff5c5c; /* Red color for delete button */
-  color: white;
-  border: none;
-  border-radius: 5px;
-  cursor: pointer;
-}
 
-.delete-btn:hover {
-  background-color: #d9534f; /* Darker red color on hover */
-}
-.edit-btn {
-  padding: 5px 10px;
-  background-color: #0062b3; /* Red color for delete button */
-  color: white;
-  border: none;
-  border-radius: 5px;
-  cursor: pointer;
-}
-
-.edit-btn:hover {
-  background-color: #d9534f; /* Darker red color on hover */
-}
 /* **********8
 MEDIA QUERY
 ****************/

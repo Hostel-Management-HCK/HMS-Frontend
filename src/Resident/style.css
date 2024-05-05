@@ -330,13 +330,14 @@ main .recent_feedbacks h2{
 }
 main .recent_feedbacks table{
   background: var(--clr-white);
-  width: 110%;
+  width: 100%;
   border-radius: var(--card-border-radius);
   padding: var(--card-padding);
   text-align: center;
   box-shadow: var(--box-shadow);
   transition: all .3s ease;
   color: var(--clr-dark);
+  overflow-y: auto;
 }
 main .recent_feedbacks table:hover{
   box-shadow: none;
@@ -441,30 +442,8 @@ Right Side
   margin-left: 0px;
   font-size: 20px;
 }
-.delete-btn {
-  padding: 5px 10px;
-  background-color: #ff5c5c; /* Red color for delete button */
-  color: white;
-  border: none;
-  border-radius: 5px;
-  cursor: pointer;
-}
 
-.delete-btn:hover {
-  background-color: #d9534f; /* Darker red color on hover */
-}
-.edit-btn {
-  padding: 5px 10px;
-  background-color: #0062b3; /* Red color for delete button */
-  color: white;
-  border: none;
-  border-radius: 5px;
-  cursor: pointer;
-}
 
-.edit-btn:hover {
-  background-color: #d9534f; /* Darker red color on hover */
-}
 /* **********8
 MEDIA QUERY
 ****************/
@@ -489,6 +468,7 @@ MEDIA QUERY
       grid-template-columns: repeat(1,1fr);
     }
 }
+
 /* ****************
 MEDIA QUERY PHONE
 ************************/

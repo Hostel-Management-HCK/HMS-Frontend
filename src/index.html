@@ -55,85 +55,96 @@
           <i class="uil uil-times form_close"></i>
           <!-- Login From -->
           <div class="form login_form">
-            <form action="#" id="loginForm">
-              <h2>Login</h2>
-  
-              <div class="input_box">
-                <input type="email" placeholder="Enter your email" id="loginEmail" required />
-                <i class="uil uil-envelope-alt email"></i>
-              </div>
-              <div class="input_box">
-                <input type="password" id="password" placeholder="Enter your password" required />
-                <i class="uil uil-lock password"></i>
-                <i class="uil uil-eye-slash pw_hide"></i>
-              </div>
-              <div id="errorContainer" class="error"></div>
-  
-              <div class="option_field">
-                <span class="checkbox">
-                  <input type="checkbox" id="check" />
-                  <label for="check">Remember me</label>
-                </span>
-                <a href="forgot_password.html" class="forgot_pw">Forgot password?</a>
-              </div>
-  
-              <button class="form_button" id="loginButton">Login Now</button>
-  
-              <div class="login_signup">Don't have an account? <a class="lug" href="#" id="signup">Signup</a></div>
-            </form>
-          </div>
-  
+              <form action="#" id="loginForm">
+                  <h2>Login</h2>
+                
+                  <div class="input_box">
+                    <input type="email" placeholder="Enter your email" id="loginEmail" />
+                    <i class="uil uil-envelope-alt email"></i>
+                    <div id="login_emailError" class="error"></div> <!-- Error container for email -->
+                  </div>
+                  <div class="input_box">
+                    <input type="password" id="password" placeholder="Enter your password" />
+                    <i class="uil uil-lock password"></i>
+                    <i class="uil uil-eye-slash pw_hide"></i>
+                    <div id="login_passwordError" class="error"></div> <!-- Error container for password -->
+                  </div>
+                  <div id="errorContainer" class="error"></div> <!-- General error container -->
+                
+                  <div class="option_field">
+                    <span class="checkbox">
+                      <input type="checkbox" id="check" />
+                      <label for="check">Remember me</label>
+                    </span>
+                    <a href="forgot_password.html" class="forgot_pw">Forgot password?</a>
+                  </div>
+                
+                  <button type="submit" class="form_button" id="loginButton">Login Now</button>
+                
+                  <div class="login_signup">Don't have an account? <a class="lug" href="#" id="signup">Signup</a></div>
+                </form>
+                </div>
           <!-- Signup From -->
           <div class="form signup_form">
-            <form action="#" id="signupForm">
-              <h2>Signup</h2>
-              <div class="name">
+              <form action="#" id="signupForm">
+                <h2>Signup</h2>
+                <div class="name">
+                  <div class="name_input">
+                    <input type="text" placeholder="First Name" id="firstName"  />
+                    <i class="uil uil-user user"></i>
+                    <div id="firstNameError" class="error"></div> <!-- Error container for first name -->
+                  </div>
+                  <div class="name_input">
+                    <input type="text" placeholder="Middle Name" id="middleName" />
+                    <div id="middleNameError" class="error"></div> <!-- Error container for middle name -->
+                  </div>
+                  <div class="name_input">
+                    <input type="text" placeholder="Last Name" id="lastName"  />
+                    <div id="lastNameError" class="error"></div> <!-- Error container for last name -->
+                  </div>
+                </div>
                 <div class="name_input">
-                  <input type="text" placeholder="First Name" id="firstName" required />
+                  <input type="text" placeholder="Username" id="userName"  />
                   <i class="uil uil-user user"></i>
+                  <div id="userNameError" class="error"></div> <!-- Error container for username -->
                 </div>
-                <div class="name_input">
-                  <input type="text" placeholder="Middle Name" id="middleName"  />
+                <div class="input_box">
+                  <input type="email" placeholder="Enter your email" id="email"  />
+                  <i class="uil uil-envelope-alt email"></i>
+                  <div id="emailError" class="error"></div> <!-- Error container for email -->
                 </div>
-                <div class="name_input">
-                  <input type="text" placeholder="Last Name" id="lastName"  required />
+                <div class="input_box">
+                  <input type="tel" placeholder="Phone Number" id="phNumber" />
+                  <i class="uil uil-phone Phone"></i>
+                  <div id="phNumberError" class="error"></div> <!-- Error container for phone number -->
                 </div>
-              </div>
-              <div class="name_input">
-                <input type="text" placeholder="Username" id="userName" required />
-                <i class="uil uil-user user"></i>
-              </div>
-              <div class="input_box">
-                <input type="email" placeholder="Enter your email" id="Email" required />
-                <i class="uil uil-envelope-alt email"></i>
-              </div>
-              <div class="input_box">
-                <input type="tel" placeholder="Phone Number" id="phNumber" title="98XXXXXXXX / 97XXXXXXXX" pattern="9[7-8][0-9]{8}" required />
-                <i class="uil uil-phone Phone"></i>
-              </div>
-              <div class="input_box">
-                <input type="date" placeholder="Date of Birth" id="DOB"required />
-                <i class="uil uil-calendar-alt calander"></i>
-              </div>
-              <div class="input_box">
-                <input type="text" placeholder="Citizenship Number" title="XX-XX-XX-XXXXX" pattern="[0-9]{2}-[0-9]{2}-[0-9]{2}-[0-9]{5}" id="citizenshipNumber" required />
-                <i class="uil uil-file-alt file"></i>
-              </div>
-              <div class="input_box">
-                <input type="password" placeholder="Create password" id="currentPassword" required />
-                <i class="uil uil-lock password"></i>
-                <i class="uil uil-eye-slash pw_hide"></i>
-              </div>
-              <div class="input_box">
-                <input type="password" placeholder="Confirm password" id="confirmPassword"required />
-                <i class="uil uil-lock password"></i>
-                <i class="uil uil-eye-slash pw_hide"></i>
-              </div>
-              
-              <button class="form_button">Signup Now</button>
-  
-              <div class="login_signup">Already have an account? <a class="lug" href="#" id="login">Login</a></div>
-            </form>
+                <div class="input_box">
+                  <input type="date" placeholder="Date of Birth" id="DOB"  />
+                  <i class="uil uil-calendar-alt calander"></i>
+                  <div id="dobError" class="error"></div> <!-- Error container for date of birth -->
+                </div>
+                <div class="input_box">
+                  <input type="text" placeholder="Citizenship Number" title="XX-XX-XX-XXXXX" pattern="[0-9]{2}-[0-9]{2}-[0-9]{2}-[0-9]{5}" id="citizenshipNumber"  />
+                  <i class="uil uil-file-alt file"></i>
+                  <div id="citizenshipNumberError" class="error"></div> <!-- Error container for citizenship number -->
+                </div>
+                <div class="input_box">
+                  <input type="password" placeholder="Create password" id="currentPassword"  />
+                  <i class="uil uil-lock password"></i>
+                  <i class="uil uil-eye-slash pw_hide"></i>
+                  <div id="passwordError" class="error"></div> <!-- Error container for password -->
+                </div>
+                <div class="input_box">
+                  <input type="password" placeholder="Confirm password" id="confirmPassword"  />
+                  <i class="uil uil-lock password"></i>
+                  <i class="uil uil-eye-slash pw_hide"></i>
+                  <div id="confirmPasswordError" class="error"></div> <!-- Error container for confirm password -->
+                </div>
+            
+                <button type="submit" class="form_button">Signup Now</button>
+            
+                <div class="login_signup">Already have an account? <a class="lug" href="#" id="login">Login</a></div>
+              </form>
           </div>
         </div>
       </section>
@@ -279,6 +290,7 @@
 });
     </script>
     <script src="script.js"></script>
+    <script src="decoder.js"></script>
     <script src="fetch.js"></script>
     </body>
 

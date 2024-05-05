@@ -8,11 +8,7 @@
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Sharp:opsz,wght,FILL,GRAD@48,400,0,0" />
   <link rel="stylesheet" href="style.css">
   <script src="https://code.jquery.com/jquery-3.6.0.min.js"
-  integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
-<link rel="stylesheet" href="//cdn.datatables.net/2.0.5/css/dataTables.dataTables.min.css">
-<script src="https://code.jquery.com/jquery-3.6.0.min.js"
-  integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
-<script src="//cdn.datatables.net/2.0.5/js/dataTables.min.js"></script>
+            integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
 </head>
 <body>
     <style>
@@ -53,8 +49,8 @@
     background: #fff;
     box-shadow: 2px 2px 5px 5px rgba(0, 0, 0, 0.15);
     border-radius: 10px;
-    transition: top 200ms ease-in-out, opacity 200ms ease-in-out, transform 200ms ease-in-out;
-    z-index: 9999; /* Ensure the popup appears above other elements */
+    transition:top 0ms ease-in-out 200ms, opacity 200ms ease-in-out 0ms,transform 20ms ease-in-out 0ms;
+
 }
 .popup.active{
     top: 50%;
@@ -185,46 +181,30 @@
          </div>
          <!-- Side bar -->
          <div class="sidebar">
-            <a href="admin.html">
-                <span class="material-symbols-sharp">dashboard </span>
-                <h3>Dashboard</h3>
-                </a>
-              <a href="resident.html">
-                  <span class="material-symbols-sharp">people </span>
-                  <h3>Residents</h3>
-              </a>
-              <a href="staff.html">
-                  <span class="material-symbols-sharp">group </span>
-                  <h3>Staff</h3>
-              </a>
-              <a href="room.html">
-                  <span class="material-symbols-sharp">hotel </span>
-                  <h3>Rooms</h3>
-              </a>
-              <a href="billing.html">
-                  <span class="material-symbols-sharp">payment </span>
-                  <h3>Billing</h3>
-              </a>
-              <a href="maintenance.html">
-                  <span class="material-symbols-sharp">build </span>
-                  <h3>Maintenance</h3>
-              </a>
-              <a href="profile.html">
-                  <span class="material-symbols-sharp">person </span>
-                  <h3>Profile</h3>
-              </a>
-              <a href="Feedback.html">
+            <a href="facilities.html">
+                <span class="material-symbols-sharp">group </span>
+                <h3>Facilities</h3>
+            </a>
+            <a href="billing.html">
+                <span class="material-symbols-sharp">payment </span>
+                <h3>Billing</h3>
+            </a>
+            <a href="profile.html">
+                <span class="material-symbols-sharp">person </span>
+                <h3>Profile</h3>
+            </a>
+            <a href="Feedback.html">
                 <span class="material-symbols-sharp">forum </span>
                 <h3>Feedback</h3>
-             </a>
-              <a href="setting.html">
-                  <span class="material-symbols-sharp">settings </span>
-                  <h3>Settings</h3>
-              </a>      
-              <a href="../index.html" id="logout-link">
+            </a>
+            <a href="setting.html">
+                <span class="material-symbols-sharp">settings </span>
+                <h3>Settings</h3>
+            </a>
+            <a href="../index.html" id="logout-link">
                 <span class="material-symbols-sharp">logout </span>
                 <h3>logout</h3>
-              </a> 
+            </a>          
           </div>
       </aside>
 
@@ -232,45 +212,40 @@
       <main>
         <!-- recent_feedbacks -->
        <div class="recent_feedbacks">
-        <h2>Staff Details</h2>
-        <table id="maintenance" class="table">
+        <h2>Resident Billings</h2>
+        <table id="table1" class="table">
             <thead>
                 <tr>
-                    <th>Maintenance ID</th>
-                    <th>Staff ID</th>
-                    <th>Staff Name</th>
-                    <th>Assigned Task</th>
-                    <th>Job Status</th>
+                    <th>Resident Name</th>
+                    <th>Time Spent</th>
+                    <th>Amount Paid</th>
+                    <th>Upcoming Due Date</th>
                 </tr>
             </thead>
-            <tbody id="maintenanceTableBody">
+            <tbody>
                 <tr>
-                    <td>101</td>
-                    <td>101</td>
-                    <td>Emily Johnson</td>
-                    <td>Check payment records</td>
-                    <td>Completed</td>
+                    <td>John Doe</td>
+                    <td>6 months</td>
+                    <td>$4800</td>
+                    <td>May 30, 2024</td>
                 </tr>
                 <tr>
-                    <td>205</td>
-                    <td>205</td>
-                    <td>David Wilson</td>
-                    <td>Issue receipts</td>
-                    <td>In Progress</td>
+                    <td>Jane Smith</td>
+                    <td>8 months</td>
+                    <td>$7200</td>
+                    <td>April 25, 2024</td>
                 </tr>
                 <tr>
-                    <td>310</td>
-                    <td>310</td>
-                    <td>Susan Martinez</td>
-                    <td>Send payment reminders</td>
-                    <td>Not Started</td>
+                    <td>Michael Johnson</td>
+                    <td>4 months</td>
+                    <td>$3400</td>
+                    <td>April 28, 2024</td>
                 </tr>
                 <tr>
-                    <td>401</td>
-                    <td>401</td>
-                    <td>Michael Brown</td>
-                    <td>Update resident records</td>
-                    <td>In Progress</td>
+                    <td>Sarah Brown</td>
+                    <td>7 months</td>
+                    <td>$5250</td>
+                    <td>April 30, 2024</td>
                 </tr>
             </tbody>
         </table>        
