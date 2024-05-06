@@ -12,7 +12,7 @@
   <script src="//cdn.datatables.net/2.0.5/js/dataTables.min.js"></script>
   <script>
       $(document).ready(function(){
-          $('table#table1').DataTable();
+          $('table#ResidentTable').DataTable();
       });
       </script>
 </head>
@@ -204,6 +204,10 @@
                   <span class="material-symbols-sharp">hotel </span>
                   <h3>Rooms</h3>
               </a>
+              <a href="room_allocation.html">
+                <span class="material-symbols-sharp">single_bed </span>
+                <h3>Allocation</h3>
+            </a>
               <a href="billing.html">
                   <span class="material-symbols-sharp">payment </span>
                   <h3>Billing</h3>
@@ -235,7 +239,7 @@
         <!-- recent_feedbacks -->
        <div class="recent_feedbacks">
         <h2>Resident Details</h2>
-        <table id="table1" class="table">
+        <table id="ResidentTable" class="table">
             <thead>
                 <tr >
                     <th>Room ID</th>
@@ -247,7 +251,7 @@
                     <th>Delete</th>
                 </tr>
             </thead>
-            <tbody>
+            <tbody id="residentTableBody">
                 <tr>
                     <td>101</td>
                     <td>John Doe</td>

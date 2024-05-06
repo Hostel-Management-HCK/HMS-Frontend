@@ -103,6 +103,16 @@ $(document).ready(function () {
             console.error('Error fetching feedback:', error);
         });
 
+
+
+
+
+    // --------------------------------------------------------------------maintenance
+
+
+
+
+
     // Make API request to fetch maintenance data
     makeRequest("GET", "http://localhost:3000/api/maintenance", token)
         .then(async (response) => {
@@ -137,17 +147,154 @@ $(document).ready(function () {
             console.error('Error fetching maintenance data:', error);
         });
 
+        
+// Function to fetch Dropdown 
+async function fetchStaffData() {
+    try {
+        const response = await makeRequest("GET", "http://localhost:3000/api/staffs", token);
+        if (response.ok) {
+            const responseData = await response.json();
+            const staffData = responseData.maintenanceDetails; // Extract staff data from maintenanceDetails
+            return staffData;
+        } else {
+            throw new Error('Failed to fetch staff data:', response.statusText);
+        }
+    } catch (error) {
+        console.error('Error fetching staff data:', error);
+        return [];
+    }
+}
+
+// Function to submit a task
+async function submitTask(staffId, assignedTask) {
+    try {
+        const response = await makeRequest("POST", "http://localhost:3000/api/maintenance", token, { staffId, assignedTask });
+        if (response.ok) {
+            console.log("Task submitted successfully.");
+        } else {
+            throw new Error('Failed to submit task:', response.statusText);
+        }
+    } catch (error) {
+        console.error('Error submitting task:', error);
+    }
+}
+
+// Function to populate the dropdown with staff names
+async function populateStaffDropdown() {
+    const staffData = await fetchStaffData();
+
+    if (Array.isArray(staffData)) {
+        const $staffDropdown = $("#staffDropDown");
+
+        // Clear existing options
+        $staffDropdown.empty();
+
+        // Iterate through staff data and add options to the dropdown
+        staffData.staffs.forEach(staff => {
+            $staffDropdown.append(`<option value="${staff.staffId}">${staff.userName}</option>`);
+        });
+    } else {
+        console.error('Invalid staff data received:', staffData);
+    }
+}
+
+// Call the function to populate the dropdown when the page loads
+populateStaffDropdown();
+
+// Function to handle form submission
+async function handleSubmit(event) {
+    event.preventDefault(); // Prevent default form submission behavior
+
+    const staffId = $("#staffDropDown").val(); // Get selected staff ID
+    const staffName = $("#staffDropDown option:selected").text(); // Get selected staff name
+    const assignedTask = $("#assignedTask").val(); // Get assigned task
+
+    // Here you can perform any additional validation if needed
+
+    // Call the submitTask function to submit the task
+    await submitTask(staffId, assignedTask);
+
+    // Clear the form fields after submission
+    $("#assignedTask").val("");
+}
+
+// Attach event listener to the submit button
+$(".popup button").on("click", handleSubmit);
+
+
+
+
+
+
     //    ------------------------------------------------------------------------ Rooms
-    // Make API request to fetch rental data
+
+
+
+
+
+
+
+
+
+
+    // Make API request to fetch room data
     function editRoom(roomId) {
         document.querySelector(".popup.edit-details").classList.add("active");
+        getRoomDetail(roomId);
     }
-    $(".room-edit").click((e) => {
-        let roomId = e.target.id
-        roomId = roomId.split("-")[1]
-        editRoom(roomId)
-        console.log("sldfksdflsfkljd")
-    })
+    // Event delegation for delete button
+    $(document).on('click', '.room-edit', function () {
+        const roomId = $(this).data('room-id');
+        editRoom(roomId);
+    });
+
+    $(document).on('click', '#saveRoomEdit', function () {
+        editRoomData();
+    });
+
+
+    const editRoomData = () => {
+
+
+        let roomId = parseInt($('#editRoomID').val());
+
+        let token = localStorage.getItem("token");
+        let price = parseInt($('#editRoomPrice').val());
+        let occupancy = parseInt($('#editOccupancyStatus').val());
+
+        makeRequest("PUT", "http://localhost:3000/api/rooms/" + roomId, token, {
+            price: price,
+            occupancy: occupancy
+        })
+            .then(async (response) => {
+                if (response.ok) {
+                    alert("The room data has been updated successfully")
+                    window.location.reload();
+                    // Close the popup after creating the room
+                    $('.popup.edit-details').hide();
+                } else {
+                    console.error('Failed to update room data:', response.statusText);
+                }
+            })
+    }
+
+    const getRoomDetail = (roomId) => {
+
+        makeRequest("GET", `http://localhost:3000/api/rooms?roomId=${roomId}`, token)
+            .then(async (response) => {
+                if (response.ok) {
+                    const responseData = await response.json();
+                    const room = responseData.room;
+
+
+                    $('#editRoomID').val(room.roomId);
+                    $('#editRoomPrice').val(room.price);
+                    $('#editOccupancyStatus').val(room.occupancy);
+                } else {
+                    console.error('Failed to fetch room data:', response.statusText);
+                }
+            })
+    }
     makeRequest("GET", "http://localhost:3000/api/rooms", token)
         .then(async (response) => {
             if (response.ok) {
@@ -159,14 +306,14 @@ $(document).ready(function () {
                 // Iterate through room data and populate the table
                 rooms.forEach(room => {
                     const row = `
-                    <tr id="rentRow_${room.roomId}">
-                        <td>${room.roomId}</td>
-                        <td>${room.price}</td>
-                        <td>${room.occupancy}</td>
-                        <td><button id="edit-${room.roomId}" class="edit-btn room-edit">Edit</button></td>
-                        <td><button class="delete-btn" data-room-id="${room.roomId}">Delete</button></td>
-                    </tr>
-                `;
+                <tr id="rentRow_${room.roomId}">
+                    <td>${room.roomId}</td>
+                    <td>${room.price}</td>
+                    <td>${room.occupancy}</td>
+                    <td><button id="edit-${room.roomId}" data-room-id="${room.roomId}" class="edit-btn room-edit">Edit</button></td>
+                    <td><button class="delete-btn" data-room-id="${room.roomId}">Delete</button></td>
+                </tr>
+            `;
                     $("#roomTableBody").append(row);
                 });
                 $('table#roomTableBody').DataTable(); // Apply DataTable to the table
@@ -233,7 +380,10 @@ $(document).ready(function () {
         createRoom();
     });
 
+
     // -------------------------------------------------------------------------- Staffs
+
+
 
     makeRequest("GET", "http://localhost:3000/api/staffs", token)
         .then(async (response) => {
@@ -248,7 +398,7 @@ $(document).ready(function () {
                 staffs.forEach(staff => {
                     const row = `
                 <tr id = "staff_row${staff.staffId}">
-                    <td>${staff.username}</td>
+                    <td>${staff.staffId}</td>
                     <td>${staff.firstName}</td>
                     <td>${staff.lastName}</td>
                     <td>${staff.email}</td>
@@ -267,7 +417,7 @@ $(document).ready(function () {
         .catch(error => {
             console.error('Error fetching staff data:', error);
         });
-    // Define deleteroom function
+    // Define deleteStaff function
     const deleteStaff = staffId => {
         if (confirm("Are you sure you want to delete the staff?")) {
             makeRequest("DELETE", `http://localhost:3000/api/staffs/${staffId}`, token)
@@ -288,4 +438,55 @@ $(document).ready(function () {
         const staffId = $(this).data('staff-id');
         deleteStaff(staffId);
     });
+
+    // To create a staff
+    const createStaff = () => {
+        const firstName = $("#firstName").val();
+        const middleName = $("#middleName").val();
+        const lastName = $("#lastName").val();
+        const userName = $("#userName").val();
+        const email = $("#email").val();
+        const phNumber = $("#phNumber").val();
+        const DOB = $("#DOB").val();
+        const citizenshipNumber = $("#citizenshipNumber").val();
+        const currentPassword = $("#currentPassword").val();
+        const confirmPassword = $("#confirmPassword").val();
+    
+        const staffData = {
+            firstName: firstName,
+            middleName: middleName,
+            lastName: lastName,
+            userName: userName,
+            email: email,
+            phNumber: phNumber,
+            DOB: DOB,
+            citizenshipNumber: citizenshipNumber,
+            currentPassword: currentPassword,
+            confirmPassword: confirmPassword
+        };
+    
+        makeRequest("POST", "http://localhost:3000/api/staffs", token, staffData)
+            .then(async (response) => {
+                let data = await response.json();
+                if (response.ok) {
+                    console.log('Staff created successfully.');
+                    alert("The staff data has been created successfully");
+                    fetchStaffData();
+                    // Close the popup after creating the staff
+                    $('.popup.compose').hide();
+                } else {
+                    console.error('Failed to create staff:', response.statusText);
+                    alert("Error creating the staff: " + data.message);
+                }
+            })
+            .catch(error => {
+                console.error('Error creating staff:', error);
+            });
+    };
+    
+    // Event listener for the "Send" button in the staff form
+    $('#staffSendButton').on('click', function () {
+        createStaff();
+    });
+    
 });
