@@ -10,11 +10,6 @@
   <link rel="stylesheet" href="//cdn.datatables.net/2.0.5/css/dataTables.dataTables.min.css">
   <script src="https://code.jquery.com/jquery-3.6.0.min.js"integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
   <script src="//cdn.datatables.net/2.0.5/js/dataTables.min.js"></script>
-  <script>
-      $(document).ready(function(){
-          $('table#ResidentTable').DataTable();
-      });
-      </script>
 </head>
 <body>
     <style>
@@ -243,93 +238,18 @@
             <thead>
                 <tr >
                     <th>Room ID</th>
-                    <th>Name</th>
+                    <th>Full Name</th>
+                    <th>Username</th>
+                    <th>Citizenship</th>
                     <th>Phone Number</th>
-                    <th>Email</th>
-                    <th>Citizenship No</th>
-                    <th>Edit</th>
+                    <th>DOB</th>
                     <th>Delete</th>
                 </tr>
             </thead>
             <tbody id="residentTableBody">
-                <tr>
-                    <td>101</td>
-                    <td>John Doe</td>
-                    <td>123-456-7890</td>
-                    <td>johndoe@example.com</td>
-                    <td>ABCD123456</td>
-                    <td><button onclick="editDetails(101)">Edit</button></td>
-                    <td><button onclick="deleteDetails(101)">Delete</button></td>
-                </tr>
-                <tr>
-                    <td>205</td>
-                    <td>Jane Smith</td>
-                    <td>987-654-3210</td>
-                    <td>janesmith@example.com</td>
-                    <td>EFGH098765</td>
-                    <td><button onclick="editDetails(205)">Edit</button></td>
-                    <td><button onclick="deleteDetails(205)">Delete</button></td>
-                </tr>
-                <tr>
-                    <td>310</td>
-                    <td>Michael Johnson</td>
-                    <td>456-789-0123</td>
-                    <td>michaeljohnson@example.com</td>
-                    <td>IJKL456789</td>
-                    <td><button onclick="editDetails(310)">Edit</button></td>
-                    <td><button onclick="deleteDetails(310)">Delete</button></td>
-                </tr>
-                <tr>
-                    <td>401</td>
-                    <td>Emily Davis</td>
-                    <td>789-012-3456</td>
-                    <td>emilydavis@example.com</td>
-                    <td>MNOP789012</td>
-                    <td><button onclick="editDetails(401)">Edit</button></td>
-                    <td><button onclick="deleteDetails(401)">Delete</button></td>
-                </tr>
             </tbody>
         </table>
-    </div>    
-    <div class="button-container">
-        <button id="show-announce">Announce</button>
-        <button id="show-compose">Compose</button>
-      </div>
-    <div class="popup">
-        <div class="close-btn">&times;</div>
-        <div class="form">
-            <h2>Announcement</h2>
-            <div class="form-element">
-                <textarea id="messages" rows="10" placeholder="Enter your message"></textarea>
-            </div>
-            <div class="form-element">
-                <button>Submit</button>
-            </div>
-        </div>
-    </div>
-       <!-- Popup for Compose -->
-       <div class="popup compose">
-        <div class="close-btn">&times;</div>
-        <div class="form">
-          <h2>Compose</h2>
-          <div class="form-element">
-            <label for="recipient">To:</label>
-            <input type="text" id="recipient" placeholder="Enter recipient email">
-          </div>
-          <div class="form-element">
-            <label for="subject">Subject:</label>
-            <input type="text" id="subject" placeholder="Enter subject">
-          </div>
-          <div class="form-element">
-            <label for="message">Message:</label>
-            <textarea id="message" rows="6" placeholder="Enter your message"></textarea>
-          </div>
-          <div class="form-element">
-            <button>Send</button>
-          </div>
-        </div>
-      </div>
-    
+    </div>        
       </main>
 
 <!-- Profile -->
@@ -352,29 +272,7 @@
     </div>
 </div>  
   </div>
-
-  <script>
-document.querySelector("#show-announce").addEventListener("click", function(){
-    document.querySelector(".popup").classList.add("active");
-});
-
-document.querySelector("#show-compose").addEventListener("click", function(){
-    document.querySelector(".popup.compose").classList.add("active");
-});
-
-document.querySelectorAll(".popup .close-btn").forEach(function(closeBtn) {
-    closeBtn.addEventListener("click", function(){
-        document.querySelector(".popup.active").classList.remove("active");
-    });
-});
-
-document.querySelectorAll(".popup.compose .close-btn").forEach(function(closeBtn) {
-    closeBtn.addEventListener("click", function(){
-        document.querySelector(".popup.compose.active").classList.remove("active");
-    });
-});
-
-  </script>
+  <script src="resident.js"></script>
    <script src="script.js"></script>
    <script src="../fetch.js"></script>
    
