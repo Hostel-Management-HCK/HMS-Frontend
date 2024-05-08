@@ -15,11 +15,6 @@
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"
         integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
     <script src="//cdn.datatables.net/2.0.5/js/dataTables.min.js"></script>
-    <script>
-        $(document).ready(function () {
-            $('table#table1').DataTable();
-        });
-    </script>
 </head>
 
 <body>
@@ -109,68 +104,31 @@
                     <span class="material-symbols-sharp">logout </span>
                     <h3>logout</h3>
                 </a>
+            </div>
         </aside>
 
         <!-- Dashboard -->
         <main>
             <!-- recent_feedbacks -->
             <div class="recent_feedbacks">
-                <h2>Recent Feedback</h2>
-                <table id="table1" class="table">
+                <h2>Resident Billing Details</h2>
+                <table id="rentTable" class="table">
                     <thead>
                         <tr>
                             <th>Resident ID</th>
                             <th>Room ID</th>
                             <th>Resident Name</th>
                             <th>Amount</th>
-                            <th>Due Date</th>
-                            <th>Last Paid</th>
                             <th>Status</th>
                         </tr>
                     </thead>
-                    <tbody>
-                        <tr>
-                            <td>1</td>
-                            <td>101</td>
-                            <td>John Doe</td>
-                            <td>$800</td>
-                            <td>April 30, 2024</td>
-                            <td>April 15, 2024</td>
-                            <td>Paid</td>
-                        </tr>
-                        <tr>
-                            <td>2</td>
-                            <td>205</td>
-                            <td>Jane Smith</td>
-                            <td>$900</td>
-                            <td>April 25, 2024</td>
-                            <td>April 20, 2024</td>
-                            <td>Paid</td>
-                        </tr>
-                        <tr>
-                            <td>3</td>
-                            <td>310</td>
-                            <td>Michael Johnson</td>
-                            <td>$850</td>
-                            <td>April 28, 2024</td>
-                            <td>April 15, 2024</td>
-                            <td>Unpaid</td>
-                        </tr>
-                        <tr>
-                            <td>4</td>
-                            <td>401</td>
-                            <td>Sarah Brown</td>
-                            <td>$750</td>
-                            <td>April 30, 2024</td>
-                            <td>April 10, 2024</td>
-                            <td>Unpaid</td>
-                        </tr>
+                    <tbody id="rentTableBody">
                     </tbody>
                 </table>
             </div>
             <div class="button-container">
-                <button onclick = "window.location.href = 'billing.html'">Show Table 1</button>
-                <button onclick = "window.location.href = 'billinga.html'">Show Table 2</button>
+                <button onclick = "window.location.href = 'billing.html'">Billings</button>
+                <button onclick = "window.location.href = 'salary.html'">Salary</button>
             </div>
         </main>
 
@@ -194,6 +152,7 @@
                 </div>
             </div>
         </div>
+        <script src="billing..js"></script>
         <script src="script.js"></script>
         <script src="../fetch.js"></script>
 

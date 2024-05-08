@@ -85,7 +85,7 @@
                     <span class="material-symbols-sharp">single_bed </span>
                     <h3>Allocation</h3>
                 </a>
-                <a href="#">
+                <a href="billing.html">
                     <span class="material-symbols-sharp">payment </span>
                     <h3>Billing</h3>
                 </a>
@@ -115,8 +115,8 @@
         <main>
             <!-- recent_feedbacks -->
             <div class="recent_feedbacks">
-                <h2>Recent Feedback</h2>
-                <table id="table1" class="table">
+                <h2>Staff Salary Details</h2>
+                <table id="salaryTable" class="table">
                     <thead>
                         <tr>
                             <th>Staff ID</th>
@@ -127,45 +127,13 @@
                             <th>Status</th>
                         </tr>
                     </thead>
-                    <tbody>
-                        <tr>
-                            <td>101</td>
-                            <td>John Smith</td>
-                            <td>$2000</td>
-                            <td>April 30, 2024</td>
-                            <td>April 15, 2024</td>
-                            <td>Paid</td>
-                        </tr>
-                        <tr>
-                            <td>205</td>
-                            <td>Jane Johnson</td>
-                            <td>$1800</td>
-                            <td>April 25, 2024</td>
-                            <td>April 20, 2024</td>
-                            <td>Paid</td>
-                        </tr>
-                        <tr>
-                            <td>310</td>
-                            <td>Michael Williams</td>
-                            <td>$2100</td>
-                            <td>April 28, 2024</td>
-                            <td>April 15, 2024</td>
-                            <td>Unpaid</td>
-                        </tr>
-                        <tr>
-                            <td>401</td>
-                            <td>Sarah Davis</td>
-                            <td>$1900</td>
-                            <td>April 30, 2024</td>
-                            <td>April 10, 2024</td>
-                            <td>Unpaid</td>
-                        </tr>
+                    <tbody id="salaryTableBody">
                     </tbody>
                 </table>
             </div>
             <div class="button-container">
-                <button onclick = "window.location.href = 'billing.html'">Show Table 1</button>
-                <button onclick = "window.location.href = 'billinga.html'">Show Table 2</button>
+                <button onclick="window.location.href = 'billing.html'">Billings</button>
+                <button onclick="window.location.href = 'salary.html'">Salary</button>
             </div>
         </main>
 
@@ -189,6 +157,7 @@
                 </div>
             </div>
         </div>
+        <script src="salary.js"></script>
         <script src="script.js"></script>
         <script src="../fetch.js"></script>
 

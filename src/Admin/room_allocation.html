@@ -49,7 +49,7 @@
             opacity: 0;
             transform: translate(-50%, -50%) scale(1.25);
             width: 500px;
-            height: 425px;
+            height: 350px;
             padding: 20px 30px;
             background: #fff;
             box-shadow: 2px 2px 5px 5px rgba(0, 0, 0, 0.15);
@@ -182,6 +182,49 @@
             background-color: #d9534f;
             /* Darker red color on hover */
         }
+
+        /* Dropdown container */
+        .dropdown-container {
+            position: relative;
+            width: 200px;
+            justify-content: center;
+            /* Adjust width as needed */
+        }
+
+        /* Dropdown button */
+        .dropdown-container select {
+            appearance: none;
+            -webkit-appearance: none;
+            -moz-appearance: none;
+            padding: 10px;
+            width: 100%;
+            border: 1px solid #aaa;
+            border-radius: 5px;
+            background-color: #fff;
+            cursor: pointer;
+            outline: none;
+        }
+
+        /* Dropdown arrow */
+        .dropdown-container::after {
+            content: '\25BC';
+            /* Unicode character for down arrow */
+            position: absolute;
+            top: 50%;
+            right: 10px;
+            transform: translateY(-50%);
+            pointer-events: none;
+        }
+
+        /* Hover effect */
+        .dropdown-container:hover select {
+            border-color: #777;
+        }
+
+        /* Focus effect */
+        .dropdown-container select:focus {
+            border-color: #555;
+        }
     </style>
     <div class="container">
         <aside>
@@ -252,39 +295,34 @@
                 <table id="roomAllocation" class="table">
                     <thead>
                         <tr>
-                            <th>Room ID</th>
                             <th>Username</th>
-                            <th>Phone Number</th>
-                            <th>Email</th>
-                            <th>Date of Birth</th>
+                            <th>Room Id</th>
+                            <th>Edit</th>
+                            <th>Delete</th>
                         </tr>
                     </thead>
-                    <tbody id="roomallocationTableBody">
+                    <tbody id="roomAllocationTableBody">
                         <tr>
                             <td>101</td>
-                            <td>John Doe</td>
-                            <td>123-456-7890</td>
+                            <td>John Doe</td>>
                             <td><button class="edit-btn" onclick="editDetails(101)">Edit</button></td>
                             <td><button class="delete-btn">Delete</button></td>
                         </tr>
                         <tr>
                             <td>205</td>
                             <td>Jane Smith</td>
-                            <td>987-654-3210</td>
                             <td><button class="edit-btn" onclick="editDetails(205)">Edit</button></td>
                             <td><button class="delete-btn">Delete</button></td>
                         </tr>
                         <tr>
                             <td>310</td>
                             <td>Michael Johnson</td>
-                            <td>456-789-0123</td>
                             <td><button class="edit-btn" onclick="editDetails(310)">Edit</button></td>
                             <td><button class="delete-btn">Delete</button></td>
                         </tr>
                         <tr>
                             <td>401</td>
                             <td>Emily Davis</td>
-                            <td>789-012-3456</td>
                             <td><button class="edit-btn" onclick="editDetails(401)">Edit</button></td>
                             <td><button class="delete-btn">Delete</button></td>
                         </tr>
@@ -299,39 +337,40 @@
                 <div class="close-btn">&times;</div>
                 <div class="form">
                     <h2>Add Room</h2>
-                    <div class="form-element">
-                        <label for="roomPrice">Room Price:</label>
-                        <input type="text" id="roomPrice" placeholder="Enter room price">
+                    <div class="dropdown-container">
+                        <label for="userName">Username:</label>
+                        <select name="userName" id="usernameDropDown">
+                            <option>N/A</option>
+                            <!-- Add more options if needed -->
+                        </select>
+                    </div>
+                    <div class="dropdown-container">
+                        <label for="roomId">Room Id:</label>
+                        <select name="roomId" id="roomIdDropDown">
+                            <option>N/A</option>
+                            <!-- Add more options if needed -->
+                        </select>
                     </div>
                     <div class="form-element">
-                        <label for="roomOccupancy">Room Occupancy:</label>
-                        <input type="text" id="roomOccupancy" placeholder="Enter room occupancy">
-                    </div>
-                    <div class="form-element">
-                        <button id="sendButton">Send</button>
+                        <button id="allocateButton">Allocate</button>
                     </div>
                 </div>
             </div>
 
             <!-- Popup for Edit Details -->
-            <div class="popup edit-details">
+            <div class="popup edit-allocationdetails-popup">
                 <div class="close-btn">&times;</div>
                 <div class="form">
-                    <h2>Edit Details</h2>
-                    <div class="form-element">
-                        <label for="editRoomID">Room ID:</label>
-                        <input type="text" id="editRoomID" readonly>
+                    <h2>Reallocate</h2>
+                    <div class="dropdown-container">
+                        <label for="staffId">Room Id:</label>
+                        <select name="editAllocationDropDown" id="editAllocationDropDown">
+                            <option>N/A</option>
+                            <!-- Add more options if needed -->
+                        </select>
                     </div>
                     <div class="form-element">
-                        <label for="editRoomPrice">Room Price:</label>
-                        <input type="text" id="editRoomPrice" placeholder="Enter room price">
-                    </div>
-                    <div class="form-element">
-                        <label for="editOccupancyStatus">Occupancy Status:</label>
-                        <input type="text" id="editOccupancyStatus" placeholder="Enter occupancy status">
-                    </div>
-                    <div class="form-element">
-                        <button id="saveRoomEdit">Save</button>
+                        <button id="editRoomAllocationbtn">Submit</button>
                     </div>
                 </div>
             </div>
@@ -360,51 +399,20 @@
         </div>
 
         <script>
-            // Function to fill edit details popup with selected item's details
-            function fillEditDetails(roomID, roomPrice, occupancyStatus) {
-                // Populate the input fields in the edit details popup with the provided data
-                document.getElementById("editRoomID").value = roomID;
-                document.getElementById("editRoomPrice").value = roomPrice;
-                document.getElementById("editOccupancyStatus").value = occupancyStatus;
-            }
-
-            // Add event listener to edit buttons in the table rows
-            document.querySelectorAll(".edit-btn").forEach(function (editBtn) {
-                editBtn.addEventListener("click", function () {
-                    // Retrieve the room ID, room price, and occupancy status associated with the row
-                    var row = editBtn.parentElement.parentElement;
-                    var roomID = row.cells[0].textContent;
-                    var roomPrice = row.cells[1].textContent; // Assuming room price is in the second column
-                    var occupancyStatus = row.cells[2].textContent; // Assuming occupancy status is in the third column
-
-                    // Fill edit details popup with selected item's details
-                    fillEditDetails(roomID, roomPrice, occupancyStatus);
-
-                    // Show the edit details popup
-                    document.querySelector(".popup.edit-details").classList.add("active");
-                });
-            });
-            // Close edit details popup when close button is clicked
-            document.querySelector(".popup.edit-details .close-btn").addEventListener("click", function () {
-                document.querySelector(".popup.edit-details.active").classList.remove("active");
-            });
-
-            // Show compose popup when the button is clicked
             document.querySelector("#addRoom").addEventListener("click", function () {
-                document.querySelector(".popup.compose").classList.add("active");
+                document.querySelector(".popup").classList.add("active");
             });
 
-            // Close all popups when close buttons are clicked
             document.querySelectorAll(".popup .close-btn").forEach(function (closeBtn) {
                 closeBtn.addEventListener("click", function () {
                     document.querySelector(".popup.active").classList.remove("active");
                 });
             });
 
-        </script>
-        <script src="script.js"></script>
-        <script src="../fetch.js"></script>
 
+        </script>
+        <script src="roomAllocation.js"></script>
+        <script src="script.js"></script>
 </body>
 
 </html>
