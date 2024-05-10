@@ -250,17 +250,9 @@
                     <span class="material-symbols-sharp">build </span>
                     <h3>Maintenance</h3>
                 </a>
-                <a href="profile.html">
-                    <span class="material-symbols-sharp">person </span>
-                    <h3>Profile</h3>
-                </a>
                 <a href="Feedback.html">
                     <span class="material-symbols-sharp">forum </span>
                     <h3>Feedback</h3>
-                </a>
-                <a href="setting.html">
-                    <span class="material-symbols-sharp">settings </span>
-                    <h3>Settings</h3>
                 </a>
                 <a href="../index.html" id="logout-link">
                     <span class="material-symbols-sharp">logout </span>
@@ -328,7 +320,7 @@
                     <div class="dropdown-container">
                         <label for="staffId">Staff ID:</label>
                         <select name="staffDropDown" id="staffDropDown">
-                            <option >N/A</option>
+                            <option>N/A</option>
                             <!-- Add more options if needed -->
                         </select>
                     </div>
@@ -349,13 +341,14 @@
                     <div class="dropdown-container">
                         <label for="staffId">Staff ID:</label>
                         <select name="staffDropDown" id="editstaffDropDown">
-                            <option >N/A</option>
+                            <option>N/A</option>
                             <!-- Add more options if needed -->
                         </select>
                     </div>
                     <div class="form-element">
                         <label for="assignedTask">Edit Tasks:</label>
-                        <input type="text" id="editassignedTask" name="assignedTask" placeholder="Enter the Task" required>
+                        <input type="text" id="editassignedTask" name="assignedTask" placeholder="Enter the Task"
+                            required>
                     </div>
                     <div class="form-element">
                         <button id="editTaskbtn">Submit</button>
@@ -396,6 +389,13 @@
                     document.querySelector(".popup.active").classList.remove("active");
                 });
             });
+
+            document.getElementById('logout-link').addEventListener('click', function (event) {
+                event.preventDefault();
+                localStorage.removeItem("token");
+                window.location.href = '../index.html';
+            });
+
 
 
         </script>

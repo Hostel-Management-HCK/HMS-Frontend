@@ -226,17 +226,9 @@
                     <span class="material-symbols-sharp">build </span>
                     <h3>Maintenance</h3>
                 </a>
-                <a href="profile.html">
-                    <span class="material-symbols-sharp">person </span>
-                    <h3>Profile</h3>
-                </a>
                 <a href="Feedback.html">
                     <span class="material-symbols-sharp">forum </span>
                     <h3>Feedback</h3>
-                </a>
-                <a href="setting.html">
-                    <span class="material-symbols-sharp">settings </span>
-                    <h3>Settings</h3>
                 </a>
                 <a href="../index.html" id="logout-link">
                     <span class="material-symbols-sharp">logout </span>
@@ -399,6 +391,12 @@
                 closeBtn.addEventListener("click", function () {
                     document.querySelector(".popup.active").classList.remove("active");
                 });
+            });
+            
+            document.getElementById('logout-link').addEventListener('click', function (event) {
+                event.preventDefault();
+                localStorage.removeItem("token");
+                window.location.href = '../index.html';
             });
 
         </script>

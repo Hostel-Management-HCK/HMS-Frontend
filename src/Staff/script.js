@@ -1,18 +1,25 @@
+
+document.getElementById('logout-link').addEventListener('click', function (event) {
+    event.preventDefault();
+    localStorage.removeItem("token");
+    window.location.href = '../index.html';
+});
+
 //   Sign Up
-document.getElementById("phNumber").addEventListener("input", function(event) {
+document.getElementById("phNumber").addEventListener("input", function (event) {
     // Remove non-numeric characters
     this.value = this.value.replace(/\D/g, "");
     // Clear error message
     document.getElementById("phNumberError").innerText = "";
-  });
-  
-  document.getElementById("signupForm").addEventListener("submit", function(event) {
+});
+
+document.getElementById("signupForm").addEventListener("submit", function (event) {
     // Prevent the form from submitting
     event.preventDefault();
-  
+
     // Clear previous errors
     clearErrors();
-  
+
     // Get the values of the form fields
     var firstName = document.getElementById("firstName").value;
     var middleName = document.getElementById("middleName").value;
@@ -22,8 +29,7 @@ document.getElementById("phNumber").addEventListener("input", function(event) {
     var phNumber = document.getElementById("phNumber").value;
     var dob = document.getElementById("DOB").value;
     var citizenshipNumber = document.getElementById("citizenshipNumber").value;
-    var password = document.getElementById("currentPassword").value;
-  
+
     // Validate first name, middle name, last name, username, email, phone number, date of birth, citizenship number, password, and confirm password
     validateField(firstName, "firstNameError", "First Name is required.", "First Name should start with a capital letter.", "isCapitalized");
     validateField(middleName, "middleNameError", "", "Middle Name should start with a capital letter.", "isCapitalized");
@@ -33,37 +39,36 @@ document.getElementById("phNumber").addEventListener("input", function(event) {
     validateField(phNumber, "phNumberError", "Phone Number is required.", "Phone Number should start with 98 or 97 followed by 8 digits.", "isValidPhoneNumber");
     validateField(dob, "dobError", "Date of Birth is required.", "Age must be at least 18 years old.", "isValidDOB");
     validateField(citizenshipNumber, "citizenshipNumberError", "Citizenship Number is required.", "Citizenship Number should follow the pattern XX-XX-XX-XXXXX.", "isValidCitizenshipNumber");
-    validateField(password, "passwordError", "Password is required.", "Password must contain at least one special character and one number and should be more than 6 characters.", "hasSpecialCharacterAndNumber", "Password should be more than 6 characters.", "isPasswordLengthValid");
     // If there are no errors, submit the form
-    if (firstName && lastName && userName && email && phNumber && dob && citizenshipNumber && password ) {
+    if (firstName && lastName && userName && email && phNumber && dob && citizenshipNumber) {
         this.submit();
     }
-  });
-  
-  // Function to validate email address format
-  function isValidEmail(email) {
+});
+
+// Function to validate email address format
+function isValidEmail(email) {
     var emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     return emailRegex.test(email);
-  }
-  
-  // Function to check if a string starts with a capital letter
-  function isCapitalized(str) {
+}
+
+// Function to check if a string starts with a capital letter
+function isCapitalized(str) {
     return /^[A-Z]/.test(str);
-  }
-  
-  // Function to check if a string contains at least one number
-  function containsNumber(str) {
+}
+
+// Function to check if a string contains at least one number
+function containsNumber(str) {
     return /\d/.test(str);
-  }
-  
-  // Function to validate phone number format
-  function isValidPhoneNumber(phoneNumber) {
+}
+
+// Function to validate phone number format
+function isValidPhoneNumber(phoneNumber) {
     var phoneRegex = /^(98|97)\d{8}$/;
     return phoneRegex.test(phoneNumber);
-  }
-  
-  // Function to validate date of birth (DOB)
-  function isValidDOB(dob) {
+}
+
+// Function to validate date of birth (DOB)
+function isValidDOB(dob) {
     var today = new Date();
     var birthDate = new Date(dob);
     var age = today.getFullYear() - birthDate.getFullYear();
@@ -72,27 +77,27 @@ document.getElementById("phNumber").addEventListener("input", function(event) {
         age--;
     }
     return age >= 18;
-  }
-  
-  // Function to validate citizenship number format
-  function isValidCitizenshipNumber(citizenshipNumber) {
+}
+
+// Function to validate citizenship number format
+function isValidCitizenshipNumber(citizenshipNumber) {
     var citizenshipRegex = /^[0-9]{2}-[0-9]{2}-[0-9]{2}-[0-9]{5}$/;
     return citizenshipRegex.test(citizenshipNumber);
-  }
-  
-  // Function to check if the password contains at least one special character and one number
-  function hasSpecialCharacterAndNumber(password) {
+}
+
+// Function to check if the password contains at least one special character and one number
+function hasSpecialCharacterAndNumber(password) {
     var specialCharacterRegex = /[!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?]/;
     var numberRegex = /\d/;
     return specialCharacterRegex.test(password) && numberRegex.test(password);
-  }
-  
-  // Function to check if the password length is valid (more than 6 characters)
-  function isPasswordLengthValid(password) {
+}
+
+// Function to check if the password length is valid (more than 6 characters)
+function isPasswordLengthValid(password) {
     return password.length > 6;
-  }
-  // Function to validate a field
-  function validateField(value, errorElementId, requiredError, formatError, validationFunctionName, additionalError, additionalValidationFunctionName) {
+}
+// Function to validate a field
+function validateField(value, errorElementId, requiredError, formatError, validationFunctionName, additionalError, additionalValidationFunctionName) {
     if (!value) {
         document.getElementById(errorElementId).innerText = requiredError;
     } else {
@@ -116,21 +121,21 @@ document.getElementById("phNumber").addEventListener("input", function(event) {
             document.getElementById(errorElementId).innerText = formatError;
         }
     }
-  }
-  
-  // Function to clear error messages
-  function clearErrors() {
+}
+
+// Function to clear error messages
+function clearErrors() {
     var errorElements = document.querySelectorAll('.error');
-    errorElements.forEach(function(element) {
+    errorElements.forEach(function (element) {
         element.innerText = "";
     });
-  }
-  
-  // Keep hyphens in the relevant places while typing numbers
-  document.getElementById("citizenshipNumber").addEventListener("input", function(event) {
+}
+
+// Keep hyphens in the relevant places while typing numbers
+document.getElementById("citizenshipNumber").addEventListener("input", function (event) {
     var inputValue = this.value.replace(/\D/g, ''); // Remove non-numeric characters
     var formattedValue = "";
-  
+
     // Add hyphens in the relevant places
     for (var i = 0; i < inputValue.length; i++) {
         if (i === 2 || i === 4 || i === 6) {
@@ -138,24 +143,23 @@ document.getElementById("phNumber").addEventListener("input", function(event) {
         }
         formattedValue += inputValue[i];
     }
-  
+
     this.value = formattedValue;
-  
+
     // Limit input once requirements are met
     if (this.value.length >= 14) {
         this.value = this.value.slice(0, 14);
     }
-  });
-  
-  const  sideMenu = document.querySelector('aside');
-  const menuBtn = document.querySelector('#menu_bar');
-  const closeBtn = document.querySelector('#close_btn');
-  
-  menuBtn.addEventListener('click',()=>{
-         sideMenu.style.display = "block"
-  })
-  closeBtn.addEventListener('click',()=>{
-      sideMenu.style.display = "none"
-  })
-  
-  
+});
+
+const sideMenu = document.querySelector('aside');
+const menuBtn = document.querySelector('#menu_bar');
+const closeBtn = document.querySelector('#close_btn');
+
+menuBtn.addEventListener('click', () => {
+    sideMenu.style.display = "block"
+})
+closeBtn.addEventListener('click', () => {
+    sideMenu.style.display = "none"
+})
+

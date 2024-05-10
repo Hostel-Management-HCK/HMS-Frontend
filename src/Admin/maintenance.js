@@ -1,5 +1,5 @@
+const token = localStorage.getItem("token");
 $(document).ready(function () {
-    const token = localStorage.getItem("token");
     let editId = 0
     // Function to make API request
     const makeRequest = (method, url, token, body) => {
@@ -51,7 +51,6 @@ $(document).ready(function () {
     // Function to fetch Dropdown 
     async function fetchStaffData() {
         try {
-            let token = localStorage.getItem("token");
             const response = await makeRequest("GET", "http://localhost:3000/api/staffs", token);
             if (response.ok) {
                 const responseData = await response.json();

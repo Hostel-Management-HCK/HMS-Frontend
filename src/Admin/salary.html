@@ -49,6 +49,46 @@
             background: linear-gradient(to bottom, rgb(44, 44, 80), rgb(44, 44, 80)7b838a);
             box-shadow: 0 6px 8px rgba(0, 0, 0, 0.2);
         }
+         /* Basic styling for the dropdown */
+         .status-dropdown {
+            width: 100%;
+            /* Make the dropdown fill the entire TD */
+            padding: 5px;
+            border-radius: 5px;
+            border: 1px solid #ccc;
+            outline: none;
+            /* Remove default focus outline */
+            font-size: 14px;
+            background-color: #fff;
+            color: #333;
+        }
+
+        .status-dropdown:focus {
+            border-color: #007bff;
+            /* Change border color on focus */
+            box-shadow: 0 0 3px #007bff;
+            /* Add a slight shadow on focus */
+        }
+
+        /* Style the dropdown arrow */
+        .status-dropdown::-ms-expand {
+            display: none;
+            /* Hide the default arrow on IE/Edge */
+        }
+
+        .status-dropdown option {
+            background-color: #fff;
+            /* Background color of options */
+            color: #333;
+            /* Text color of options */
+        }
+
+        .status-dropdown option:checked {
+            background-color: #007bff;
+            /* Background color of selected option */
+            color: #fff;
+            /* Text color of selected option */
+        }
     </style>
     <div class="container">
         <aside>
@@ -93,17 +133,9 @@
                     <span class="material-symbols-sharp">build </span>
                     <h3>Maintenance</h3>
                 </a>
-                <a href="profile.html">
-                    <span class="material-symbols-sharp">person </span>
-                    <h3>Profile</h3>
-                </a>
                 <a href="Feedback.html">
                     <span class="material-symbols-sharp">forum </span>
                     <h3>Feedback</h3>
-                </a>
-                <a href="setting.html">
-                    <span class="material-symbols-sharp">settings </span>
-                    <h3>Settings</h3>
                 </a>
                 <a href="../index.html" id="logout-link">
                     <span class="material-symbols-sharp">logout </span>
@@ -157,6 +189,13 @@
                 </div>
             </div>
         </div>
+        <script>
+            document.getElementById('logout-link').addEventListener('click', function (event) {
+            event.preventDefault();
+            localStorage.removeItem("token");
+            window.location.href = '../index.html';
+          });
+            </script>
         <script src="salary.js"></script>
         <script src="script.js"></script>
         <script src="../fetch.js"></script>
