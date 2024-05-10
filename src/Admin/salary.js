@@ -27,14 +27,21 @@ $(document).ready(function () {
                 // Iterate through rent and populate the table
                 salary.forEach(salaryItems => {
                     const row = `
-                        <tr id="salary_row${salaryItems.staffId}">
-                            <td>${salaryItems.staffId}</td>
-                            <td>${salaryItems.staffName}</td>
-                            <td>${salaryItems.amount}</td>
-                            <td>${salaryItems.dueDate}</td> 
-                            <td>${salaryItems.lastPaid}</td>
-                            <td>${salaryItems.status}</td>
-                        </tr>
+                    <tr id="salary_row${salaryItems.staffId}">
+                    <td>${salaryItems.staffId}</td>
+                    <td>${salaryItems.staffName}</td>
+                    <td>${salaryItems.amount}</td>
+                    <td>${salaryItems.dueDate}</td> 
+                    <td>${salaryItems.lastPaid}</td>
+                    <td>
+                        <select class="status-dropdown" id="status_dropdown${salaryItems.staffId}">
+                            <option value="pending" ${salaryItems.status === 'pending' ? 'selected' : ''}>Pending</option>
+                            <option value="paid" ${salaryItems.status === 'paid' ? 'selected' : ''}>Paid</option>
+                            <option value="late" ${salaryItems.status === 'late' ? 'selected' : ''}>Late</option>
+                            <!-- Add more options as needed -->
+                        </select>
+                    </td>
+                </tr>                
                     `;
                     $("#salaryTableBody").append(row);
                 });

@@ -333,17 +333,17 @@ $("#loginForm").on("submit", function (event) {
           if (role === "Admin") {
             setTimeout(() => {
               window.location.href = "./Admin/admin.html";
-            }, 2000);
+            }, 1000);
           }
           else if (role === "Staff") {
             setTimeout(() => {
               window.location.href = "./Staff/tasks.html";
-            }, 2000);
+            }, 1000);
           }
           else {
             setTimeout(() => {
               window.location.href = "./Resident/facilities.html";
-            }, 2000);
+            }, 1000);
           }
 
         });

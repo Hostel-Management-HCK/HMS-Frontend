@@ -384,7 +384,7 @@
         <a href="room_allocation.html">
           <span class="material-symbols-sharp">single_bed </span>
           <h3>Allocation</h3>
-      </a>
+        </a>
         <a href="billing.html">
           <span class="material-symbols-sharp">payment </span>
           <h3>Billing</h3>
@@ -393,18 +393,10 @@
           <span class="material-symbols-sharp">build </span>
           <h3>Maintenance</h3>
         </a>
-        <a href="profile.html">
-          <span class="material-symbols-sharp">person </span>
-          <h3>Profile</h3>
-        </a>
         <a href="Feedback.html">
           <span class="material-symbols-sharp">forum </span>
           <h3>Feedback</h3>
-        </a>
-        <a href="setting.html">
-          <span class="material-symbols-sharp">settings </span>
-          <h3>Settings</h3>
-        </a>
+        </a>>
         <a href="../index.html" id="logout-link">
           <span class="material-symbols-sharp">logout </span>
           <h3>logout</h3>
@@ -523,8 +515,8 @@
           </div>
         </form>
       </div>
-       <!-- Popup for Edit Details -->
-       <div class="popup edit-staffDetails-popup">
+      <!-- Popup for Edit Details -->
+      <div class="popup edit-staffDetails-popup">
         <div class="close-btn">&times;</div>
         <form class="form" id="editSignupForm">
           <h2>Add Staff</h2>
@@ -574,50 +566,54 @@
             <button id="staffSendButton">Submit</button>
           </div>
         </form>
+      </div>
+  </div>
+
+
+
+  </main>
+
+  <!-- Profile -->
+  <div class="right">
+
+    <div class="top">
+      <button id="menu_bar">
+        <span class="material-symbols-sharp">menu</span>
+      </button>
+
+      <div class="profile">
+        <div class="info">
+          <p><b>John</b></p>
+          <p>Admin</p>
+          <small class="text-muted"></small>
         </div>
-    </div>
-
-        
-           
-    </main>
-
-    <!-- Profile -->
-    <div class="right">
-
-      <div class="top">
-        <button id="menu_bar">
-          <span class="material-symbols-sharp">menu</span>
-        </button>
-
-        <div class="profile">
-          <div class="info">
-            <p><b>John</b></p>
-            <p>Admin</p>
-            <small class="text-muted"></small>
-          </div>
-          <div class="profile-photo">
-            <img src="../../images/profile-1.jpg" alt="" />
-          </div>
+        <div class="profile-photo">
+          <img src="../../images/profile-1.jpg" alt="" />
         </div>
       </div>
     </div>
+  </div>
 
-    <script>
-      document.querySelector("#show-announce").addEventListener("click", function () {
-        document.querySelector(".popup").classList.add("active");
+  <script>
+    document.querySelector("#show-announce").addEventListener("click", function () {
+      document.querySelector(".popup").classList.add("active");
+    });
+
+    document.querySelectorAll(".popup .close-btn").forEach(function (closeBtn) {
+      closeBtn.addEventListener("click", function () {
+        document.querySelector(".popup.active").classList.remove("active");
       });
+    });
+    document.getElementById('logout-link').addEventListener('click', function (event) {
+      event.preventDefault();
+      localStorage.removeItem("token");
+      window.location.href = '../index.html';
+    });
 
-      document.querySelectorAll(".popup .close-btn").forEach(function (closeBtn) {
-        closeBtn.addEventListener("click", function () {
-          document.querySelector(".popup.active").classList.remove("active");
-        });
-      });
-
-
-    </script>
-    <script src="script.js"></script>
-    <script src="staff.js"></script>
-    <script src="../fetch.js"></script>
+  </script>
+  <script src="script.js"></script>
+  <script src="staff.js"></script>
+  <script src="../fetch.js"></script>
 
 </body>
 
