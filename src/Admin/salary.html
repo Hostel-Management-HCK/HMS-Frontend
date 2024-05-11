@@ -49,8 +49,9 @@
             background: linear-gradient(to bottom, rgb(44, 44, 80), rgb(44, 44, 80)7b838a);
             box-shadow: 0 6px 8px rgba(0, 0, 0, 0.2);
         }
-         /* Basic styling for the dropdown */
-         .status-dropdown {
+
+        /* Basic styling for the dropdown */
+        .status-dropdown {
             width: 100%;
             /* Make the dropdown fill the entire TD */
             padding: 5px;
@@ -163,10 +164,10 @@
                     </tbody>
                 </table>
             </div>
-            <div class="button-container">
-                <button onclick="window.location.href = 'billing.html'">Billings</button>
-                <button onclick="window.location.href = 'salary.html'">Salary</button>
-            </div>
+                <div class="button-container">
+                    <button onclick="window.location.href = 'billing.html'">Billings</button>
+                    <button onclick="window.location.href = 'salary.html'">Salary</button>
+                </div>
         </main>
 
         <!-- Profile -->
@@ -191,11 +192,11 @@
         </div>
         <script>
             document.getElementById('logout-link').addEventListener('click', function (event) {
-            event.preventDefault();
-            localStorage.removeItem("token");
-            window.location.href = '../index.html';
-          });
-            </script>
+                event.preventDefault();
+                localStorage.removeItem("token");
+                window.location.href = '../index.html';
+            });
+        </script>
         <script src="salary.js"></script>
         <script src="script.js"></script>
         <script src="../fetch.js"></script>

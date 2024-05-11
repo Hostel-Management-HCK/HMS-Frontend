@@ -32,6 +32,7 @@ makeRequest("GET", "http://localhost:3000/api/staffs", token)
             <td>${staff.firstName} ${staff.lastName}</td>
             <td>${staff.email}</td>
             <td>${staff.phone}</td>
+            <td>${staff.billing.amount === null ? "No Salary": staff.billing.amount }</td>
             <td><button class="edit-btn edit-staffDetails" data-staff-id="${staff.staffId}" (${staff.staffId})">Edit</button></td>
             <td><button class=" staff-delete delete-btn" data-staff-id="${staff.staffId}">Delete</button></td>
         </tr>
@@ -71,13 +72,15 @@ deleteStaff(staffId);
 // To create a staff
 const createStaff = () => {
 const firstName = $("#firstName").val();
-const middleName = $("#middleName").val();
+let middleName = $("#middleName").val();
+middleName = middleName === "" ? null: middleName
 const lastName = $("#lastName").val();
 const userName = $("#userName").val();
 const email = $("#email").val();
 const phNumber = $("#phNumber").val();
 const citizenshipNumber = $("#citizenshipNumber").val();
 const currentPassword = $("#currentPassword").val();
+const salary = $("#Salary").val();
 
 const staffData = {
     firstName: firstName,
@@ -88,6 +91,7 @@ const staffData = {
     phone: phNumber,
     citizenshipNo: citizenshipNumber,
     password: currentPassword,
+    amount: salary
 };
 
 makeRequest("POST", "http://localhost:3000/api/staffs", token, staffData)
@@ -142,7 +146,7 @@ const getStaffDetail = (staffId) => {
                 $('#editEmail').val(staff.email);
                 $('#editPhNumber').val(staff.phone);
                 $('#editCitizenshipNumber').val(staff.citizenshipNo);
-                $('#editCurrentPassword').val(staff.password);
+                $('#editSalary').val(staff.billing.amount);
             } else {
                 console.error('Failed to fetch room data:', response.statusText);
             }
@@ -160,6 +164,7 @@ const editStaffData = (staffId) => {
     let phNumber = parseInt($('#editPhNumber').val());
     let citizenshipNumber = ($('#editCitizenshipNumber').val());
     let currentPassword = ($('#editCurrentPassword').val());
+    let salary = ($('#editSalary').val());
 
 
     console.log(userName)
@@ -171,7 +176,8 @@ const editStaffData = (staffId) => {
         email: email,
         phone: phNumber,
         citizenshipNo: citizenshipNumber,
-        password: currentPassword
+        password: currentPassword,
+        amount : salary,
 
     }
 
@@ -278,9 +284,10 @@ document.getElementById("phNumber").addEventListener("input", function(event) {
     validateField(phNumber, "phNumberError", "Phone Number is required.", "Phone Number should start with 98 or 97 followed by 8 digits.", "isValidPhoneNumber");
     validateField(citizenshipNumber, "citizenshipNumberError", "Citizenship Number is required.", "Citizenship Number should follow the pattern XX-XX-XX-XXXXX.", "isValidCitizenshipNumber");
     validateField(password, "passwordError", "Password is required.", "Password must contain at least one special character and one number and should be more than 6 characters.", "hasSpecialCharacterAndNumber", "Password should be more than 6 characters.", "isPasswordLengthValid");
+    
     // If there are no errors, submit the form
     if (firstName && lastName && userName && email && phNumber && citizenshipNumber && password ) {
-        this.submit();
+        $(this).submit();
     }
   };
   
@@ -404,7 +411,6 @@ document.getElementById("phNumber").addEventListener("input", function(event) {
     var email = document.getElementById("editEmail").value;
     var phNumber = document.getElementById("editPhNumber").value;
     var citizenshipNumber = document.getElementById("editCitizenshipNumber").value;
-    var password = document.getElementById("editCurrentPassword").value;
 
     // Validate first name, middle name, last name, username, email, phone number, date of birth, citizenship number, password, and confirm password
     validateField(firstName, "editFirstNameError", "First Name is required.", "First Name should start with a capital letter.", "isCapitalized");
@@ -414,9 +420,9 @@ document.getElementById("phNumber").addEventListener("input", function(event) {
     validateField(email, "editEmailError", "Email is required.", "Please enter a valid email address.", "isValidEmail");
     validateField(phNumber, "editPhNumberError", "Phone Number is required.", "Phone Number should start with 98 or 97 followed by 8 digits.", "isValidPhoneNumber");
     validateField(citizenshipNumber, "editCitizenshipNumberError", "Citizenship Number is required.", "Citizenship Number should follow the pattern XX-XX-XX-XXXXX.", "isValidCitizenshipNumber");
-    validateField(password, "editPasswordError", "Password is required.", "Password must contain at least one special character and one number and should be more than 6 characters.", "hasSpecialCharacterAndNumber", "Password should be more than 6 characters.", "isPasswordLengthValid");
+    
 
-    return firstName && lastName && userName && email && phNumber && citizenshipNumber && password;
+    return firstName && lastName && userName && email && phNumber && citizenshipNumber ;
 };
 
 // Function to validate username to contain only small letters and at least one number

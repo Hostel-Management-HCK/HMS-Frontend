@@ -49,7 +49,7 @@
             opacity: 0;
             transform: translate(-50%, -50%) scale(1.25);
             width: 500px;
-            height: 600px;
+            height: 450 px;
             padding: 20px 30px;
             background: #fff;
             box-shadow: 2px 2px 5px 5px rgba(0, 0, 0, 0.15);
@@ -237,6 +237,8 @@
                         <tr>
                             <th>Resident Name</th>
                             <th>Feedback</th>
+                            <th>Response</th>
+                            <th>Reply</th>
                         </tr>
                     </thead>
                     <tbody id="feedbackTableBody">
@@ -262,25 +264,19 @@
             <div class="button-container">
                 <button id="show-compose">Compose</button>
             </div>
-            <!-- Popup for Compose -->
-            <div class="popup compose">
+
+            <!-- Popup for Edit Details -->
+            <div id="replyPopup" class="popup reply-popup">
                 <div class="close-btn">&times;</div>
                 <div class="form">
-                    <h2>Compose</h2>
+                    <h2>Reply</h2>
                     <div class="form-element">
-                        <label for="recipient">To:</label>
-                        <input type="text" id="recipient" placeholder="Enter recipient email">
+                        <label for="message">Add reply</label>
+                        <input type="text" id="message" name="message" placeholder="Enter the reply"
+                            required>
                     </div>
                     <div class="form-element">
-                        <label for="subject">Subject:</label>
-                        <input type="text" id="subject" placeholder="Enter subject">
-                    </div>
-                    <div class="form-element">
-                        <label for="message">Message:</label>
-                        <textarea id="message" rows="6" placeholder="Enter your message"></textarea>
-                    </div>
-                    <div class="form-element">
-                        <button>Send</button>
+                        <button id="submitReply">Submit</button>
                     </div>
                 </div>
             </div>
@@ -312,9 +308,9 @@
             document.querySelector("#show-compose").addEventListener("click", function () {
                 document.querySelector(".popup.compose").classList.add("active");
             });
-            document.querySelectorAll(".popup.compose .close-btn").forEach(function (closeBtn) {
+            document.querySelectorAll(".close-btn").forEach(function (closeBtn) {
                 closeBtn.addEventListener("click", function () {
-                    document.querySelector(".popup.compose.active").classList.remove("active");
+                    document.querySelector("#replyPopup").classList.remove("active");
                 });
             });
             document.getElementById('logout-link').addEventListener('click', function (event) {
@@ -324,6 +320,7 @@
             });
         </script>
         <script src="script.js"></script>
+        <script src="feedback.js"></script>
         <script src="../fetch.js"></script>
 
 </body>

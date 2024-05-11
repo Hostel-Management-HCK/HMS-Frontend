@@ -193,11 +193,12 @@
     /* Add styles for the Change Password button */
     #change_password_btn {
       background-color: white;
-      border: none;
+      border: 1px solid black;
       padding: 5px 5px;
       border-radius: 5px;
       cursor: pointer;
       margin-right: 10px;
+      margin-block: 1rem;
       /* Adjust margin as needed */
     }
 
@@ -298,7 +299,7 @@
               <div id="citizenshipNumberError" class="error"></div> <!-- Error container for citizenship number -->
             </div>
             <div>
-              <button id="change_password_btn" onclick="window.location.href = 'changePassword.html';">Change
+              <button id="change_password_btn" type="button" onclick="window.location.href = '../changePassword.html'">Change
                 Password</button>
             </div>
             <button type="submit" class="form_button" id="editResidentBtn">Edit Profile</button>

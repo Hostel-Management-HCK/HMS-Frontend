@@ -212,69 +212,19 @@
             <thead>
               <tr>
                 <th>Task ID</th>
-                <th>Resident Name</th>
                 <th>Assigned Task</th>
                 <th>Job Status</th>
               </tr>
             </thead>
             <tbody id="tasksTableBody">
-              <tr>
-                <td>101</td>
-                <td>John Doe</td>
-                <td>Clean the kitchen</td>
-                <td>Completed</td>
-              </tr>
-              <tr>
-                <td>205</td>
-                <td>Jane Smith</td>
-                <td>Fix the plumbing issue</td>
-                <td>Pending</td>
-              </tr>
-              <tr>
-                <td>310</td>
-                <td>Michael Johnson</td>
-                <td>Mow the lawn</td>
-                <td>In Progress</td>
-              </tr>
-              <tr>
-                <td>401</td>
-                <td>Emily Davis</td>
-                <td>Paint the fence</td>
-                <td>Not Started</td>
-              </tr>
+              
             </tbody>
           </table>          
     </div>    
     <div class="button-container">
         <button id="show-announce">Announce</button>
       </div>
-    <div class="popup">
-        <div class="close-btn">&times;</div>
-        <div class="form">
-          <h2>Add Staff</h2>
-          <div class="form-element">
-              <label for="staffId">Staff ID:</label>
-              <input type="text" id="staffId" name="staffId" placeholder="Enter Staff ID" required>
-          </div>
-          <div class="form-element">
-              <label for="staffName">Staff Name:</label>
-              <input type="text" id="staffName" name="staffName" placeholder="Enter Staff Name" required>
-          </div>
-          <div class="form-element">
-              <label for="phoneNumber">Phone Number:</label>
-              <input type="tel" id="phoneNumber" name="phoneNumber" placeholder="Enter Phone Number" required>
-          </div>
-          <div class="form-element">
-              <label for="dob">Date of Birth:</label>
-              <input type="date" id="dob" name="dob" required>
-          </div>
-          <div class="form-element">
-              <label for="location">Location:</label>
-              <input type="text" id="location" name="location" placeholder="Enter Location" required>
-          </div>
-          <div class="form-element">
-              <button>Submit</button>
-    </div>
+    
       </main>
 
 <!-- Profile -->
@@ -311,9 +261,10 @@ document.querySelectorAll(".popup .close-btn").forEach(function(closeBtn) {
 
 
   </script>
-   <script src="script.js"></script>
-   <script src="tasks.js"></script>
+   <script src="../decoder.js"></script>
    <script src="../fetch.js"></script>
+   <script src="tasks.js"></script>
+
    
 </body>
 </html>     
