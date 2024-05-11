@@ -308,9 +308,9 @@ $("#loginForm").on("submit", function (event) {
 
   body = { email: email, password: password }
 
+
   makeRequest("POST", "http://localhost:3000/api/login", "", {}, body)
     .then(async (data) => {
-      console.log(data)
       if (data.token) {
         localStorage.setItem("token", data.token);
         // Display SweetAlert

@@ -244,6 +244,15 @@
             padding: 15px;
         }
 
+        #feedbackTable{
+            width: 100%;
+        }
+
+        .table-wrapper{
+            padding: 1rem;
+            margin-block: 3rem;
+        }
+
         /* Responsive Styling */
         @media screen and (max-width: 600px) {
             .feedback-container {
@@ -303,14 +312,6 @@
                     <h1 class="feedback-title">Feedback Form</h1>
                     <form class="feedback-form" id="feedbackForm">
                         <div class="form-group">
-                            <label for="residentID" class="form-label">Resident ID:</label>
-                            <input type="text" id="residentID" class="form-input" name="residentID" required>
-                        </div>
-                        <div class="form-group">
-                            <label for="residentName" class="form-label">Resident Name:</label>
-                            <input type="text" id="residentName" class="form-input" name="residentName" required>
-                        </div>
-                        <div class="form-group">
                             <label for="feedbackContent" class="form-label">Feedback Content:</label>
                             <textarea id="feedbackContent" class="form-input form-textarea" name="feedbackContent"
                                 required></textarea>
@@ -320,7 +321,31 @@
                     <div class="success-message" id="successMessage" style="display: none;">
                         Feedback sent successfully. Thank you!
                     </div>
+
+
+                    <div class="table-wrapper">
+                   
+                        <table id="feedbackTable" class="table">
+                            <thead>
+                                <tr>
+                                    <th>
+                                        Your Feeback 
+                                    </th>
+                                    <th>
+                                        Response
+                                    </th>
+                                </tr>
+                            </thead>
+                            <tbody id="feedbackTableBody">
+
+                            </tbody>
+                        </table>
+
+                    
                 </div>
+                </div>
+
+                
         </main>
 
         <!-- Profile -->
@@ -357,6 +382,7 @@
         </script>
         <script src="script.js"></script>
         <script src="../fetch.js"></script>
+        <script src="./feedback.js"></script>
 
 </body>
 

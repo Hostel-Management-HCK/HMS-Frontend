@@ -86,11 +86,11 @@ $(document).ready(function () {
         if (Array.isArray(staffs)) {
             const $staffDropdown = $("#staffDropDown");
             const $staffEditDropdown = $("#editstaffDropDown");
-            
+
             // Clear existing options
             $staffDropdown.empty();
             $staffEditDropdown.empty();
-            
+
             // Iterate through staff data and add options to the dropdown
             staffs.forEach(staff => {
                 $staffDropdown.append(`<option value="${staff.staffId}">${staff.firstName + " " + staff.lastName}</option>`);
@@ -152,31 +152,30 @@ $(document).ready(function () {
     $(document).on('click', '#editTaskbtn', function () {
         const staffId = parseInt($("#editstaffDropDown").val())
         const task = $("#editassignedTask").val()
-        makeRequest("PUT", 'http://localhost:3000/api/maintenance/' + editId, token, {staffId,task})
-        .then (response=>{
-            if(response.ok){
-                alert("Updated Successfully")
-                window.location.reload()
-            }
-            else{
-                alert("Update Failed");
-            }
-        })
+        makeRequest("PUT", 'http://localhost:3000/api/maintenance/' + editId, token, { staffId, task })
+            .then(response => {
+                if (response.ok) {
+                    alert("Updated Successfully")
+                    window.location.reload()
+                }
+                else {
+                    alert("Update Failed");
+                }
+            })
     })
 
     const editTask = maintenanceId => {
-        makeRequest("GET", 'http://localhost:3000/api/maintenance/' + maintenanceId, token)
-        .then(async response => {
-            if (response.ok){
-                editId = maintenanceId
-                const data = await response.json() 
-                console.log(data.maintenance.staffName)
-                console.log(data)
-                $(`#editstaffDropDown option[value='${data.maintenance.staffId}']`).attr('selected', true);
-                $("#editassignedTask").val(data.maintenance.task)
-                
-            }
-        })
+        makeRequest("GET", 'http://localhost:3000/api/maintenance?maintenanceId=' + maintenanceId, token)
+            .then(async response => {
+                if (response.ok) {
+                    editId = maintenanceId
+                    const data = await response.json()
+                    console.log(data)
+                    $(`#editstaffDropDown option[value='${data.maintenanceDetails.staffId}']`).attr('selected', true);
+                    $("#editassignedTask").val(data.maintenanceDetails.task)
+
+                }
+            })
         document.querySelector(".edit-taskdetails-popup").classList.add("active")
     }
 });

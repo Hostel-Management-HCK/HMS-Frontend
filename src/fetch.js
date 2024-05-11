@@ -19,6 +19,7 @@ async function makeRequest(method, url, token, headers = {}, body = null) {
     }
 
     try {
+        debugger
         const response = await fetch(url, requestOptions);
 
         if (!response.ok) {

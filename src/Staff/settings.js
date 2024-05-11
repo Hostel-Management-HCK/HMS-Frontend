@@ -19,13 +19,15 @@ const staffId = data.payload.staffId
 };
 
 // Function to get resident details by ID
-const getResidentDetail = (staffId) => {
+const getStaffDetail = (staffId) => {
     makeRequest("GET", `http://localhost:3000/api/staffs/${staffId}`, token)
         .then(async (response) => {
             console.log(response)
             if (response.ok) {
+            
                 const staffData = await response.json();
-                const staffs = staffData.staffs
+                console.log(staffData)
+                const staffs = staffData.staff
                 if (staffs) {
                     console.log(staffs)
                     // Populate form fields with staff data
@@ -35,8 +37,6 @@ const getResidentDetail = (staffId) => {
                     $('#userName').val(staffs.username);
                     $('#email').val(staffs.email);
                     $('#phNumber').val(staffs.phone);
-                    let dob = new Date(staffs.dateOfBirth).toISOString().split('T')[0]
-                    $('#DOB').val(dob);
                     $('#citizenshipNumber').val(staffs.citizenshipNo);
                 } else {
                     console.error('Failed to fetch staff data:', response.statusText);
@@ -49,7 +49,7 @@ const getResidentDetail = (staffId) => {
             console.error('Error fetching staff data:', error);
         });
 }
-getResidentDetail(username)
+getStaffDetail(staffId)
 
 // Function to handle editing staffs data
 const editResidentData = (staffs) => {
@@ -59,7 +59,6 @@ const editResidentData = (staffs) => {
     let email = $('#email').val();
     let newUsername = $('#userName').val();
     let phNumber = parseInt($('#phNumber').val());
-    let DOB = $('#DOB').val();
     let citizenshipNumber = $('#CitizenshipNumber').val();
 
     const body = {
@@ -69,13 +68,13 @@ const editResidentData = (staffs) => {
         newUsername: newUsername,
         email: email,
         phone: phNumber,
-        dateOfBirth: DOB,
         citizenshipNo: citizenshipNumber,
     }
 
     makeRequest("PUT", `http://localhost:3000/api/residentInfo/${staffId}`, token, body)
         .then(async (response) => {
             if (response.ok) {
+                console.log(response)
                 alert("The resident data has been updated successfully");
                 // Close the popup after updating the resident data
             } else {

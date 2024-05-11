@@ -165,6 +165,29 @@
     box-shadow: 0 6px 8px rgba(0, 0, 0, 0.2);
 }
 
+.topCard{
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+}
+.card{
+    min-height: 10rem;
+    background-color: white;
+    display: flex;
+    text-align: center;
+    justify-content: center;
+    align-items: center;
+    font-size: 1.8rem;
+    border-radius: 5%;
+    padding: 1rem;
+    color: #222;
+}
+
+.card:hover{
+    box-shadow: var(--box-shadow);
+}
+
+
 </style>
    <div class="container">
       <aside>
@@ -206,76 +229,35 @@
 
       <!-- Dashboard -->
       <main>
+
+        <div class="topCard">
+            <div class="card"  style="width: 18rem" >
+                <div class="card-content">
+                    <p id="payAmount"> 2000</p>
+                </div>
+            </div>
+
+            <div class="card" style="width: 18rem">
+                <div class="card-content">
+                    <p id="dueDate">2022-05-05</p>
+                </div>
+            </div>
+        </div>
         <!-- recent_feedbacks -->
        <div class="recent_feedbacks">
         <h2>Resident Billings</h2>
-        <table id="table1" class="table">
+        <table id="billingTable" class="table">
             <thead>
                 <tr>
-                    <th>Resident Name</th>
-                    <th>Time Spent</th>
+                    <th>Billing Date</th>
                     <th>Amount Paid</th>
-                    <th>Upcoming Due Date</th>
                 </tr>
             </thead>
-            <tbody>
-                <tr>
-                    <td>John Doe</td>
-                    <td>6 months</td>
-                    <td>$4800</td>
-                    <td>May 30, 2024</td>
-                </tr>
-                <tr>
-                    <td>Jane Smith</td>
-                    <td>8 months</td>
-                    <td>$7200</td>
-                    <td>April 25, 2024</td>
-                </tr>
-                <tr>
-                    <td>Michael Johnson</td>
-                    <td>4 months</td>
-                    <td>$3400</td>
-                    <td>April 28, 2024</td>
-                </tr>
-                <tr>
-                    <td>Sarah Brown</td>
-                    <td>7 months</td>
-                    <td>$5250</td>
-                    <td>April 30, 2024</td>
-                </tr>
+            <tbody id="billingTableBody">
+                
             </tbody>
         </table>        
     </div>    
-    <div class="button-container">
-        <button id="show-announce">Announce</button>
-      </div>
-    <div class="popup">
-        <div class="close-btn">&times;</div>
-        <div class="form">
-          <h2>Add Staff</h2>
-          <div class="form-element">
-              <label for="staffId">Staff ID:</label>
-              <input type="text" id="staffId" name="staffId" placeholder="Enter Staff ID" required>
-          </div>
-          <div class="form-element">
-              <label for="staffName">Staff Name:</label>
-              <input type="text" id="staffName" name="staffName" placeholder="Enter Staff Name" required>
-          </div>
-          <div class="form-element">
-              <label for="phoneNumber">Phone Number:</label>
-              <input type="tel" id="phoneNumber" name="phoneNumber" placeholder="Enter Phone Number" required>
-          </div>
-          <div class="form-element">
-              <label for="dob">Date of Birth:</label>
-              <input type="date" id="dob" name="dob" required>
-          </div>
-          <div class="form-element">
-              <label for="location">Location:</label>
-              <input type="text" id="location" name="location" placeholder="Enter Location" required>
-          </div>
-          <div class="form-element">
-              <button>Submit</button>
-    </div>
       </main>
 
 <!-- Profile -->
@@ -314,6 +296,8 @@ document.querySelectorAll(".popup .close-btn").forEach(function(closeBtn) {
   </script>
    <script src="script.js"></script>
    <script src="../fetch.js"></script>
+   <script src="../decoder.js"></script>
+   <script src="./billing.js"></script>
    
 </body>
 </html>     
