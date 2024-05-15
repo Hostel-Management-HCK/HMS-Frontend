@@ -132,6 +132,7 @@ $(document).ready(function () {
                     // Close the popup after creating the staff
                     $('.popup.compose').hide();
                 });
+                
             } else {
                 Swal.fire(
                     'Failed!',
