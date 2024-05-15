@@ -47,25 +47,48 @@ $(document).ready(function () {
             console.error('Error fetching allocation data:', error);
         });
 });
-// Define deleteRoom function
+// Define deleteAllocation function
 const deleteAllocation = username => {
-    if (confirm("Are you sure you want to remove the selected Resident?")) {
-        makeRequest("DELETE", `http://localhost:3000/api/allocate-room/${username}`, token)
-            .then(response => {
-                console.log(response)
-                if (response.ok) {
-                    $(`#allocate_row_${username}`).remove(); // Remove the table row
-                    alert('Allocation deleted successfully.');
-                    window.location.reload()
-                } else {
-                    alert('Failed to Remove Allocation:', response.statusText);
-                }
-            })
-            .catch(error => {
-                console.error('Error Removing Allocation:', error);
-            });
-    }
+    Swal.fire({
+        title: 'Are you sure?',
+        text: "You want to remove the selected Allocation?",
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#3085d6',
+        cancelButtonColor: '#d33',
+        confirmButtonText: 'Yes, remove it!'
+    }).then((result) => {
+        if (result.isConfirmed) {
+            makeRequest("DELETE", `http://localhost:3000/api/allocate-room/${username}`, token)
+                .then(response => {
+                    if (response.ok) {
+                        $(`#allocate_row_${username}`).remove(); // Remove the table row
+                        Swal.fire(
+                            'Success!',
+                            'Allocation deleted successfully.',
+                            'success'
+                        ).then(() => {
+                            window.location.reload();
+                        });
+                    } else {
+                        Swal.fire(
+                            'Failed!',
+                            `Failed to remove allocation: ${response.statusText}`,
+                            'error'
+                        );
+                    }
+                })
+                .catch(error => {
+                    Swal.fire(
+                        'Error!',
+                        `Error removing allocation: ${error}`,
+                        'error'
+                    );
+                });
+        }
+    });
 };
+
 // Event delegation for delete button
 $(document).on('click', '.delete-allocation', function () {
     const username = $(this).data('username');
@@ -154,17 +177,26 @@ populateAllocationDropDown();
 
 // Function to submit a task
 async function allocateRoom(roomId, username) {
-    console.log(roomId)
+    console.log(roomId);
     try {
         const response = await makeRequest("POST", "http://localhost:3000/api/allocate-room/", token, { username, roomId });
         if (response.ok) {
-            alert("Room allocated successfully.");
-            window.location.reload()
+            Swal.fire(
+                'Success!',
+                'Room allocated successfully.',
+                'success'
+            ).then(() => {
+                window.location.reload();
+            });
         } else {
-            throw new Error('Failed to allocate room:', response.statusText);
+            throw new Error(`Failed to allocate room: ${response.statusText}`);
         }
     } catch (error) {
-        console.error('Error allocate room:', error);
+        Swal.fire(
+            'Error!',
+            `Error allocating room: ${error}`,
+            'error'
+        );
     }
 }
 
@@ -186,7 +218,7 @@ $(document).on('click', '.edit-allocationdetails', function () {
 
 const editTask = async username => {
     const response = await makeRequest("GET", "http://localhost:3000/api/allocated-rooms?username=" + username, token)
-    if(response.ok){
+    if (response.ok) {
         const data = await response.json()
         $(`#editAllocationDropDown option[value=${data.allocation.roomId}]`).attr("selected", true)
         editusername = username
@@ -194,16 +226,31 @@ const editTask = async username => {
     document.querySelector(".edit-allocationdetails-popup").classList.add("active")
 }
 
-$(document).on('click','#editRoomAllocationbtn',function(){
+$(document).on('click', '#editRoomAllocationbtn', function () {
     const roomId = parseInt($("#editAllocationDropDown").val())
-    makeRequest("PUT","http://localhost:3000/api/allocate-room/"+ editusername, token, {roomId})
-    .then(response=>{
-        if(response.ok){
-            alert("Room is successfully allocated")
-            window.location.reload()
-        }
-        else{
-            alert("Room allocation failed")
-        }
-    })
+    makeRequest("PUT", "http://localhost:3000/api/allocate-room/" + editusername, token, { roomId })
+        .then(response => {
+            if (response.ok) {
+                Swal.fire(
+                    'Success!',
+                    'Room is successfully allocated.',
+                    'success'
+                ).then(() => {
+                    window.location.reload();
+                });
+            } else {
+                Swal.fire(
+                    'Failed!',
+                    'Room allocation failed.',
+                    'error'
+                );
+            }
+        })
+        .catch(error => {
+            Swal.fire(
+                'Error!',
+                `Error updating allocation: ${error}`,
+                'error'
+            );
+        });
 })

@@ -16,21 +16,31 @@ $(document).ready(function () {
 
     // Function to submit password change
     async function changePassword(email, newPassword, confirmPassword) {
-
         try {
             const response = await makeRequest("POST", "http://localhost:3000/api/reset-password", token, { email, newPassword, confirmPassword });
             if (response.ok) {
-
-                alert("Password changed successfully please re login.");
-                window.location.href = "index.html"
+                Swal.fire(
+                    'Success!',
+                    'Password changed successfully. Please re-login.',
+                    'success'
+                ).then(() => {
+                    window.location.href = "index.html";
+                });
             } else {
-
                 let data = await response.json();
-                alert(data.message)
+                Swal.fire(
+                    'Error!',
+                    data.message,
+                    'error'
+                );
             }
         } catch (error) {
             console.error('Error changing password:', error);
-            alert("Error changing password. Please try again later.");
+            Swal.fire(
+                'Error!',
+                'Error changing password. Please try again later.',
+                'error'
+            );
         }
     }
 

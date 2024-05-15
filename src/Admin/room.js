@@ -43,14 +43,32 @@ $(document).ready(function () {
         })
             .then(async (response) => {
                 if (response.ok) {
-                    alert("The room data has been updated successfully")
-                    window.location.reload();
-                    // Close the popup after creating the room
-                    $('.popup.edit-details').hide();
+                    Swal.fire(
+                        'Success!',
+                        'The room data has been updated successfully.',
+                        'success'
+                    ).then(() => {
+                        // Reload the page
+                        window.location.reload();
+                        // Close the popup after updating the room
+                        $('.popup.edit-details').hide();
+                    });
                 } else {
-                    console.error('Failed to update room data:', response.statusText);
+                    Swal.fire(
+                        'Failed!',
+                        `Failed to update room data: ${response.statusText}`,
+                        'error'
+                    );
                 }
             })
+            .catch(error => {
+                Swal.fire(
+                    'Error!',
+                    `Error updating room data: ${error}`,
+                    'error'
+                );
+            });
+
     }
 
     const getRoomDetail = (roomId) => {
@@ -101,20 +119,42 @@ $(document).ready(function () {
         });
     // Define deleteRoom function
     const deleteRoom = roomId => {
-        if (confirm("Are you sure you want to delete this room?")) {
-            makeRequest("DELETE", `http://localhost:3000/api/room/${roomId}`, token)
-                .then(response => {
-                    if (response.ok) {
-                        $(`#roomRow_${roomId}`).remove(); // Remove the table row
-                        console.log('Room deleted successfully.');
-                    } else {
-                        console.error('Failed to delete room:', response.statusText);
-                    }
-                })
-                .catch(error => {
-                    console.error('Error deleting room:', error);
-                });
-        }
+        Swal.fire({
+            title: 'Are you sure?',
+            text: "You want to delete this room?",
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Yes, delete it!'
+        }).then((result) => {
+            if (result.isConfirmed) {
+                makeRequest("DELETE", `http://localhost:3000/api/rooms/${roomId}`, token)
+                    .then(response => {
+                        if (response.ok) {
+                            $(`#roomRow_${roomId}`).remove(); // Remove the table row
+                            Swal.fire(
+                                'Deleted!',
+                                'Room deleted successfully.',
+                                'success'
+                            );
+                        } else {
+                            Swal.fire(
+                                'Failed!',
+                                `Failed to delete room: ${response.statusText}`,
+                                'error'
+                            );
+                        }
+                    })
+                    .catch(error => {
+                        Swal.fire(
+                            'Error!',
+                            `Error deleting room: ${error}`,
+                            'error'
+                        );
+                    });
+            }
+        });
     };
     // Event delegation for delete button
     $(document).on('click', '.delete-btn', function () {
@@ -130,26 +170,45 @@ $(document).ready(function () {
             price: roomPrice,
             occupancy: roomOccupancy
         };
-
         makeRequest("POST", "http://localhost:3000/api/rooms", token, roomData)
             .then(async (response) => {
-                let data = await response.json()
+                let data = await response.json();
                 if (response.ok) {
-                    console.log('Room created successfully.');
-                    alert("The room data has been created successfully")
-                    fetchRoomData();
-                    // Close the popup after creating the room
-                    $('.popup.compose').hide();
+                    Swal.fire(
+                        'Success!',
+                        'The room data has been created successfully.',
+                        'success'
+                    ).then(() => {
+                        // Fetch room data
+                        fetchRoomData();
+                        // Close the popup after creating the room
+                        $('.popup.compose').hide();
+                    });
                 } else {
-                    console.error('Failed to create room:', response.statusText);
-                    alert("Error creation of the room" + data.message);
+                    Swal.fire(
+                        'Failed!',
+                        `Failed to create room: ${response.statusText}`,
+                        'error'
+                    ).then(() => {
+                        // Show error message if available
+                        if (data.message) {
+                            Swal.fire(
+                                'Error',
+                                `Error creating the room: ${data.message}`,
+                                'error'
+                            );
+                        }
+                    });
                 }
             })
             .catch(error => {
-                console.error('Error creating room:', error);
+                Swal.fire(
+                    'Error!',
+                    `Error creating room: ${error}`,
+                    'error'
+                );
             });
     };
-
     // Event listener for the "Send" button in the form
     $('#sendButton').on('click', function () {
         createRoom();

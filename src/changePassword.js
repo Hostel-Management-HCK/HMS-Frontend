@@ -2,76 +2,85 @@
 const token = localStorage.getItem("token");
 
 $(document).ready(function () {
-    // Function to make API request
-    const makeRequest = (method, url, token, body) => {
-        return fetch(url, {
-            method: method,
-            headers: {
-                'Content-Type': 'application/json',
-                'Authorization': `Bearer ${token}` // Include JWT token in the request headers
-            },
-            body: JSON.stringify(body)
+  // Function to make API request
+  const makeRequest = (method, url, token, body) => {
+    return fetch(url, {
+      method: method,
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${token}` // Include JWT token in the request headers
+      },
+      body: JSON.stringify(body)
+    });
+  };
+
+  // Function to submit password change
+  async function changePassword(oldPassword, newPassword, confirmPassword) {
+    try {
+      const response = await makeRequest("POST", "http://localhost:3000/api/change-password", token, { oldPassword, newPassword, confirmPassword });
+      if (response.ok) {
+        Swal.fire(
+          'Success!',
+          'Password changed successfully. Please re-login.',
+          'success'
+        ).then(() => {
+          window.location.href = "index.html";
         });
-    };
+      } else {
+        let data = await response.json();
+        Swal.fire(
+          'Error!',
+          data.message,
+          'error'
+        );
+      }
+    } catch (error) {
+      console.error('Error changing password:', error);
+      Swal.fire(
+        'Error!',
+        'Error changing password. Please try again later.',
+        'error'
+      );
+    }
+  }
+  // Function to handle form submission
+  async function handleSubmit() {
 
-    // Function to submit password change
-    async function changePassword(oldPassword, newPassword,confirmPassword) {
 
-        try {
-            const response = await makeRequest("POST", "http://localhost:3000/api/change-password", token,{ oldPassword, newPassword , confirmPassword});
-            if (response.ok) {
+    if (!validateForm()) {
+      return
+    }
+    const oldPassword = $("#oldPassword").val();
+    const newPassword = $("#newPassword").val();
+    const confirmPassword = $("#confirmPassword").val();
 
-                alert("Password changed successfully please re login.");
-                window.location.href = "index.html"
-            } else {
-
-                let data = await response.json();
-                alert(data.message)
-            }
-        } catch (error) {
-            console.error('Error changing password:', error);
-            alert("Error changing password. Please try again later.");
-        }
+    // Validate new password and confirm password
+    if (newPassword !== confirmPassword) {
+      $("#confirmPasswordError").text("Passwords do not match.");
+      return;
     }
 
-    // Function to handle form submission
-    async function handleSubmit() {
+    // Call the changePassword function to submit the password change
+    await changePassword(oldPassword, newPassword, confirmPassword);
 
+    // Clear the form fields after submission
+    $("#oldPassword").val("");
+    $("#newPassword").val("");
+    $("#confirmPassword").val("");
+  }
 
-        if(!validateForm()){
-            return
-        }
-        const oldPassword = $("#oldPassword").val();
-        const newPassword = $("#newPassword").val();
-        const confirmPassword = $("#confirmPassword").val();
-
-        // Validate new password and confirm password
-        if (newPassword !== confirmPassword) {
-            $("#confirmPasswordError").text("Passwords do not match.");
-            return;
-        }
-
-        // Call the changePassword function to submit the password change
-        await changePassword(oldPassword, newPassword,confirmPassword);
-
-        // Clear the form fields after submission
-        $("#oldPassword").val("");
-        $("#newPassword").val("");
-        $("#confirmPassword").val("");
-    }
-
-    // Attach event listener to the submit button
-    $("#changePasswordForm").on("submit",(event)=>{
-        event.preventDefault()
-        handleSubmit()
-    } );
+  // Attach event listener to the submit button
+  $("#changePasswordForm").on("submit", (event) => {
+    event.preventDefault()
+    handleSubmit()
+  });
 
 
 
 
-    
-// --------------------------------------------------
-function validateForm() {
+
+  // --------------------------------------------------
+  function validateForm() {
     var oldPassword = document.getElementById("oldPassword").value;
     var newPassword = document.getElementById("newPassword").value;
     var confirmPassword = document.getElementById("confirmPassword").value;

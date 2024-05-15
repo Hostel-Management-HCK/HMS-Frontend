@@ -379,17 +379,17 @@
 
                 <div class="profile">
                     <div class="info">
-                        <p><b>John</b></p>
-                        <p>Admin</p>
+                        <p id="usernameProfile"><b>John</b></p>
+                        <p id="roleProfie">Admin</p>
                         <small class="text-muted"></small>
-                    </div>
+                      </div>
                     <div class="profile-photo">
-                        <img src="../../images/profile-1.jpg" alt="" />
+                        <img src="../../images/profile.png" alt="" />
                     </div>
                 </div>
             </div>
         </div>
-
+        <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
         <script>
             document.querySelector("#addRoom").addEventListener("click", function () {
                 document.querySelector(".popup").classList.add("active");
@@ -408,8 +408,10 @@
             });
 
         </script>
+        <script src="../decoder.js"></script>
         <script src="roomAllocation.js"></script>
         <script src="script.js"></script>
+        <script src="../showUser.js"></script>
 </body>
 
 </html>

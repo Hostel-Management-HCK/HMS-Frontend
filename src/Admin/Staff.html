@@ -416,6 +416,7 @@
               <th>Name</th>
               <th>Email</th>
               <th>Phone Number</th>
+              <th>Citizenship</th>
               <th>Salary</th>
               <th>Edit</th>
               <th>Delete</th>
@@ -509,7 +510,7 @@
             <input type="number" placeholder="Salary" id="Salary" />
             <i class="uil uil-dollar-sign user"></i> <!-- Changed icon to dollar sign -->
             <div id="SalaryError" class="error"></div> <!-- Error container for first name -->
-        </div>
+          </div>
           <div class="input_box">
             <input type="password" placeholder="Create password" id="currentPassword" />
             <i class="uil uil-lock password"></i>
@@ -525,7 +526,7 @@
       <div class="popup edit-staffDetails-popup">
         <div class="close-btn">&times;</div>
         <form class="form" id="editSignupForm">
-          <h2>Add Staff</h2>
+          <h2>Edit Staff</h2>
           <div class="name">
             <div class="name_input">
               <input type="text" placeholder="First Name" id="editFirstName" />
@@ -566,59 +567,66 @@
             <input type="number" placeholder="Salary" id="editSalary" />
             <i class="uil uil-dollar-sign user"></i> <!-- Changed icon to dollar sign -->
             <div id="editSalaryError" class="error"></div> <!-- Error container for first name -->
-        </div>
+          </div>
           <div class="form-element">
             <button id="editstaffSendButton">Submit</button>
           </div>
         </form>
       </div>
-  </div>
+    </main>
+    <!-- Profile -->
+    <div class="right">
+      <div class="top">
+        <button id="menu_bar">
+          <span class="material-symbols-sharp">menu</span>
+        </button>
 
-
-
-  </main>
-
-  <!-- Profile -->
-  <div class="right">
-
-    <div class="top">
-      <button id="menu_bar">
-        <span class="material-symbols-sharp">menu</span>
-      </button>
-
-      <div class="profile">
-        <div class="info">
-          <p><b>John</b></p>
-          <p>Admin</p>
-          <small class="text-muted"></small>
-        </div>
-        <div class="profile-photo">
-          <img src="../../images/profile-1.jpg" alt="" />
+        <div class="profile">
+          <div class="info">
+            <p id="usernameProfile"><b>John</b></p>
+            <p id="roleProfie">Admin</p>
+            <small class="text-muted"></small>
+          </div>
+          <div class="profile-photo">
+            <img src="../../images/profile.png" alt="" />
+          </div>
         </div>
       </div>
     </div>
-  </div>
-
-  <script>
-    document.querySelector("#show-announce").addEventListener("click", function () {
-      document.querySelector(".popup").classList.add("active");
-    });
-
-    document.querySelectorAll(".popup .close-btn").forEach(function (closeBtn) {
-      closeBtn.addEventListener("click", function () {
-        document.querySelector(".popup.active").classList.remove("active");
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script>
+      document.querySelector("#show-announce").addEventListener("click", function () {
+        document.querySelector(".popup").classList.add("active");
       });
-    });
-    document.getElementById('logout-link').addEventListener('click', function (event) {
-      event.preventDefault();
-      localStorage.removeItem("token");
-      window.location.href = '../index.html';
-    });
 
-  </script>
-  <script src="script.js"></script>
-  <script src="staff.js"></script>
-  <script src="../fetch.js"></script>
+      document.querySelectorAll(".popup .close-btn").forEach(function (closeBtn) {
+        closeBtn.addEventListener("click", function () {
+          document.querySelector(".popup.active").classList.remove("active");
+        });
+      });
+      document.getElementById('logout-link').addEventListener('click', function (event) {
+        event.preventDefault();
+        localStorage.removeItem("token");
+        window.location.href = '../index.html';
+      });
+
+      document.querySelector(".pw_hide").addEventListener("click", (e) => {
+
+        let getPwInput = document.querySelector("#currentPassword");
+        if (getPwInput.type === "password") {
+          getPwInput.type = "text";
+          e.target.classList.replace("uil-eye-slash", "uil-eye");
+        } else {
+          getPwInput.type = "password";
+          e.target.classList.replace("uil-eye", "uil-eye-slash");
+        }
+      });
+    </script>
+    <script src="../decoder.js"></script>
+    <script src="script.js"></script>
+    <script src="staff.js"></script>
+    <script src="../fetch.js"></script>
+    <script src="../showUser.js"></script>
 
 </body>
 

@@ -316,17 +316,18 @@
 
         <div class="profile">
           <div class="info">
-            <p><b>John</b></p>
-            <p>Admin</p>
+            <p id="usernameProfile"><b>John</b></p>
+            <p id="roleProfie">Admin</p>
             <small class="text-muted"></small>
           </div>
           <div class="profile-photo">
-            <img src="../../images/profile-1.jpg" alt="" />
+            <img src="../../images/profile.png" alt="" />
           </div>
         </div>
       </div>
     </div>
 
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script>
       pwShowHide = document.querySelectorAll(".pw_hide");
       pwShowHide.forEach((icon) => {
@@ -345,6 +346,7 @@
     <script src="script.js"></script>
     <script src="../decoder.js"></script>
     <script src="resident.js"></script>
+    <script src="../showUser.js"></script>
 
 </body>
 

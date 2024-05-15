@@ -47,22 +47,44 @@ makeRequest("GET", "http://localhost:3000/api/residentInfo", token)
     console.error('Error fetching Resident data:', error);
 });
 });
-// Define deleteRoom function
+// Define deleteResident function
 const deleteResident = username => {
-    if (confirm("Are you sure you want to remove the selected Resident?")) {
-        makeRequest("DELETE", `http://localhost:3000/api/residentInfo/${username}`, token)
-            .then(response => {
-                if (response.message === "Resident deleted successfully") {
-                    $(`#residentRow_${username}`).remove(); // Remove the table row
-                    alert('Resident deleted successfully.');
-                } else {
-                    console.error('Failed to Remove Resident:', response.statusText);
-                }
-            })
-            .catch(error => {
-                console.error('Error Removing Resident:', error);
-            });
-    }
+    Swal.fire({
+        title: 'Are you sure?',
+        text: "You won't be able to revert this!",
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#3085d6',
+        cancelButtonColor: '#d33',
+        confirmButtonText: 'Yes, delete it!'
+    }).then((result) => {
+        if (result.isConfirmed) {
+            makeRequest("DELETE", `http://localhost:3000/api/residentInfo/${username}`, token)
+                .then(response => {
+                    if (response.message === "Resident deleted successfully") {
+                        $(`#residentRow_${username}`).remove(); // Remove the table row
+                        Swal.fire(
+                            'Deleted!',
+                            'Resident has been deleted successfully.',
+                            'success'
+                        );
+                    } else {
+                        Swal.fire(
+                            'Failed!',
+                            `Failed to Remove Resident: ${response.statusText}`,
+                            'error'
+                        );
+                    }
+                })
+                .catch(error => {
+                    Swal.fire(
+                        'Error!',
+                        `Error Removing Resident: ${error}`,
+                        'error'
+                    );
+                });
+        }
+    });
 };
 // Event delegation for delete button
 $(document).on('click', '.delete-resident', function () {

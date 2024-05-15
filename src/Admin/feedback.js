@@ -23,20 +23,20 @@ $(document).ready(function () {
                 // Clear existing table rows
                 $("#feedbackTableBody").empty();
 
-                
+
 
                 // Iterate through feedbacks and populate the table
                 feedbacks.forEach(feedback => {
 
                     let reply = feedback.adminResponse === null
-                  
+
                     const row = `
                         <tr>
                             <td>${feedback.residentUsername}</td>
                             <td>${feedback.message}</td>
                             <td>${feedback.adminResponse === null ? "No Response" : feedback.adminResponse}</td>
                             
-                            <td><button ${!reply ? "disbaled":""} data-reply="${!reply}" class="edit-btn edit-replydetails" data-feedbackId="${feedback.feedbackId}">Reply</button></td>
+                            <td><button ${!reply ? "disbaled" : ""} data-reply="${!reply}" class="edit-btn edit-replydetails" data-feedbackId="${feedback.feedbackId}">Reply</button></td>
                         </tr>
                     `;
                     $("#feedbackTableBody").append(row);
@@ -49,39 +49,56 @@ $(document).ready(function () {
             console.error('Error fetching feedback:', error);
         });
 
-        const reply = response => {
-            makeRequest("POST", 'http://localhost:3000/api/feedback/respond?feedbackId='+feedbackId, token, {response})
-                .then(async response => {
-                    if (response.ok) {
-                        const data = await response.json()
-                        console.log(data)
-                        if(data.success){
-                            alert("Added reply")
-                        }else{
-                            alert("Reply failed")
-                        }
-                        window.location.reload()
-    
+    const reply = response => {
+        makeRequest("POST", 'http://localhost:3000/api/feedback/respond?feedbackId=' + feedbackId, token, { response })
+            .then(async response => {
+                if (response.ok) {
+                    const data = await response.json();
+                    console.log(data);
+                    if (data.success) {
+                        swal.fire({
+                            title: "Success",
+                            text: "Added reply",
+                            icon: "success",
+                            confirmButtonText: "OK"
+                        }).then(() => {
+                            window.location.reload();
+                        });
+                    } else {
+                        swal.fire({
+                            title: "Error",
+                            text: "Reply failed",
+                            icon: "error",
+                            confirmButtonText: "OK"
+                        }).then(() => {
+                            window.location.reload();
+                        });
                     }
-                })
-                .catch(err =>{
-                    alert("Reply Failed")
-                    window.location.reload()
-                })
-        }
+                }
+            })
+            .catch(err => {
+                swal.fire({
+                    title: "Error",
+                    text: "Reply failed",
+                    icon: "error",
+                    confirmButtonText: "OK"
+                }).then(() => {
+                    window.location.reload();
+                });
+            });
+
+    }
+    $(document).on('click', '.edit-replydetails', function () {
+        const id = $(this).data("feedbackid");
+        console.log(id);
+        feedbackId = parseInt(id)
+        document.querySelector(".reply-popup").classList.add("active");
+    });
 
 
-        $(document).on('click', '.edit-replydetails', function () {
-            const id = $(this).data("feedbackid");
-            console.log(id);
-            feedbackId = parseInt(id)
-            document.querySelector(".reply-popup").classList.add("active");
-        });
-        
+    $(document).on("click", "#submitReply", function () {
+        const value = $("#message").val()
 
-        $(document).on("click","#submitReply",function(){
-            const value = $("#message").val()
-
-            reply(value)
-        })
+        reply(value)
+    })
 });

@@ -74,17 +74,36 @@ const editResidentData = (username) => {
     }
 
     makeRequest("PUT", `http://localhost:3000/api/residentInfo/${username}`, token, body)
-        .then(async (response) => {
-            if (response.ok) {
-                alert("The resident data has been updated successfully");
-                // Close the popup after updating the resident data
-            } else {
-                console.error('Failed to update resident data:', response.statusText);
-            }
-        })
-        .catch(error => {
-            console.error('Error updating resident data:', error);
+    .then(async (response) => {
+        if (response.ok) {
+            Swal.fire(
+                'Success!',
+                'The resident data has been updated successfully.',
+                'success'
+            ).then(() => {
+                window.location.reload(); // Auto-reload the page
+            });
+        } else {
+            console.error('Failed to update resident data:', response.statusText);
+            Swal.fire(
+                'Failed!',
+                `Failed to update resident data: ${response.statusText}`,
+                'error'
+            ).then(() => {
+                window.location.reload(); // Auto-reload the page
+            });
+        }
+    })
+    .catch(error => {
+        console.error('Error updating resident data:', error);
+        Swal.fire(
+            'Error!',
+            `Error updating resident data: ${error}`,
+            'error'
+        ).then(() => {
+            window.location.reload(); // Auto-reload the page
         });
+    });
 }
 $("#editResidentBtn").on("click", ()=>{
     editResidentData(username)

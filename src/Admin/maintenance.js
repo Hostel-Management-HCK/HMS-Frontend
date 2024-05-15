@@ -63,20 +63,30 @@ $(document).ready(function () {
             return [];
         }
     }
-
     // Function to submit a task
     async function submitTask(staffId, task) {
         try {
             const response = await makeRequest("POST", "http://localhost:3000/api/maintenance", token, { staffId, task });
             if (response.ok) {
-                console.log("Task submitted successfully.");
+                Swal.fire(
+                    'Success!',
+                    'Task submitted successfully.',
+                    'success'
+                ).then(() => {
+                    window.location.reload();
+                });
             } else {
-                throw new Error('Failed to submit task:', response.statusText);
+                throw new Error(`Failed to submit task: ${response.statusText}`);
             }
         } catch (error) {
-            console.error('Error submitting task:', error);
+            Swal.fire(
+                'Error!',
+                `Error submitting task: ${error}`,
+                'error'
+            );
         }
     }
+
 
     // Function to populate the dropdown with staff names
     async function populateStaffDropdown() {
@@ -121,22 +131,49 @@ $(document).ready(function () {
     $("#taskForm").on("click", handleSubmit);
 
     const deleteroomallocation = maintenanceId => {
-        if (confirm("Are you sure you want to delete this Task?")) {
-            makeRequest("DELETE", `http://localhost:3000/api/maintenance/${maintenanceId}`, token)
-                .then(response => {
-                    if (response.ok) {
-                        $(`#maintenanceRow_${maintenanceId}`).remove(); // Remove the table row
-                        console.log('Task deleted successfully.');
-                        alert("Task Deleted Successfully")
-                    } else {
-                        console.error('Failed to delete Task:', response.statusText);
-                    }
-                })
-                .catch(error => {
-                    console.error('Error deleting Task:', error);
-                });
-        }
+        Swal.fire({
+            title: 'Are you sure?',
+            text: "You want to delete this Task?",
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Yes, delete it!'
+        }).then((result) => {
+            if (result.isConfirmed) {
+                makeRequest("DELETE", `http://localhost:3000/api/maintenance/${maintenanceId}`, token)
+                    .then(response => {
+                        if (response.ok) {
+                            $(`#maintenanceRow_${maintenanceId}`).remove(); // Remove the table row
+                            console.log('Task deleted successfully.');
+                            Swal.fire(
+                                'Success!',
+                                'Task deleted successfully.',
+                                'success'
+                            ).then(() => {
+                                window.location.reload();
+                            });
+                        } else {
+                            console.error('Failed to delete Task:', response.statusText);
+                            Swal.fire(
+                                'Failed!',
+                                'Failed to delete Task.',
+                                'error'
+                            );
+                        }
+                    })
+                    .catch(error => {
+                        console.error('Error deleting Task:', error);
+                        Swal.fire(
+                            'Error!',
+                            'Error deleting Task.',
+                            'error'
+                        );
+                    });
+            }
+        });
     };
+
     // Event delegation for delete button
     $(document).on('click', '.maintaintenace-dl', function () {
         const maintenanceId = $(this).data('maintenance-id');
@@ -150,20 +187,34 @@ $(document).ready(function () {
         console.log("sldjflksajdf")
     })
     $(document).on('click', '#editTaskbtn', function () {
-        const staffId = parseInt($("#editstaffDropDown").val())
-        const task = $("#editassignedTask").val()
+        const staffId = parseInt($("#editstaffDropDown").val());
+        const task = $("#editassignedTask").val();
         makeRequest("PUT", 'http://localhost:3000/api/maintenance/' + editId, token, { staffId, task })
             .then(response => {
                 if (response.ok) {
-                    alert("Updated Successfully")
-                    window.location.reload()
-                }
-                else {
-                    alert("Update Failed");
+                    Swal.fire(
+                        'Success!',
+                        'Task updated successfully.',
+                        'success'
+                    ).then(() => {
+                        window.location.reload();
+                    });
+                } else {
+                    Swal.fire(
+                        'Failed!',
+                        'Failed to update task.',
+                        'error'
+                    );
                 }
             })
-    })
-
+            .catch(error => {
+                Swal.fire(
+                    'Error!',
+                    `Error updating task: ${error}`,
+                    'error'
+                );
+            });
+    });
     const editTask = maintenanceId => {
         makeRequest("GET", 'http://localhost:3000/api/maintenance?maintenanceId=' + maintenanceId, token)
             .then(async response => {
