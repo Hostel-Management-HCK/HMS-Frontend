@@ -1,68 +1,24 @@
-
-// Function to validate email address format
-function isValidEmail(login_email) {
-  var emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-  return emailRegex.test(login_email);
-}
-
-// Function to check if the password contains at least one special character
-function hasSpecialCharacter(login_password) {
-  var specialCharacterRegex = /[!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?]/;
-  return specialCharacterRegex.test(login_password);
-}
-
-//   Sign Up
-document.getElementById("phNumber").addEventListener("input", function (event) {
-  // Remove non-numeric characters
-  this.value = this.value.replace(/\D/g, "");
-  // Clear error message
-  document.getElementById("phNumberError").innerText = "";
-});
-
-document.getElementById("signupForm").addEventListener("submit", function (event) {
-  // Prevent the form from submitting
-  event.preventDefault();
-
-  // Clear previous errors
-  clearErrors();
-
-  // Get the values of the form fields
-  var firstName = document.getElementById("firstName").value;
-  var middleName = document.getElementById("middleName").value;
-  var lastName = document.getElementById("lastName").value;
-  var userName = document.getElementById("userName").value;
-  var email = document.getElementById("email").value;
-  var phNumber = document.getElementById("phNumber").value;
-  var dob = document.getElementById("DOB").value;
-  var citizenshipNumber = document.getElementById("citizenshipNumber").value;
-  var password = document.getElementById("currentPassword").value;
-  var confirmPassword = document.getElementById("confirmPassword").value;
-
-  // Validate first name, middle name, last name, username, email, phone number, date of birth, citizenship number, password, and confirm password
-  validateField(firstName, "firstNameError", "First Name is required.", "First Name should start with a capital letter.", "isCapitalized");
-  validateField(middleName, "middleNameError", "", "Middle Name should start with a capital letter.", "isCapitalized");
-  validateField(lastName, "lastNameError", "Last Name is required.", "Last Name should start with a capital letter.", "isCapitalized");
-  validateField(userName, "userNameError", "Username is required.", "Username should contain only small letters and at least one number.", "isValidUsername");
-  validateField(email, "emailError", "Email is required.", "Please enter a valid email address.", "isValidEmail");
-  validateField(phNumber, "phNumberError", "Phone Number is required.", "Phone Number should start with 98 or 97 followed by 8 digits.", "isValidPhoneNumber");
-  validateField(dob, "dobError", "Date of Birth is required.", "Age must be at least 18 years old.", "isValidDOB");
-  validateField(citizenshipNumber, "citizenshipNumberError", "Citizenship Number is required.", "Citizenship Number should follow the pattern XX-XX-XX-XXXXX.", "isValidCitizenshipNumber");
-  validateField(password, "passwordError", "Password is required.", "Password must contain at least one special character and one number and should be more than 6 characters.", "hasSpecialCharacterAndNumber", "Password should be more than 6 characters.", "isPasswordLengthValid");
-  validateField(confirmPassword, "confirmPasswordError", "Confirm password is required.", "Passwords do not match.", "passwordMatch", password);
-
-  // If there are no errors, submit the form
-  if (firstName && lastName && userName && email && phNumber && dob && citizenshipNumber && password && confirmPassword && password === confirmPassword) {
-    this.submit();
-  }
-});
-// Function to validate username to contain only small letters and at least one number
-function isValidUsername(str) {
-  return /^[a-z]+[0-9]*[a-z]*$/.test(str) && /\d/.test(str);
-}
 // Function to validate email address format
 function isValidEmail(email) {
   var emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
   return emailRegex.test(email);
+}
+
+// Function to check if the password contains at least one special character and one number
+function hasSpecialCharacterAndNumber(password) {
+  var specialCharacterRegex = /[!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?]/;
+  var numberRegex = /\d/;
+  return specialCharacterRegex.test(password) && numberRegex.test(password);
+}
+
+// Function to check if the password length is valid (more than 6 characters)
+function isPasswordLengthValid(password) {
+  return password.length > 6;
+}
+
+// Function to check if password matches confirm password
+function passwordMatch(password, confirmPassword) {
+  return password === confirmPassword;
 }
 
 // Function to check if a string starts with a capital letter
@@ -70,9 +26,9 @@ function isCapitalized(str) {
   return /^[A-Z]/.test(str);
 }
 
-// Function to check if a string contains at least one number
-function containsNumber(str) {
-  return /\d/.test(str);
+// Function to validate username to contain only small letters and at least one number
+function isValidUsername(str) {
+  return /^[a-z]+[0-9]*[a-z]*$/.test(str) && /\d/.test(str);
 }
 
 // Function to validate phone number format
@@ -99,50 +55,22 @@ function isValidCitizenshipNumber(citizenshipNumber) {
   return citizenshipRegex.test(citizenshipNumber);
 }
 
-// Function to check if the password contains at least one special character and one number
-function hasSpecialCharacterAndNumber(password) {
-  var specialCharacterRegex = /[!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?]/;
-  var numberRegex = /\d/;
-  return specialCharacterRegex.test(password) && numberRegex.test(password);
-}
-
-// Function to check if the password length is valid (more than 6 characters)
-function isPasswordLengthValid(password) {
-  return password.length > 6;
-}
-
-// Function to check if password matches confirm password
-function passwordMatch(password, confirmPassword) {
-  return password === confirmPassword;
-}
-
 // Function to validate a field
-function validateField(value, errorElementId, requiredError, formatError, validationFunctionName, additionalError, additionalValidationFunctionName) {
+function validateField(value, errorElementId, requiredError, formatError, validationFunction, additionalError = null, additionalValidationFunction = null) {
   if (!value) {
     document.getElementById(errorElementId).innerText = requiredError;
-  } else {
-    if (validationFunctionName === "isCapitalized" && !isCapitalized(value)) {
-      document.getElementById(errorElementId).innerText = formatError;
-    } else if (validationFunctionName === "isValidUsername" && !isValidUsername(value)) {
-      document.getElementById(errorElementId).innerText = formatError;
-    } else if (validationFunctionName === "containsNumber" && !containsNumber(value)) {
-      document.getElementById(errorElementId).innerText = additionalError;
-    } else if (validationFunctionName === "passwordMatch" && !passwordMatch(value, additionalError)) {
-      document.getElementById(errorElementId).innerText = formatError;
-    } else if (validationFunctionName === "isValidEmail" && !isValidEmail(value)) {
-      document.getElementById(errorElementId).innerText = formatError;
-    } else if (validationFunctionName === "isValidPhoneNumber" && !isValidPhoneNumber(value)) {
-      document.getElementById(errorElementId).innerText = formatError;
-    } else if (validationFunctionName === "isValidDOB" && !isValidDOB(value)) {
-      document.getElementById(errorElementId).innerText = formatError;
-    } else if (validationFunctionName === "isValidCitizenshipNumber" && !isValidCitizenshipNumber(value)) {
-      document.getElementById(errorElementId).innerText = formatError;
-    } else if (validationFunctionName === "hasSpecialCharacterAndNumber" && !hasSpecialCharacterAndNumber(value)) {
-      document.getElementById(errorElementId).innerText = formatError;
-    } else if (validationFunctionName === "isPasswordLengthValid" && !isPasswordLengthValid(value)) {
-      document.getElementById(errorElementId).innerText = formatError;
-    }
+    return false;
   }
+  if (validationFunction && !validationFunction(value)) {
+    document.getElementById(errorElementId).innerText = formatError;
+    return false;
+  }
+  if (additionalValidationFunction && !additionalValidationFunction(value)) {
+    document.getElementById(errorElementId).innerText = additionalError;
+    return false;
+  }
+  document.getElementById(errorElementId).innerText = "";
+  return true;
 }
 
 // Function to clear error messages
@@ -175,16 +103,13 @@ document.getElementById("citizenshipNumber").addEventListener("input", function 
 });
 
 // Opening form
-
 const formOpenBtn = document.querySelector("#form-open"),
   home = document.querySelector(".home"),
   formContainer = document.querySelector(".form_container"),
   formCloseBtn = document.querySelector(".form_close"),
   signupBtn = document.querySelector("#signup"),
   loginBtn = document.querySelector("#login"),
-
   pwShowHide = document.querySelectorAll(".pw_hide");
-
 
 formOpenBtn.addEventListener("click", () => home.classList.add("show"));
 formCloseBtn.addEventListener("click", () => home.classList.remove("show"));
@@ -211,126 +136,142 @@ loginBtn.addEventListener("click", (e) => {
   formContainer.classList.remove("active");
 });
 
+const validateSignUpForm = () => {
+  // Clear previous errors
+  clearErrors();
 
-$("#signupForm").on("submit", function (event) {
-  event.preventDefault();
+  // Get the values of the form fields
+  var firstName = document.getElementById("firstName").value;
+  var middleName = document.getElementById("middleName").value;
+  var lastName = document.getElementById("lastName").value;
+  var userName = document.getElementById("userName").value;
+  var email = document.getElementById("email").value;
+  var phNumber = document.getElementById("phNumber").value;
+  var dob = document.getElementById("DOB").value;
+  var citizenshipNumber = document.getElementById("citizenshipNumber").value;
+  var password = document.getElementById("currentPassword").value;
+  var confirmPassword = document.getElementById("confirmPassword").value;
 
+  // Validate all fields
+  let validFirstName = validateField(firstName, "firstNameError", "First Name is required.", "First Name should start with a capital letter.", isCapitalized);
+  let validMiddleName = middleName === "" ? true : validateField(middleName, "middleNameError", "", "Middle Name should start with a capital letter.", isCapitalized);
+  let validLastName = validateField(lastName, "lastNameError", "Last Name is required.", "Last Name should start with a capital letter.", isCapitalized);
+  let validUsername = validateField(userName, "userNameError", "Username is required.", "Username should contain only small letters and at least one number.", isValidUsername);
+  let validEmail = validateField(email, "emailError", "Email is required.", "Please enter a valid email address.", isValidEmail);
+  let validPhoneNumber = validateField(phNumber, "phNumberError", "Phone Number is required.", "Phone Number should start with 98 or 97 followed by 8 digits.", isValidPhoneNumber);
+  let validDob = validateField(dob, "dobError", "Date of Birth is required.", "Age must be at least 18 years old.", isValidDOB);
+  let validCitizenshipNumber = validateField(citizenshipNumber, "citizenshipNumberError", "Citizenship Number is required.", "Citizenship Number should follow the pattern XX-XX-XX-XXXXX.", isValidCitizenshipNumber);
+  let validPassword = validateField(password, "passwordError", "Password is required.", "Password must contain at least one special character and one number and should be more than 6 characters.", hasSpecialCharacterAndNumber, "Password should be more than 6 characters.", isPasswordLengthValid);
+  let validConfirmPassword = (password === confirmPassword);
 
-  let firstName = $("#firstName").val();
-  let middleName = $("#middleName").val();
-  let lastName = $("#lastName").val();
-  let userName = $("#userName").val();
-  let Email = $("#Email").val();
-  let phNumber = $("#phNumber").val();
-  let DOB = $("#DOB").val();
-  let citizenshipNumber = $("#citizenshipNumber").val();
-  let currentPassword = $("#currentPassword").val();
-  let confirmPassword = $("#confirmPassword").val();
-
-
-  if (currentPassword != confirmPassword) {
-    alert("Confirm password and current password did not match")
+  if ( !validConfirmPassword){
+    validateField(confirmPassword, "confirmPasswordError", "Confirm password is required.", "Passwords do not match.", passwordMatch, password);
   }
 
-  let body = {
-    "username": userName,
-    "firstName": firstName,
-    "middleName": middleName,
-    "role": "Resident",
-    "lastName": lastName,
-    "email": Email,
-    "phone": phNumber,
-    "citizenshipNo": citizenshipNumber,
-    "password": currentPassword,
-    "dateOfBirth": DOB
-  }
-
-
-  makeRequest("POST", "http://localhost:3000/api/signup", "", {}, body)
-    .then(response => {
-      console.log(response);
-      if (response.status === 201) {
-        console.log("Sign Up successful");
-        alert("Sign Up successful");
-      } else {
-        console.log("Sign Up error");
-        alert("Sign Up error");
-      }
-    })
-    .catch(err => {
-      console.log(err);
-      alert("Sign Up error");
-    });
-
+  return validFirstName && validMiddleName && validLastName && validUsername && validEmail && validPhoneNumber && validDob && validCitizenshipNumber && validPassword && validConfirmPassword;
 }
 
+$(document).ready(function () {
+  $("#signupForm").on("submit", function (event) {
+    event.preventDefault();
 
-);
+    if (!validateSignUpForm()) {
+      console.log("Validation failed");
+      return;
+    }
 
-$("#loginForm").on("submit", function (event) {
+    let firstName = $("#firstName").val();
+    let middleName = $("#middleName").val();
+    middleName = middleName === "" ? "" : middleName;
+    let lastName = $("#lastName").val();
+    let userName = $("#userName").val();
+    let email = $("#email").val();
+    let phNumber = $("#phNumber").val();
+    let dob = $("#DOB").val();
+    let citizenshipNumber = $("#citizenshipNumber").val();
+    let currentPassword = $("#currentPassword").val();
+    let confirmPassword = $("#confirmPassword").val();
 
-  event.preventDefault();
+    if (currentPassword != confirmPassword) {
+      alert("Confirm password and current password did not match");
+      return;
+    }
 
+    let body = {
+      "username": userName,
+      "firstName": firstName,
+      "middleName": middleName,
+      "role": "Resident",
+      "lastName": lastName,
+      "email": email,
+      "phone": phNumber,
+      "citizenshipNo": citizenshipNumber,
+      "password": currentPassword,
+      "dateOfBirth": dob
+    };
 
-  let password = $("#password").val();
-  let email = $("#loginEmail").val();
+    makeRequest("POST", "http://localhost:3000/api/signup", "", {}, body)
+      .then(response => {
+        console.log(response);
+        if (response.message) {
+          Swal.fire(
+            'Success!',
+            'Status changed successfully.',
+            'success'
+        );
+        } else {
+          console.log("Sign Up error");
+          swal("Error", "Sign Up error", "error");
+        }
+      })
+      .catch(err => {
+        console.log(err);
+        swal("Error", err.message || "An error occurred", "error");
+      });
+  });
 
-  body = { email: email, password: password }
+  $("#loginForm").on("submit", function (event) {
+    event.preventDefault();
 
+    let password = $("#password").val();
+    let email = $("#loginEmail").val();
 
-  makeRequest("POST", "http://localhost:3000/api/login", "", {}, body)
-    .then(async (data) => {
-      if (data.token) {
-        localStorage.setItem("token", data.token);
-        // Display SweetAlert
-        swal({
-          title: "Success!",
-          text: "Login Successful",
-          icon: "success",
-          timer: 2000, // Auto close after 2 seconds
-          buttons: false // Hide the "OK" button
-        }).then(() => {
-          // Redirect after a delay of 2 seconds
+    let body = { email: email, password: password };
 
-
-          console.log(data.role)
-
-
-          let jwtData = decodeJWT(data.token)
-          console.log(jwtData)
-          let role = jwtData.payload.role
-          if (role === "Admin") {
-            setTimeout(() => {
-              window.location.href = "./Admin/admin.html";
-            }, 1000);
-          }
-          else if (role === "Staff") {
-            setTimeout(() => {
-              window.location.href = "./Staff/tasks.html";
-            }, 1000);
-          }
-          else {
-            setTimeout(() => {
-              window.location.href = "./Resident/facilities.html";
-            }, 1000);
-          }
-
-        });
-      } else {
-        console.log("Login error. No token received.");
-        document.getElementById("errorContainer").innerText = "Invalid Email or Password";
-      }
-    })
-    .catch(err => {
-      console.log("Error occurred during login:", err);
-    });
-
-
-
-}
-
-
-);
-
-
-
+    makeRequest("POST", "http://localhost:3000/api/login", "", {}, body)
+      .then(async (data) => {
+        if (data.token) {
+          localStorage.setItem("token", data.token);
+          swal({
+            title: "Success!",
+            text: "Login Successful",
+            icon: "success",
+            timer: 1000,
+            buttons: false
+          }).then(() => {
+            let jwtData = decodeJWT(data.token);
+            let role = jwtData.payload.role;
+            if (role === "Admin") {
+              setTimeout(() => {
+                window.location.href = "./Admin/admin.html";
+              }, 500);
+            } else if (role === "Staff") {
+              setTimeout(() => {
+                window.location.href = "./Staff/tasks.html";
+              }, 500);
+            } else {
+              setTimeout(() => {
+                window.location.href = "./Resident/facilities.html";
+              }, 500);
+            }
+          });
+        } else {
+          console.log("Login error. No token received.");
+          document.getElementById("errorContainer").innerText = "Invalid Email or Password";
+        }
+      })
+      .catch(err => {
+        console.log("Error occurred during login:", err);
+      });
+  });
+});

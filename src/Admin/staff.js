@@ -72,7 +72,7 @@ $(document).ready(function () {
                         } else {
                             Swal.fire(
                                 'Failed!',
-                                `Failed to delete staff: ${response.statusText}`,
+                                `Failed to delete staff: ${response.errors.undefined}`,
                                 'error'
                             );
                         }
@@ -136,7 +136,7 @@ $(document).ready(function () {
             } else {
                 Swal.fire(
                     'Failed!',
-                    `Failed to create staff: ${response.statusText}`,
+                    `Failed to create staff: ${response.errors.undefined}`,
                     'error'
                 ).then(() => {
                     // Show error message if available
@@ -244,7 +244,7 @@ const editStaffData = (staffId) => {
         } else {
             Swal.fire(
                 'Failed!',
-                `Failed to update staff data: ${response.statusText}`,
+                `Failed to update staff data: ${response.errors.undefined}`,
                 'error'
             );
         }

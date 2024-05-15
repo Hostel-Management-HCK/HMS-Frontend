@@ -19,17 +19,12 @@ async function makeRequest(method, url, token, headers = {}, body = null) {
     }
 
     try {
-        debugger
         const response = await fetch(url, requestOptions);
-
-        if (!response.ok) {
-            throw new Error(`HTTP error! Status: ${response.status}`);
-        }
 
         const data = await response.json();
         return data;
     } catch (error) {
         console.error('Error:', error);
-        return {error:error,message:"Error fetching the data "};
+        return {error:error,message:"Error fetching the data ",error};
     }
 }
