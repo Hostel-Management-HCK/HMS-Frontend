@@ -26,7 +26,6 @@ const getStaffDetail = (staffId) => {
             if (response.ok) {
             
                 const staffData = await response.json();
-                console.log(staffData)
                 const staffs = staffData.staff
                 if (staffs) {
                     console.log(staffs)
@@ -38,6 +37,7 @@ const getStaffDetail = (staffId) => {
                     $('#email').val(staffs.email);
                     $('#phNumber').val(staffs.phone);
                     $('#citizenshipNumber').val(staffs.citizenshipNo);
+               
                 } else {
                     console.error('Failed to fetch staff data:', response.statusText);
                 }
@@ -55,6 +55,7 @@ getStaffDetail(staffId)
 const editResidentData = (staffs) => {
     let firstName = $('#firstName').val();
     let middleName = $('#middleName').val();
+    middleName= middleName === ""?null:middleName
     let lastName = $('#lastName').val();
     let email = $('#email').val();
     let newUsername = $('#userName').val();
@@ -71,24 +72,40 @@ const editResidentData = (staffs) => {
         citizenshipNo: citizenshipNumber,
     }
 
-    makeRequest("PUT", `http://localhost:3000/api/residentInfo/${staffId}`, token, body)
-        .then(async (response) => {
-            if (response.ok) {
-                console.log(response)
-                alert("The resident data has been updated successfully");
-                // Close the popup after updating the resident data
-            } else {
-                console.error('Failed to update resident data:', response.statusText);
-            }
-        })
-        .catch(error => {
-            console.error('Error updating resident data:', error);
+    makeRequest("PUT", `http://localhost:3000/api/staffs/${staffId}`, token, body)
+    .then(async (response) => {
+        if (response.ok) {
+            console.log(response);
+            Swal.fire(
+                'Success!',
+                'The resident data has been updated successfully.',
+                'success'
+            ).then(() => {
+                window.location.reload();
+            });
+        } else {
+            Swal.fire(
+                'Failed!',
+                `Failed to update resident data: ${response.statusText}`,
+                'error'
+            ).then(() => {
+                window.location.reload();
+            });
+        }
+    })
+    .catch(error => {
+        Swal.fire(
+            'Error!',
+            `Error updating resident data: ${error}`,
+            'error'
+        ).then(() => {
+            window.location.reload();
         });
+    });
 }
 $("#editstaffs-btn").on("click", ()=>{
     editResidentData(staffId)
 });
-
 
 
 

@@ -61,24 +61,38 @@ $(document).ready(function () {
             console.log(error)
         });
 
-        
-        $(document).on('change', '.status-dropdown', function (e) {
 
-            let maintenanceId =parseInt(this.id.split("#")[1])
-            console.log(maintenanceId)
+    $(document).on('change', '.status-dropdown', function (e) {
+        let maintenanceId = parseInt(this.id.split("#")[1]);
 
-            if(window.confirm("Do you want to complete the job")){
-
-
-                makeRequest("PUT", "http://localhost:3000/api/maintenance" , token,{maintenanceId})
-                .then(response =>{
-                    if(response.ok){
-                        alert("Status has been changed")
-                        window.location.reload()
+        if (window.confirm("Do you want to complete the job?")) {
+            makeRequest("PUT", "http://localhost:3000/api/maintenance", token, { maintenanceId })
+                .then(response => {
+                    if (response.ok) {
+                        Swal.fire(
+                            'Success!',
+                            'Status has been changed.',
+                            'success'
+                        ).then(() => {
+                            window.location.reload(); // Auto-reload the page
+                        });
+                    } else {
+                        Swal.fire(
+                            'Failed!',
+                            'Failed to change status.',
+                            'error'
+                        );
                     }
                 })
-            }
-        })
-
+                .catch(error => {
+                    console.error('Error changing status:', error);
+                    Swal.fire(
+                        'Error!',
+                        'Error changing status.',
+                        'error'
+                    );
+                });
+        }
+    });
 });
 
