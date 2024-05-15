@@ -234,10 +234,11 @@ nav .navigation ul li a:hover {
   position: relative;
   margin-top: 30px;
   width: 100%;
-  height: 40px;
+  height: 50px;
+  margin-bottom: 10px;
 }
 .name_input input {
-  height: 100%;
+  height: 80%;
   width: 100%;
   border: none;
   outline: none;
@@ -552,8 +553,9 @@ footer .copyright .pro-links i:hover{
 }
 .error {
   color: red;
-  font-size: 15px;
+  font-size: 12px;
   margin-top: 5px;
+  margin-bottom: 5px;
 }
 
   .footer-col ul li i {

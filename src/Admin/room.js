@@ -109,7 +109,8 @@ $(document).ready(function () {
             `;
                     $("#roomTableBody").append(row);
                 });
-                $('table#roomTableBody').DataTable(); // Apply DataTable to the table
+
+                    $('table#RoomTable').DataTable();
             } else {
                 console.error('Failed to fetch room data:', response.statusText);
             }

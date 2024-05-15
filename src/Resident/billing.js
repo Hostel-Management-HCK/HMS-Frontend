@@ -14,9 +14,9 @@ function getBillingData(){
 
             const payAmount = $("#payAmount")
             const dueDate =  $("#dueDate")
-            payAmount.text(`Amount ${details.amount}`)
+            payAmount.text(`Amount: ${details.amount}`)
 
-            dueDate.text(`Next pay date ${details.nextPayDate}`)
+            dueDate.text(`Next pay date: ${details.nextPayDate}`)
 
 
 
