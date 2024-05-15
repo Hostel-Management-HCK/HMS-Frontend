@@ -340,17 +340,18 @@
 
                 <div class="profile">
                     <div class="info">
-                        <p><b>John</b></p>
-                        <p>Admin</p>
+                        <p id="usernameProfile"><b>John</b></p>
+                        <p id="roleProfie">Admin</p>
                         <small class="text-muted"></small>
-                    </div>
+                      </div>
                     <div class="profile-photo">
-                        <img src="../../images/profile-1.jpg" alt="" />
+                        <img src="../../images/profile.png" alt="" />
                     </div>
                 </div>
             </div>
         </div>
 
+        <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
         <script>
             // Function to fill edit details popup with selected item's details
             function fillEditDetails(roomID, roomPrice, occupancyStatus) {
@@ -400,9 +401,11 @@
             });
 
         </script>
+        <script src="../decoder.js"></script>
         <script src="script.js"></script>
         <script src="./room.js"></script>
         <script src="../fetch.js"></script>
+        <script src="../showUser.js"></script>
 
 </body>
 

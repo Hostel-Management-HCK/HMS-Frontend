@@ -1,37 +1,3 @@
-// login form vallidation
-document.getElementById("loginForm").addEventListener("submit", function (event) {
-  // Prevent the form from submitting
-  event.preventDefault();
-
-  // Clear previous errors
-  document.getElementById("login_emailError").innerText = "";
-  document.getElementById("login_passwordError").innerText = "";
-  document.getElementById("errorContainer").innerText = "";
-
-  // Get the values of the email and password fields
-  var login_email = document.getElementById("loginEmail").value;
-  var login_password = document.getElementById("password").value;
-
-  // Validate email
-  if (!login_email) {
-    document.getElementById("login_emailError").innerText = "Email is required.";
-  } else if (!isValidEmail(login_email)) {
-    document.getElementById("login_emailError").innerText = "Please enter a valid email address.";
-  }
-
-  // Validate password
-  if (!login_password) {
-    document.getElementById("login_passwordError").innerText = "Password is required.";
-  } else if (!hasSpecialCharacter(login_password)) {
-    document.getElementById("login_passwordError").innerText = "Password must contain at least one special character.";
-  }
-
-  // If there are no errors, you can submit the form
-  if (login_email && login_password) {
-    // Submit the form
-    this.submit();
-  }
-});
 
 // Function to validate email address format
 function isValidEmail(login_email) {
@@ -44,8 +10,6 @@ function hasSpecialCharacter(login_password) {
   var specialCharacterRegex = /[!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?]/;
   return specialCharacterRegex.test(login_password);
 }
-
-// Sign Up
 
 //   Sign Up
 document.getElementById("phNumber").addEventListener("input", function (event) {
@@ -78,7 +42,7 @@ document.getElementById("signupForm").addEventListener("submit", function (event
   validateField(firstName, "firstNameError", "First Name is required.", "First Name should start with a capital letter.", "isCapitalized");
   validateField(middleName, "middleNameError", "", "Middle Name should start with a capital letter.", "isCapitalized");
   validateField(lastName, "lastNameError", "Last Name is required.", "Last Name should start with a capital letter.", "isCapitalized");
-  validateField(userName, "userNameError", "Username is required.", "Username should start with a capital letter.", "isCapitalized", "Username should contain at least one number.", "containsNumber");
+  validateField(userName, "userNameError", "Username is required.", "Username should contain only small letters and at least one number.", "isValidUsername");
   validateField(email, "emailError", "Email is required.", "Please enter a valid email address.", "isValidEmail");
   validateField(phNumber, "phNumberError", "Phone Number is required.", "Phone Number should start with 98 or 97 followed by 8 digits.", "isValidPhoneNumber");
   validateField(dob, "dobError", "Date of Birth is required.", "Age must be at least 18 years old.", "isValidDOB");
@@ -91,7 +55,10 @@ document.getElementById("signupForm").addEventListener("submit", function (event
     this.submit();
   }
 });
-
+// Function to validate username to contain only small letters and at least one number
+function isValidUsername(str) {
+  return /^[a-z]+[0-9]*[a-z]*$/.test(str) && /\d/.test(str);
+}
 // Function to validate email address format
 function isValidEmail(email) {
   var emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
@@ -155,6 +122,8 @@ function validateField(value, errorElementId, requiredError, formatError, valida
     document.getElementById(errorElementId).innerText = requiredError;
   } else {
     if (validationFunctionName === "isCapitalized" && !isCapitalized(value)) {
+      document.getElementById(errorElementId).innerText = formatError;
+    } else if (validationFunctionName === "isValidUsername" && !isValidUsername(value)) {
       document.getElementById(errorElementId).innerText = formatError;
     } else if (validationFunctionName === "containsNumber" && !containsNumber(value)) {
       document.getElementById(errorElementId).innerText = additionalError;

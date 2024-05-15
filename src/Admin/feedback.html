@@ -261,10 +261,6 @@
                     </tbody>
                 </table>
             </div>
-            <div class="button-container">
-                <button id="show-compose">Compose</button>
-            </div>
-
             <!-- Popup for Edit Details -->
             <div id="replyPopup" class="popup reply-popup">
                 <div class="close-btn">&times;</div>
@@ -293,17 +289,17 @@
 
                 <div class="profile">
                     <div class="info">
-                        <p><b>John</b></p>
-                        <p>Admin</p>
+                        <p id="usernameProfile"><b>John</b></p>
+                        <p id="roleProfie">Admin</p>
                         <small class="text-muted"></small>
-                    </div>
+                      </div>
                     <div class="profile-photo">
-                        <img src="../../images/profile-1.jpg" alt="" />
+                        <img src="../../images/profile.png" alt="" />
                     </div>
                 </div>
             </div>
         </div>
-
+        <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
         <script>
             document.querySelector("#show-compose").addEventListener("click", function () {
                 document.querySelector(".popup.compose").classList.add("active");
@@ -319,9 +315,11 @@
                 window.location.href = '../index.html';
             });
         </script>
+        <script src="../decoder.js"></script>
         <script src="script.js"></script>
         <script src="feedback.js"></script>
         <script src="../fetch.js"></script>
+        <script src="../showUser.js"></script>
 
 </body>
 

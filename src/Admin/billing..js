@@ -73,36 +73,58 @@ $(document).ready(function () {
 $(document).on('change', '.status-dropdown', function (e) {
     const val = e.target.value;
 
+    if (val === statusArr[0]) {
+        Swal.fire(
+            'Error!',
+            'Cannot change the status after billing.',
+            'error'
+        );
+        return;
+    }
 
-    if(val === statusArr[0]){
-        alert("Cannot change the status after billing")
-        return
-    }
-    if(window.confirm("Do you want to change the status?")){
-        const userName = this.id.split("#")[1]
-        changeStatusResident(userName,val)
-        $(`#${this.id}`).prop('disabled', true);
-    }
-    else{
-        if(val === statusArr[0]){
-            e.target.value = statusArr[1]
+    Swal.fire({
+        title: 'Are you sure?',
+        text: 'Do you want to change the status?',
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#3085d6',
+        cancelButtonColor: '#d33',
+        confirmButtonText: 'Yes, change it!'
+    }).then((result) => {
+        if (result.isConfirmed) {
+            const userName = this.id.split("#")[1];
+            changeStatusResident(userName, val);
+            $(`#${this.id}`).prop('disabled', true);
+        } else {
+            if (val === statusArr[0]) {
+                e.target.value = statusArr[1];
+            } else {
+                e.target.value = statusArr[0];
+            }
         }
-        else{
-            e.target.value = statusArr[0]
-        }
-    }
+    });
+});
 
-
-})
 
 function changeStatusResident(username,newStatus){
-    makeRequest("POST",`http://localhost:3000/api/billing/rent`, token, {}, {username: username,newStatus : newStatus})
-    .then( async reponse =>{
-        if(reponse.ok){
-            const data = await reponse.json()
-            if(data.residenPaymentDetails){
-                alert("Status change succcess fully")
+    makeRequest("POST", `http://localhost:3000/api/billing/rent`, token, {}, { username: username, newStatus: newStatus })
+    .then(async response => {
+        if (response.ok) {
+            const data = await response.json();
+            if (data.residenPaymentDetails) {
+                Swal.fire(
+                    'Success!',
+                    'Status change successfully.',
+                    'success'
+                );
             }
         }
     })
+    .catch(error => {
+        Swal.fire(
+            'Error!',
+            `Error changing status: ${error}`,
+            'error'
+        );
+    });
 }

@@ -2,7 +2,7 @@ const token = localStorage.getItem("token");
 
 let editstaffId = 0;
 $(document).ready(function () {
-    
+
 
     // Function to make API request
     const makeRequest = (method, url, token, body) => {
@@ -15,119 +15,164 @@ $(document).ready(function () {
             body: JSON.stringify(body)
         });
     };
-makeRequest("GET", "http://localhost:3000/api/staffs", token)
-.then(async (response) => {
-    if (response.ok) {
-        const responseData = await response.json();
-        const staffs = responseData.staffs;
+    makeRequest("GET", "http://localhost:3000/api/staffs", token)
+        .then(async (response) => {
+            if (response.ok) {
+                const responseData = await response.json();
+                const staffs = responseData.staffs;
 
-        // Clear existing table rows
-        $("#staffTableBody").empty();
+                // Clear existing table rows
+                $("#staffTableBody").empty();
 
-        // Iterate through staffs and populate the table
-        staffs.forEach(staff => {
-            const row = `
+                // Iterate through staffs and populate the table
+                staffs.forEach(staff => {
+                    const row = `
         <tr id = "staff_row${staff.staffId}">
             <td>${staff.staffId}</td>
             <td>${staff.firstName} ${staff.lastName}</td>
             <td>${staff.email}</td>
             <td>${staff.phone}</td>
-            <td>${staff.billing.amount === null ? "No Salary": staff.billing.amount }</td>
+            <td>${staff.citizenshipNo}</td>
+            <td>${staff.billing.amount === null ? "No Salary" : staff.billing.amount}</td>
             <td><button class="edit-btn edit-staffDetails" data-staff-id="${staff.staffId}" (${staff.staffId})">Edit</button></td>
             <td><button class=" staff-delete delete-btn" data-staff-id="${staff.staffId}">Delete</button></td>
         </tr>
     `;
-            $("#staffTableBody").append(row);
-        });
-        $('table#staffTable').DataTable();
-    } else {
-        console.error('Failed to fetch staff data:', response.statusText);
-    }
-})
-.catch(error => {
-    console.error('Error fetching staff data:', error);
-});
-// Define deleteStaff function
-const deleteStaff = staffId => {
-if (confirm("Are you sure you want to delete the staff?")) {
-    makeRequest("DELETE", `http://localhost:3000/api/staffs/${staffId}`, token)
-        .then(response => {
-            if (response.ok) {
-                $(`#staff_row${staffId}`).remove(); // Remove the table row
-                alert("Staff ")
+                    $("#staffTableBody").append(row);
+                });
+                $('table#staffTable').DataTable();
             } else {
-                console.error('Failed to delete room:', response.statusText);
+                console.error('Failed to fetch staff data:', response.statusText);
             }
         })
         .catch(error => {
-            console.error('Error deleting room:', error);
+            console.error('Error fetching staff data:', error);
         });
-}
-};
-$(document).on('click', '.staff-delete', function () {
-const staffId = $(this).data('staff-id');
-deleteStaff(staffId);
-});
+    // Define deleteStaff function
+    const deleteStaff = staffId => {
+        Swal.fire({
+            title: 'Are you sure?',
+            text: "You won't be able to revert this!",
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Yes, delete it!'
+        }).then((result) => {
+            if (result.isConfirmed) {
+                makeRequest("DELETE", `http://localhost:3000/api/staffs/${staffId}`, token)
+                    .then(response => {
+                        if (response.ok) {
+                            $(`#staff_row${staffId}`).remove(); // Remove the table row
+                            Swal.fire(
+                                'Deleted!',
+                                'Staff has been deleted successfully.',
+                                'success'
+                            );
+                        } else {
+                            Swal.fire(
+                                'Failed!',
+                                `Failed to delete staff: ${response.statusText}`,
+                                'error'
+                            );
+                        }
+                    })
+                    .catch(error => {
+                        Swal.fire(
+                            'Error!',
+                            `Error deleting staff: ${error}`,
+                            'error'
+                        );
+                    });
+            }
+        });
+    };
 
-// To create a staff
-const createStaff = () => {
-const firstName = $("#firstName").val();
-let middleName = $("#middleName").val();
-middleName = middleName === "" ? null: middleName
-const lastName = $("#lastName").val();
-const userName = $("#userName").val();
-const email = $("#email").val();
-const phNumber = $("#phNumber").val();
-const citizenshipNumber = $("#citizenshipNumber").val();
-const currentPassword = $("#currentPassword").val();
-const salary = $("#Salary").val();
-
-const staffData = {
-    firstName: firstName,
-    middleName: middleName,
-    lastName: lastName,
-    username: userName,
-    email: email,
-    phone: phNumber,
-    citizenshipNo: citizenshipNumber,
-    password: currentPassword,
-    amount: salary
-};
-
-makeRequest("POST", "http://localhost:3000/api/staffs", token, staffData)
-    .then(async (response) => {
-        let data = await response.json();
-        if (response.ok) {
-            console.log('Staff created successfully.');
-            alert("The staff data has been created successfully");
-            fetchStaffData();
-            // Close the popup after creating the staff
-            $('.popup.compose').hide();
-        } else {
-            console.error('Failed to create staff:', response.statusText);
-            alert("Error creating the staff: " + data.message);
-        }
-    })
-    .catch(error => {
-        console.error('Error creating staff:', error);
+    $(document).on('click', '.staff-delete', function () {
+        const staffId = $(this).data('staff-id');
+        deleteStaff(staffId);
     });
-};
 
-// Event listener for the "Send" button in the staff form
-$('#staffSendButton').on('click', function () {
-createStaff();
-});
+    // To create a staff
+    const createStaff = () => {
+        const firstName = $("#firstName").val();
+        let middleName = $("#middleName").val();
+        middleName = middleName === "" ? null : middleName
+        const lastName = $("#lastName").val();
+        const userName = $("#userName").val();
+        const email = $("#email").val();
+        const phNumber = $("#phNumber").val();
+        const citizenshipNumber = $("#citizenshipNumber").val();
+        const currentPassword = $("#currentPassword").val();
+        const salary = $("#Salary").val();
 
-$(document).on('click','.edit-staffDetails', function(){
-    const staffId = $(this).data('staff-id');
-    editstaff(staffId);
-    console.log("sldjflksajdf")
-})
+        const staffData = {
+            firstName: firstName,
+            middleName: middleName,
+            lastName: lastName,
+            username: userName,
+            email: email,
+            phone: phNumber,
+            citizenshipNo: citizenshipNumber,
+            password: currentPassword,
+            amount: salary
+        };
 
-const editstaff = staffId =>{
-    document.querySelector(".edit-staffDetails-popup").classList.add("active")
-    getStaffDetail(staffId);
-}
+        makeRequest("POST", "http://localhost:3000/api/staffs", token, staffData)
+        .then(async (response) => {
+            let data = await response.json();
+            if (response.ok) {
+                Swal.fire(
+                    'Success!',
+                    'The staff data has been created successfully.',
+                    'success'
+                ).then(() => {
+                    // Fetch staff data
+                    fetchStaffData();
+                    // Close the popup after creating the staff
+                    $('.popup.compose').hide();
+                });
+            } else {
+                Swal.fire(
+                    'Failed!',
+                    `Failed to create staff: ${response.statusText}`,
+                    'error'
+                ).then(() => {
+                    // Show error message if available
+                    if (data.message) {
+                        Swal.fire(
+                            'Error',
+                            `Error creating the staff: ${data.message}`,
+                            'error'
+                        );
+                    }
+                });
+            }
+        })
+        .catch(error => {
+            Swal.fire(
+                'Error!',
+                `Error creating staff: ${error}`,
+                'error'
+            );
+        });   
+    };
+
+    // Event listener for the "Send" button in the staff form
+    $('#staffSendButton').on('click', function () {
+        createStaff();
+    });
+
+    $(document).on('click', '.edit-staffDetails', function () {
+        const staffId = $(this).data('staff-id');
+        editstaff(staffId);
+        console.log("sldjflksajdf")
+    })
+
+    const editstaff = staffId => {
+        document.querySelector(".edit-staffDetails-popup").classList.add("active")
+        getStaffDetail(staffId);
+    }
 });
 const getStaffDetail = (staffId) => {
 
@@ -158,6 +203,7 @@ const editStaffData = (staffId) => {
 
     let firstName = ($('#editFirstName').val());
     let middleName = ($('#editMiddleName').val());
+    middleName= middleName === ""?null:middleName
     let lastName = ($('#editLastName').val());
     let userName = ($('#editUserName').val());
     let email = ($('#editEmail').val());
@@ -168,7 +214,7 @@ const editStaffData = (staffId) => {
 
 
     console.log(userName)
-    const body =  {
+    const body = {
         username: userName,
         firstName: firstName,
         middleName: middleName,
@@ -177,22 +223,38 @@ const editStaffData = (staffId) => {
         phone: phNumber,
         citizenshipNo: citizenshipNumber,
         password: currentPassword,
-        amount : salary,
+        amount: salary,
 
     }
 
-    makeRequest("PUT", "http://localhost:3000/api/staffs/" + staffId, token, body)
-        .then(async (response) => {
-
-            if (response.staff) {
-                alert("The staff data has been updated successfully")
+    makeRequest("PUT", "http://localhost:3000/api/staffs/" + staffId, token,{}, body)
+    .then(async (response) => {
+        if (response.staff) {
+            Swal.fire(
+                'Success!',
+                'The staff data has been updated successfully.',
+                'success'
+            ).then(() => {
+                // Reload the page
                 window.location.reload();
-                // Close the popup after creating the room
+                // Close the popup after updating staff data
                 $('.popup.edit-details').hide();
-            } else {
-                console.error('Failed to update staff data:', response.statusText);
-            }
-        })
+            });
+        } else {
+            Swal.fire(
+                'Failed!',
+                `Failed to update staff data: ${response.statusText}`,
+                'error'
+            );
+        }
+    })
+    .catch(error => {
+        Swal.fire(
+            'Error!',
+            `Error updating staff data: ${error}`,
+            'error'
+        );
+    });
 }
 
 
@@ -250,19 +312,19 @@ const editStaffData = (staffId) => {
 
 
 
-function validateAddStaff(){
+function validateAddStaff() {
     // -------------------------------------------------------- Validation
-//   Sign Up
-document.getElementById("phNumber").addEventListener("input", function(event) {
-    // Remove non-numeric characters
-    this.value = this.value.replace(/\D/g, "");
-    // Clear error message
-    document.getElementById("phNumberError").innerText = "";
-  });
-  
+    //   Sign Up
+    document.getElementById("phNumber").addEventListener("input", function (event) {
+        // Remove non-numeric characters
+        this.value = this.value.replace(/\D/g, "");
+        // Clear error message
+        document.getElementById("phNumberError").innerText = "";
+    });
+
     // Prevent the form from submitting
     event.preventDefault();
-  
+
     // Clear previous errors
     clearErrors();
     // Get the values of the form fields
@@ -274,7 +336,7 @@ document.getElementById("phNumber").addEventListener("input", function(event) {
     var phNumber = document.getElementById("phNumber").value;
     var citizenshipNumber = document.getElementById("citizenshipNumber").value;
     var password = document.getElementById("currentPassword").value;
-  
+
     // Validate first name, middle name, last name, username, email, phone number, date of birth, citizenship number, password, and confirm password
     validateField(firstName, "firstNameError", "First Name is required.", "First Name should start with a capital letter.", "isCapitalized");
     validateField(middleName, "middleNameError", "", "Middle Name should start with a capital letter.", "isCapitalized");
@@ -284,54 +346,54 @@ document.getElementById("phNumber").addEventListener("input", function(event) {
     validateField(phNumber, "phNumberError", "Phone Number is required.", "Phone Number should start with 98 or 97 followed by 8 digits.", "isValidPhoneNumber");
     validateField(citizenshipNumber, "citizenshipNumberError", "Citizenship Number is required.", "Citizenship Number should follow the pattern XX-XX-XX-XXXXX.", "isValidCitizenshipNumber");
     validateField(password, "passwordError", "Password is required.", "Password must contain at least one special character and one number and should be more than 6 characters.", "hasSpecialCharacterAndNumber", "Password should be more than 6 characters.", "isPasswordLengthValid");
-    
+
     // If there are no errors, submit the form
-    if (firstName && lastName && userName && email && phNumber && citizenshipNumber && password ) {
+    if (firstName && lastName && userName && email && phNumber && citizenshipNumber && password) {
         $(this).submit();
     }
-  };
-  
-  // Function to validate email address format
-  function isValidEmail(email) {
+};
+
+// Function to validate email address format
+function isValidEmail(email) {
     var emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     return emailRegex.test(email);
-  }
-  
-  // Function to check if a string starts with a capital letter
-  function isCapitalized(str) {
+}
+
+// Function to check if a string starts with a capital letter
+function isCapitalized(str) {
     return /^[A-Z]/.test(str);
-  }
-  
-  // Function to check if a string contains at least one number
-  function containsNumber(str) {
+}
+
+// Function to check if a string contains at least one number
+function containsNumber(str) {
     return /\d/.test(str);
-  }
-  
-  // Function to validate phone number format
-  function isValidPhoneNumber(phoneNumber) {
+}
+
+// Function to validate phone number format
+function isValidPhoneNumber(phoneNumber) {
     var phoneRegex = /^(98|97)\d{8}$/;
     return phoneRegex.test(phoneNumber);
-  }
-  
-  // Function to validate citizenship number format
-  function isValidCitizenshipNumber(citizenshipNumber) {
+}
+
+// Function to validate citizenship number format
+function isValidCitizenshipNumber(citizenshipNumber) {
     var citizenshipRegex = /^[0-9]{2}-[0-9]{2}-[0-9]{2}-[0-9]{5}$/;
     return citizenshipRegex.test(citizenshipNumber);
-  }
-  
-  // Function to check if the password contains at least one special character and one number
-  function hasSpecialCharacterAndNumber(password) {
+}
+
+// Function to check if the password contains at least one special character and one number
+function hasSpecialCharacterAndNumber(password) {
     var specialCharacterRegex = /[!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?]/;
     var numberRegex = /\d/;
     return specialCharacterRegex.test(password) && numberRegex.test(password);
-  }
-  
-  // Function to check if the password length is valid (more than 6 characters)
-  function isPasswordLengthValid(password) {
+}
+
+// Function to check if the password length is valid (more than 6 characters)
+function isPasswordLengthValid(password) {
     return password.length > 6;
-  }
-  // Function to validate a field
-  function validateField(value, errorElementId, requiredError, formatError, validationFunctionName, additionalError, additionalValidationFunctionName) {
+}
+// Function to validate a field
+function validateField(value, errorElementId, requiredError, formatError, validationFunctionName, additionalError, additionalValidationFunctionName) {
     if (!value) {
         document.getElementById(errorElementId).innerText = requiredError;
     } else {
@@ -355,21 +417,21 @@ document.getElementById("phNumber").addEventListener("input", function(event) {
             document.getElementById(errorElementId).innerText = formatError;
         }
     }
-  }
-  
-  // Function to clear error messages
-  function clearErrors() {
+}
+
+// Function to clear error messages
+function clearErrors() {
     var errorElements = document.querySelectorAll('.error');
-    errorElements.forEach(function(element) {
+    errorElements.forEach(function (element) {
         element.innerText = "";
     });
-  }
-  
-  // Keep hyphens in the relevant places while typing numbers
-  document.getElementById("citizenshipNumber").addEventListener("input", function(event) {
+}
+
+// Keep hyphens in the relevant places while typing numbers
+document.getElementById("citizenshipNumber").addEventListener("input", function (event) {
     var inputValue = this.value.replace(/\D/g, ''); // Remove non-numeric characters
     var formattedValue = "";
-  
+
     // Add hyphens in the relevant places
     for (var i = 0; i < inputValue.length; i++) {
         if (i === 2 || i === 4 || i === 6) {
@@ -377,19 +439,19 @@ document.getElementById("phNumber").addEventListener("input", function(event) {
         }
         formattedValue += inputValue[i];
     }
-  
+
     this.value = formattedValue;
-  
+
     // Limit input once requirements are met
     if (this.value.length >= 14) {
         this.value = this.value.slice(0, 14);
     }
-  });
-  document.getElementById("signupForm").addEventListener("submit", function(event) {
+});
+document.getElementById("signupForm").addEventListener("submit", function (event) {
     validateAddStaff()
-  })
+})
 
-  function validateEdit() {
+function validateEdit() {
     // -------------------------------------------------------- Validation
     document.getElementById("editPhNumber").addEventListener("input", function (event) {
         // Remove non-numeric characters
@@ -420,9 +482,9 @@ document.getElementById("phNumber").addEventListener("input", function(event) {
     validateField(email, "editEmailError", "Email is required.", "Please enter a valid email address.", "isValidEmail");
     validateField(phNumber, "editPhNumberError", "Phone Number is required.", "Phone Number should start with 98 or 97 followed by 8 digits.", "isValidPhoneNumber");
     validateField(citizenshipNumber, "editCitizenshipNumberError", "Citizenship Number is required.", "Citizenship Number should follow the pattern XX-XX-XX-XXXXX.", "isValidCitizenshipNumber");
-    
 
-    return firstName && lastName && userName && email && phNumber && citizenshipNumber ;
+
+    return firstName && lastName && userName && email && phNumber && citizenshipNumber;
 };
 
 // Function to validate username to contain only small letters and at least one number

@@ -206,6 +206,11 @@
         .dropdown-container select:focus {
             border-color: #555;
         }
+
+        .swal2-container {
+            z-index: 9999;
+            /* Set a high z-index value */
+        }
     </style>
     <div class="container">
         <aside>
@@ -367,17 +372,18 @@
 
                 <div class="profile">
                     <div class="info">
-                        <p><b>John</b></p>
-                        <p>Admin</p>
+                        <p id="usernameProfile"><b>John</b></p>
+                        <p id="roleProfie">Admin</p>
                         <small class="text-muted"></small>
-                    </div>
+                      </div>
                     <div class="profile-photo">
-                        <img src="../../images/profile-1.jpg" alt="" />
+                        <img src="../../images/profile.png" alt="" />
                     </div>
                 </div>
             </div>
         </div>
 
+        <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
         <script>
 
             document.querySelector("#show-announce").addEventListener("click", function () {
@@ -399,9 +405,11 @@
 
 
         </script>
+        <script src="../decoder.js"></script>
         <script src="script.js"></script>
         <script src="maintenance.js"></script>
         <script src="../fetch.js"></script>
+        <script src="../showUser.js"></script>
 
 </body>
 

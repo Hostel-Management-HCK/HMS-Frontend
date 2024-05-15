@@ -221,10 +221,6 @@
             </tbody>
           </table>          
     </div>    
-    <div class="button-container">
-        <button id="show-announce">Announce</button>
-      </div>
-    
       </main>
 
 <!-- Profile -->
@@ -236,18 +232,18 @@
    </button>
    
     <div class="profile">
-       <div class="info">
-           <p><b>John</b></p>
-           <p>Admin</p>
-           <small class="text-muted"></small>
-       </div>
+      <div class="info">
+        <p id="usernameProfile"><b>John</b></p>
+        <p id="roleProfie">Admin</p>
+        <small class="text-muted"></small>
+      </div>
        <div class="profile-photo">
-         <img src="../../images/profile-1.jpg" alt=""/>
+        <img src="../../images/profile.png" alt="" />
        </div>
     </div>
 </div>  
   </div>
-
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
   <script>
 document.querySelector("#show-announce").addEventListener("click", function(){
     document.querySelector(".popup").classList.add("active");
@@ -264,6 +260,7 @@ document.querySelectorAll(".popup .close-btn").forEach(function(closeBtn) {
    <script src="../decoder.js"></script>
    <script src="../fetch.js"></script>
    <script src="tasks.js"></script>
+   <script src="../showUser.js"></script>
 
    
 </body>

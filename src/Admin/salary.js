@@ -27,7 +27,8 @@ $(document).ready(function () {
 
                 // Iterate through salary payments and populate the table
                 salary.forEach(salaryItem => {
-
+                    
+                    console.log(salaryItem.status)
                     let upToDate = false
                     if(salaryItem.status === "Up-to-date"){
     
@@ -41,10 +42,9 @@ $(document).ready(function () {
                         <td>${salaryItem.staffId}</td>
                         <td>${salaryItem.staffName}</td>
                         <td>${salaryItem.amount}</td>
-                        <td>${salaryItem.dueDate}</td> 
-                        <td>${salaryItem.lastPaid}</td>
+                        <td>${salaryItem.nextPayDate}</td> 
                         <td>
-                            <select class="status-dropdown" disabled=${upToDate} id="status_dropdown${salaryItem.staffId}">
+                            <select class="status-dropdown" ${upToDate ? "disabled":""} id="status_dropdown${salaryItem.staffId}">
                                 <option value="Pending" ${salaryItem.status === 'Pending' ? 'selected' : ''}>Pending</option>
                                 <option value="Up-to-date" ${salaryItem.status === 'Up-to-date' ? 'selected' : ''}>Up-to-date</option>
                                 <!-- Add more options as needed -->
@@ -71,32 +71,54 @@ $(document).on('change', '.status-dropdown', function (e) {
     const val = e.target.value;
     const staffId = this.id.replace('status_dropdown', '');
 
-
-    if(val === statusArr[0]){
-        alert("Cannot change the status after billing")
-        return
+    if (val === statusArr[0]) {
+        Swal.fire(
+            'Error!',
+            'Cannot change the status after billing.',
+            'error'
+        );
+        return;
     }
 
-    if (window.confirm("Do you want to change the status?")) {
-        changeStatusSalary(staffId, val);
-    } else {
-        // Reset the dropdown value if user cancels
-        const salaryStatus = $(`#status_dropdown${staffId}`).data('originalStatus');
-        $(`#status_dropdown${staffId}`).val(salaryStatus);
-    }
+    Swal.fire({
+        title: 'Are you sure?',
+        text: 'Do you want to change the status?',
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#3085d6',
+        cancelButtonColor: '#d33',
+        confirmButtonText: 'Yes, change it!'
+    }).then((result) => {
+        if (result.isConfirmed) {
+            changeStatusSalary(staffId, val);
+        } else {
+            // Reset the dropdown value if user cancels
+            const salaryStatus = $(`#status_dropdown${staffId}`).data('originalStatus');
+            $(`#status_dropdown${staffId}`).val(salaryStatus);
+        }
+    });
 });
 
 function changeStatusSalary(staffId, newStatus) {
-    makeRequest("POST", `http://localhost:3000/api/billing/salary`, token, {},{staffId, newStatus })
+    makeRequest("POST", `http://localhost:3000/api/billing/salary`, token, {}, { staffId, newStatus })
         .then(async response => {
             if (response.ok) {
                 const data = await response.json();
                 if (data.salaryPaymentDetails) {
-                    alert("Status changed successfully");
+                    Swal.fire(
+                        'Success!',
+                        'Status changed successfully.',
+                        'success'
+                    );
                 }
             }
         })
         .catch(error => {
-            console.error('Error changing status:', error);
+            Swal.fire(
+                'Error!',
+                `Error changing status: ${error}`,
+                'error'
+            );
         });
 }
+

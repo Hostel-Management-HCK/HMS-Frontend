@@ -27,24 +27,25 @@ document.getElementById("signupForm").addEventListener("submit", function (event
     var userName = document.getElementById("userName").value;
     var email = document.getElementById("email").value;
     var phNumber = document.getElementById("phNumber").value;
-    var dob = document.getElementById("DOB").value;
     var citizenshipNumber = document.getElementById("citizenshipNumber").value;
 
     // Validate first name, middle name, last name, username, email, phone number, date of birth, citizenship number, password, and confirm password
     validateField(firstName, "firstNameError", "First Name is required.", "First Name should start with a capital letter.", "isCapitalized");
     validateField(middleName, "middleNameError", "", "Middle Name should start with a capital letter.", "isCapitalized");
     validateField(lastName, "lastNameError", "Last Name is required.", "Last Name should start with a capital letter.", "isCapitalized");
-    validateField(userName, "userNameError", "Username is required.", "Username should start with a capital letter.", "isCapitalized", "Username should contain at least one number.", "containsNumber");
+    validateField(userName, "userNameError", "Username is required.", "Username should contain only small letters and at least one number.", "isValidUsername");
     validateField(email, "emailError", "Email is required.", "Please enter a valid email address.", "isValidEmail");
     validateField(phNumber, "phNumberError", "Phone Number is required.", "Phone Number should start with 98 or 97 followed by 8 digits.", "isValidPhoneNumber");
-    validateField(dob, "dobError", "Date of Birth is required.", "Age must be at least 18 years old.", "isValidDOB");
     validateField(citizenshipNumber, "citizenshipNumberError", "Citizenship Number is required.", "Citizenship Number should follow the pattern XX-XX-XX-XXXXX.", "isValidCitizenshipNumber");
     // If there are no errors, submit the form
-    if (firstName && lastName && userName && email && phNumber && dob && citizenshipNumber) {
+    if (firstName && lastName && userName && email && phNumber && citizenshipNumber) {
         this.submit();
     }
 });
-
+// Function to validate username to contain only small letters and at least one number
+function isValidUsername(str) {
+    return /^[a-z]+[0-9]*[a-z]*$/.test(str) && /\d/.test(str);
+  }
 // Function to validate email address format
 function isValidEmail(email) {
     var emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
@@ -103,6 +104,8 @@ function validateField(value, errorElementId, requiredError, formatError, valida
     } else {
         if (validationFunctionName === "isCapitalized" && !isCapitalized(value)) {
             document.getElementById(errorElementId).innerText = formatError;
+        } else if (validationFunctionName === "isValidUsername" && !isValidUsername(value)) {
+            document.getElementById(errorElementId).innerText = formatError;
         } else if (validationFunctionName === "containsNumber" && !containsNumber(value)) {
             document.getElementById(errorElementId).innerText = additionalError;
         } else if (validationFunctionName === "passwordMatch" && !passwordMatch(value, additionalError)) {
@@ -110,8 +113,6 @@ function validateField(value, errorElementId, requiredError, formatError, valida
         } else if (validationFunctionName === "isValidEmail" && !isValidEmail(value)) {
             document.getElementById(errorElementId).innerText = formatError;
         } else if (validationFunctionName === "isValidPhoneNumber" && !isValidPhoneNumber(value)) {
-            document.getElementById(errorElementId).innerText = formatError;
-        } else if (validationFunctionName === "isValidDOB" && !isValidDOB(value)) {
             document.getElementById(errorElementId).innerText = formatError;
         } else if (validationFunctionName === "isValidCitizenshipNumber" && !isValidCitizenshipNumber(value)) {
             document.getElementById(errorElementId).innerText = formatError;
