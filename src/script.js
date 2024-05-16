@@ -182,7 +182,8 @@ $(document).ready(function () {
 
     let firstName = $("#firstName").val();
     let middleName = $("#middleName").val();
-    middleName = middleName === "" ? "" : middleName;
+
+    middleName = middleName === "" ? null : middleName;
     let lastName = $("#lastName").val();
     let userName = $("#userName").val();
     let email = $("#email").val();
@@ -212,16 +213,19 @@ $(document).ready(function () {
 
     makeRequest("POST", "http://localhost:3000/api/signup", "", {}, body)
       .then(response => {
-        console.log(response);
         if (response.message) {
-          Swal.fire(
-            'Success!',
-            'Status changed successfully.',
-            'success'
-        );
+          swal({
+            title: "Success!",
+            text: "Sign Up Successful",
+            icon: "success",
+            timer: 1000,
+            buttons: false
+          }).then(async(data) => {
+            window.location.reload();
+          })
         } else {
           console.log("Sign Up error");
-          swal("Error", "Sign Up error", "error");
+          swal("Error", "Sign Up error "+ response.errors.undefined, "error");
         }
       })
       .catch(err => {

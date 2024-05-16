@@ -342,7 +342,7 @@ function validateAddStaff() {
     validateField(firstName, "firstNameError", "First Name is required.", "First Name should start with a capital letter.", "isCapitalized");
     validateField(middleName, "middleNameError", "", "Middle Name should start with a capital letter.", "isCapitalized");
     validateField(lastName, "lastNameError", "Last Name is required.", "Last Name should start with a capital letter.", "isCapitalized");
-    validateField(userName, "userNameError", "Username is required.", "Username should start with a capital letter.", "isCapitalized", "Username should contain at least one number.", "containsNumber");
+    validateField(userName, "userNameError", "Username is required.", "Username should contain only small letters and at least one number.", "isValidUsername");
     validateField(email, "emailError", "Email is required.", "Please enter a valid email address.", "isValidEmail");
     validateField(phNumber, "phNumberError", "Phone Number is required.", "Phone Number should start with 98 or 97 followed by 8 digits.", "isValidPhoneNumber");
     validateField(citizenshipNumber, "citizenshipNumberError", "Citizenship Number is required.", "Citizenship Number should follow the pattern XX-XX-XX-XXXXX.", "isValidCitizenshipNumber");
@@ -402,6 +402,8 @@ function validateField(value, errorElementId, requiredError, formatError, valida
             document.getElementById(errorElementId).innerText = formatError;
         } else if (validationFunctionName === "containsNumber" && !containsNumber(value)) {
             document.getElementById(errorElementId).innerText = additionalError;
+        } else if (validationFunctionName === "isValidUsername" && !isValidUsername(value)) {
+            document.getElementById(errorElementId).innerText = formatError;
         } else if (validationFunctionName === "passwordMatch" && !passwordMatch(value, additionalError)) {
             document.getElementById(errorElementId).innerText = formatError;
         } else if (validationFunctionName === "isValidEmail" && !isValidEmail(value)) {
@@ -426,6 +428,12 @@ function clearErrors() {
     errorElements.forEach(function (element) {
         element.innerText = "";
     });
+}
+
+// Function to validate email address format
+function isValidEmail(email) {
+    var emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    return emailRegex.test(email);
 }
 
 // Keep hyphens in the relevant places while typing numbers
