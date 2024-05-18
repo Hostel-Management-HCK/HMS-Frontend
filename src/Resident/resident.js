@@ -75,12 +75,16 @@ const editResidentData = (username) => {
 
     makeRequest("PUT", `http://localhost:3000/api/residentInfo/${username}`, token, body)
     .then(async (response) => {
+        let data = await response.json();
         if (response.ok) {
             Swal.fire(
                 'Success!',
                 'The resident data has been updated successfully.',
                 'success'
             ).then(() => {
+                if(data.newToken){
+                    localStorage.setItem("token", data.newToken);
+                }
                 window.location.reload(); // Auto-reload the page
             });
         } else {
