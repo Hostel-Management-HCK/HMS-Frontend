@@ -34,7 +34,7 @@ $(document).ready(function () {
         .then(async (response) => {
             if (response.feedbacks) {
                 let feedbacks = response.feedbacks
-                feedbacks = feedbacks.slice(Math.max(feedbacks.length - 5, 1))
+                feedbacks = feedbacks.slice(Math.max(feedbacks.length - 5, 0))
                 // Clear existing table rows
                 $("#feedbackTableBody").empty();
 

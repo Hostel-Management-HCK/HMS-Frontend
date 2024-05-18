@@ -67,6 +67,7 @@ $(document).ready(function () {
     async function submitTask(staffId, task) {
         try {
             const response = await makeRequest("POST", "http://localhost:3000/api/maintenance", token, { staffId, task });
+            const data = await response.json();
             if (response.ok) {
                 Swal.fire(
                     'Success!',
@@ -76,7 +77,7 @@ $(document).ready(function () {
                     window.location.reload();
                 });
             } else {
-                throw new Error(`Failed to submit task: ${response.statusText}`);
+                throw new Error(`Failed to submit task: ${data.errors.undefined}`);
             }
         } catch (error) {
             Swal.fire(
@@ -190,7 +191,9 @@ $(document).ready(function () {
         const staffId = parseInt($("#editstaffDropDown").val());
         const task = $("#editassignedTask").val();
         makeRequest("PUT", 'http://localhost:3000/api/maintenance/' + editId, token, { staffId, task })
-            .then(response => {
+            .then(async response => {
+
+                let data = await response.json()
                 if (response.ok) {
                     Swal.fire(
                         'Success!',
@@ -202,7 +205,7 @@ $(document).ready(function () {
                 } else {
                     Swal.fire(
                         'Failed!',
-                        'Failed to update task.',
+                        'Failed to update task.'+data.errors.undefined,
                         'error'
                     );
                 }
@@ -210,7 +213,7 @@ $(document).ready(function () {
             .catch(error => {
                 Swal.fire(
                     'Error!',
-                    `Error updating task: ${error}`,
+                    `Error updating task: ${data.errors.undefined}`,
                     'error'
                 );
             });

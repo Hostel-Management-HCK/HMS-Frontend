@@ -4,6 +4,9 @@ const staffId = data.payload.staffId
 
 console.log(token)
 console.log("sadfadsfasdfdsgfdsfg")
+
+
+const statusArr = ["Pending", "Done"]
 $(document).ready(function () {
     let editId = 0
     // Function to make API request
@@ -65,8 +68,17 @@ $(document).ready(function () {
     $(document).on('change', '.status-dropdown', function (e) {
         let maintenanceId = parseInt(this.id.split("#")[1]);
 
-        if (window.confirm("Do you want to complete the job?")) {
-            makeRequest("PUT", "http://localhost:3000/api/maintenance", token, { maintenanceId })
+        Swal.fire({
+            title: 'Are you sure?',
+            text: 'Do you want to change the status?',
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Yes, change it!'
+        }).then((result) => {
+            if (result.isConfirmed) {
+                makeRequest("PUT", "http://localhost:3000/api/maintenance", token, { maintenanceId })
                 .then(response => {
                     if (response.ok) {
                         Swal.fire(
@@ -92,7 +104,15 @@ $(document).ready(function () {
                         'error'
                     );
                 });
-        }
+            } else {
+                if (val === statusArr[0]) {
+                    e.target.value = statusArr[1];
+                } else {
+                    e.target.value = statusArr[0];
+                }
+            }
+        });
+
     });
 });
 

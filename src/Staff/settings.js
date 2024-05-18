@@ -74,6 +74,8 @@ const editResidentData = (staffs) => {
 
     makeRequest("PUT", `http://localhost:3000/api/staffs/${staffId}`, token, body)
     .then(async (response) => {
+
+        let data = await response.json();
         if (response.ok) {
             console.log(response);
             Swal.fire(
@@ -86,7 +88,7 @@ const editResidentData = (staffs) => {
         } else {
             Swal.fire(
                 'Failed!',
-                `Failed to update resident data: ${response.statusText}`,
+                `Failed to update resident data: ${data.errors.undefined}`,
                 'error'
             ).then(() => {
                 window.location.reload();

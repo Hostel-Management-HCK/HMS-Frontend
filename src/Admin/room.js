@@ -42,6 +42,8 @@ $(document).ready(function () {
             occupancy: occupancy
         })
             .then(async (response) => {
+
+                let data = await response.json();
                 if (response.ok) {
                     Swal.fire(
                         'Success!',
@@ -56,7 +58,7 @@ $(document).ready(function () {
                 } else {
                     Swal.fire(
                         'Failed!',
-                        `Failed to update room data: ${response.statusText}`,
+                        `Failed to update room data: ${data.message}`,
                         'error'
                     );
                 }
@@ -138,7 +140,9 @@ $(document).ready(function () {
                                 'Deleted!',
                                 'Room deleted successfully.',
                                 'success'
-                            );
+                            ).then(()=>{
+                                window.location.reload();
+                            })
                         } else {
                             Swal.fire(
                                 'Failed!',
@@ -180,26 +184,17 @@ $(document).ready(function () {
                         'The room data has been created successfully.',
                         'success'
                     ).then(() => {
-                        // Fetch room data
-                        fetchRoomData();
-                        // Close the popup after creating the room
-                        $('.popup.compose').hide();
+                        // Reload the page
+                        window.location.reload();
                     });
                 } else {
-                    Swal.fire(
-                        'Failed!',
-                        `Failed to create room: ${response.statusText}`,
-                        'error'
-                    ).then(() => {
-                        // Show error message if available
-                        if (data.message) {
-                            Swal.fire(
-                                'Error',
-                                `Error creating the room: ${data.message}`,
-                                'error'
-                            );
-                        }
-                    });
+                    if (data.message) {
+                        Swal.fire(
+                            'Error',
+                            `Error creating the room: ${data.message}`,
+                            'error'
+                        );
+                    }
                 }
             })
             .catch(error => {

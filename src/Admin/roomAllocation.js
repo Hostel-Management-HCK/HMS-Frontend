@@ -180,6 +180,7 @@ async function allocateRoom(roomId, username) {
     console.log(roomId);
     try {
         const response = await makeRequest("POST", "http://localhost:3000/api/allocate-room/", token, { username, roomId });
+        const data = await response.json();
         if (response.ok) {
             Swal.fire(
                 'Success!',
@@ -189,7 +190,11 @@ async function allocateRoom(roomId, username) {
                 window.location.reload();
             });
         } else {
-            throw new Error(`Failed to allocate room: ${response.statusText}`);
+            Swal.fire(
+                'Error!',
+                `Error allocating room: ${data.message}`,
+                'error'
+            );
         }
     } catch (error) {
         Swal.fire(
@@ -233,7 +238,7 @@ $(document).on('click', '#editRoomAllocationbtn', function () {
             if (response.ok) {
                 Swal.fire(
                     'Success!',
-                    'Room is successfully allocated.',
+                    'Resident is successfully reallocated.',
                     'success'
                 ).then(() => {
                     window.location.reload();

@@ -29,7 +29,7 @@ $(document).ready(function () {
                     const row = `
         <tr id = "staff_row${staff.staffId}">
             <td>${staff.staffId}</td>
-            <td>${staff.firstName} ${staff.lastName}</td>
+            <td>${staff.firstName} ${staff.middleName  === null ? "" : staff.middleName} ${staff.lastName}</td>
             <td>${staff.email}</td>
             <td>${staff.phone}</td>
             <td>${staff.citizenshipNo}</td>
@@ -127,16 +127,13 @@ $(document).ready(function () {
                     'The staff data has been created successfully.',
                     'success'
                 ).then(() => {
-                    // Fetch staff data
-                    fetchStaffData();
-                    // Close the popup after creating the staff
-                    $('.popup.compose').hide();
+                    window.location.reload();
                 });
                 
             } else {
                 Swal.fire(
                     'Failed!',
-                    `Failed to create staff: ${response.errors.undefined}`,
+                    `Failed to create staff: ${data.errors.undefined}`,
                     'error'
                 ).then(() => {
                     // Show error message if available
@@ -337,6 +334,8 @@ function validateAddStaff() {
     var phNumber = document.getElementById("phNumber").value;
     var citizenshipNumber = document.getElementById("citizenshipNumber").value;
     var password = document.getElementById("currentPassword").value;
+    var salary = document.getElementById("Salary").value;
+
 
     // Validate first name, middle name, last name, username, email, phone number, date of birth, citizenship number, password, and confirm password
     validateField(firstName, "firstNameError", "First Name is required.", "First Name should start with a capital letter.", "isCapitalized");
@@ -347,6 +346,7 @@ function validateAddStaff() {
     validateField(phNumber, "phNumberError", "Phone Number is required.", "Phone Number should start with 98 or 97 followed by 8 digits.", "isValidPhoneNumber");
     validateField(citizenshipNumber, "citizenshipNumberError", "Citizenship Number is required.", "Citizenship Number should follow the pattern XX-XX-XX-XXXXX.", "isValidCitizenshipNumber");
     validateField(password, "passwordError", "Password is required.", "Password must contain at least one special character and one number and should be more than 6 characters.", "hasSpecialCharacterAndNumber", "Password should be more than 6 characters.", "isPasswordLengthValid");
+    validateField(salary, "SalaryError", "Salary is required.", "Salary should be a number between 10,000 and 1,00,00,000.", "isValidSalary");
 
     // If there are no errors, submit the form
     if (firstName && lastName && userName && email && phNumber && citizenshipNumber && password) {
@@ -387,6 +387,10 @@ function hasSpecialCharacterAndNumber(password) {
     var specialCharacterRegex = /[!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?]/;
     var numberRegex = /\d/;
     return specialCharacterRegex.test(password) && numberRegex.test(password);
+}
+
+function isValidSalary(salary) {
+    return salary > 0 && salary < 1000000;
 }
 
 // Function to check if the password length is valid (more than 6 characters)
@@ -482,7 +486,9 @@ function validateEdit() {
     var email = document.getElementById("editEmail").value;
     var phNumber = document.getElementById("editPhNumber").value;
     var citizenshipNumber = document.getElementById("editCitizenshipNumber").value;
+    var salary = document.getElementById("editSalary").value;
 
+    
     // Validate first name, middle name, last name, username, email, phone number, date of birth, citizenship number, password, and confirm password
     validateField(firstName, "editFirstNameError", "First Name is required.", "First Name should start with a capital letter.", "isCapitalized");
     validateField(middleName, "editMiddleNameError", "", "Middle Name should start with a capital letter.", "isCapitalized");
@@ -491,7 +497,7 @@ function validateEdit() {
     validateField(email, "editEmailError", "Email is required.", "Please enter a valid email address.", "isValidEmail");
     validateField(phNumber, "editPhNumberError", "Phone Number is required.", "Phone Number should start with 98 or 97 followed by 8 digits.", "isValidPhoneNumber");
     validateField(citizenshipNumber, "editCitizenshipNumberError", "Citizenship Number is required.", "Citizenship Number should follow the pattern XX-XX-XX-XXXXX.", "isValidCitizenshipNumber");
-
+    validateField(salary, "editSalaryError", "Salary is required.", "Salary should be a number between 10,000 and 1,00,00,000.", "isValidSalary");
 
     return firstName && lastName && userName && email && phNumber && citizenshipNumber;
 };
@@ -519,6 +525,9 @@ function validateField(value, errorElementId, requiredError, formatError, valida
         } else if (validationFunctionName === "hasSpecialCharacterAndNumber" && !hasSpecialCharacterAndNumber(value)) {
             document.getElementById(errorElementId).innerText = formatError;
         } else if (validationFunctionName === "isPasswordLengthValid" && !isPasswordLengthValid(value)) {
+            document.getElementById(errorElementId).innerText = formatError;
+        }
+        else if (validationFunctionName === "isValidSalary" && !isValidSalary(value)) {
             document.getElementById(errorElementId).innerText = formatError;
         }
     }

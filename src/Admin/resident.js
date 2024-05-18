@@ -26,11 +26,11 @@ makeRequest("GET", "http://localhost:3000/api/residentInfo", token)
             const row = `
         <tr id = "resident_row${resident.roomId}">
             <td>${resident.roomId}</td>
-            <td>${resident.firstName}${resident.lastName}</td>
+            <td>${resident.firstName} ${resident.middleName === null ? "":resident.middleName} ${resident.lastName}</td>
             <td>${resident.username}</td>
             <td>${resident.citizenshipNo}</td>  
             <td>${resident.phone}</td>
-            <td>${resident.dateOfBirth}</td>
+            <td>${resident.dateOfBirth.split("T")[0]}</td>
             <td><button class=" delete-resident delete-btn" data-resident-id="${resident.username}">Delete</button></td>
         </tr>
     `;
@@ -67,7 +67,9 @@ const deleteResident = username => {
                             'Deleted!',
                             'Resident has been deleted successfully.',
                             'success'
-                        );
+                        ).then(() => {
+                            location.reload();
+                        });
                     } else {
                         Swal.fire(
                             'Failed!',

@@ -39,9 +39,6 @@ document.getElementById("signupForm").addEventListener("submit", function (event
   validateField(dob, "dobError", "Date of Birth is required.", "Age must be at least 18 years old.", "isValidDOB");
   validateField(citizenshipNumber, "citizenshipNumberError", "Citizenship Number is required.", "Citizenship Number should follow the pattern XX-XX-XX-XXXXX.", "isValidCitizenshipNumber");
   // If there are no errors, submit the form
-  if (firstName && lastName && userName && email && phNumber && dob && citizenshipNumber) {
-    this.submit();
-  }
 });
 // Function to validate username to contain only small letters and at least one number
 function isValidUsername(str) {

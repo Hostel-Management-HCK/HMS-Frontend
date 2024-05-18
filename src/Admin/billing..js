@@ -41,7 +41,7 @@ $(document).ready(function () {
                     <td>${rentItem.username}</td>
                     <td>${rentItem.nextPayDate}</td>
                     <td>${rentItem.residentName}</td>
-                    <td>${rentItem.amount}</td>  
+                    <td>${rentItem.amount === null ? "No Amount" : rentItem.amount}</td>  
                     <td>
                         <select class="status-dropdown" ${upToDate ? "disabled": ""} id="status_dropdown#${rentItem.username}">
                             <option value="Pending" ${rentItem.status === 'Pending' ? 'selected' : ''}>Pending</option>
@@ -109,15 +109,15 @@ $(document).on('change', '.status-dropdown', function (e) {
 function changeStatusResident(username,newStatus){
     makeRequest("POST", `http://localhost:3000/api/billing/rent`, token, {}, { username: username, newStatus: newStatus })
     .then(async response => {
-        if (response.ok) {
-            const data = await response.json();
-            if (data.residenPaymentDetails) {
+
+        if (response.message === "Payment status updated successfully") {
                 Swal.fire(
                     'Success!',
                     'Status change successfully.',
                     'success'
-                );
-            }
+                ).then(() => {
+                    window.location.reload();
+                });
         }
     })
     .catch(error => {

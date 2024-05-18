@@ -50,6 +50,17 @@ $(document).ready(function () {
         });
 
     const reply = response => {
+
+
+        if(response === "") {
+            swal.fire({
+                title: "Error",
+                text: "Reply cannot be empty",
+                icon: "error",
+                confirmButtonText: "OK"
+            })
+            return;
+        }
         makeRequest("POST", 'http://localhost:3000/api/feedback/respond?feedbackId=' + feedbackId, token, { response })
             .then(async response => {
                 if (response.ok) {

@@ -102,16 +102,15 @@ $(document).on('change', '.status-dropdown', function (e) {
 function changeStatusSalary(staffId, newStatus) {
     makeRequest("POST", `http://localhost:3000/api/billing/salary`, token, {}, { staffId, newStatus })
         .then(async response => {
-            if (response.ok) {
-                const data = await response.json();
-                if (data.salaryPaymentDetails) {
+            if (response.message === "Payment status updated successfully") {
                     Swal.fire(
                         'Success!',
                         'Status changed successfully.',
                         'success'
-                    );
+                    ).then(() => {
+                        window.location.reload();
+                    })
                 }
-            }
         })
         .catch(error => {
             Swal.fire(
