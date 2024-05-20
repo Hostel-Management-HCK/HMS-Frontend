@@ -60,7 +60,7 @@ const editResidentData = (username) => {
     let newUsername = $('#userName').val();
     let phNumber = parseInt($('#phNumber').val());
     let DOB = $('#DOB').val();
-    let citizenshipNumber = $('#CitizenshipNumber').val();
+    let citizenshipNumber = $('#citizenshipNumber').val();
 
     const body = {
         firstName: firstName,
